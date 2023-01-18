@@ -1,6 +1,7 @@
 import React from "react";
 import Hr from "../layout/Hr";
 import MetamaskLogin from "../layout/MetamaskLogin";
+import Submit from "../layout/Submit";
 const Login = () => {
   return (
     <>
@@ -31,13 +32,26 @@ const Login = () => {
             </div>
 
             <div className="">
-              <div className="flex flex-row">
-                <div>Submit</div>
-                <div>Remember</div>
+              <div className="flex flex-row justify-between my-6">
+                <div>
+                  <Submit />
+                </div>
+                <div className="flex flex-row justify-center items-center px-4">
+                  <input type="checkbox" className="mr-3 h-4 w-4" />
+                  <label className="flex items-center justify-center text-xl text-gray mb-1 font-medium">
+                    Remember me
+                  </label>
+                </div>
               </div>
-              <div>
-                <div>Dont have an account?</div>
-                <div>Dont have an account?</div>
+              <div className="flex flex-col items-center justify-center my-6 text-sm text-gray font-bold">
+                <div className="-ml-3.5">
+                  Dont have an account?
+                  <label className="text-blue ml-2">Sign up here</label>
+                </div>
+                <div className="flex justify-start">
+                  Forgot your password?
+                  <label className="text-blue ml-2">Reset Password</label>
+                </div>
               </div>
             </div>
           </div>
