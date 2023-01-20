@@ -1,10 +1,25 @@
 import React from "react";
 
 const Home = () => {
+  const sidebarList = [
+    { id: "home", name: "Home", icon: "home-icon.png" },
+    { id: "royalties", name: "Royalties", icon: "royalties-icon.png" },
+    {
+      id: "collection-details",
+      name: "Collection Details",
+      icon: "Collection-Details.png",
+    },
+    {
+      id: "payment-history",
+      name: "Payment History",
+      icon: "Payment-History.png",
+    },
+    { id: "feedback", name: "Feedback", icon: "Feedback.png" },
+  ];
   return (
     <>
       <div className="flex flex-row min-h-screen bg-gray-100 text-gray-800">
-        <aside className="sidebar w-64 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in bg-indigo-500">
+        <aside className="sidebar w-64 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in bg-indigo-500 bg-grayBg">
           <div className="sidebar-header flex flex-col items-center justify-center py-4">
             <div className="">logo</div>
 
@@ -14,17 +29,33 @@ const Home = () => {
           </div>
           <div className="sidebar-content px-4 py-6">
             <ul className="flex flex-col w-full">
-              <li className="my-px">
-                <a
-                  href="#"
-                  className="flex flex-row items-center h-10 px-3 rounded-lg text-gray-700 bg-gray-100"
-                >
-                  <span className="flex items-center justify-center text-lg text-gray-400">
-                    <img alt="home" src="home-icon.png" />
-                  </span>
-                  <span className="ml-3">Home</span>
-                </a>
-              </li>
+              {sidebarList.map((el) => {
+                return (
+                  <>
+                    <li className="my-px">
+                      <a
+                        href="#"
+                        className={`${
+                          el.id === "home"
+                            ? "bg-grayLight font-bold"
+                            : "text-blueGray-500"
+                        }  flex flex-row items-center h-10 px-3 rounded-lg text-gray-700 font-semibold bg-gray-100 hover:bg-grayLight`}
+                      >
+                        <span className="flex items-center justify-center text-lg text-gray-400">
+                          <img alt="home" src={el.icon} />
+                        </span>
+                        <span
+                          className={`${
+                            el.id === "home" ? " font-bold" : ""
+                          }  ml-3 text-blue  hover:font-bold`}
+                        >
+                          {el.name}
+                        </span>
+                      </a>
+                    </li>
+                  </>
+                );
+              })}
             </ul>
           </div>
         </aside>
