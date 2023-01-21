@@ -1,5 +1,5 @@
 import React from "react";
-import Submit from "../layout/Submit";
+import Button from "../layout/Button";
 import Input from "../layout/Input";
 const Signup = () => {
   const signupList = [
@@ -49,7 +49,7 @@ const Signup = () => {
             </div>
           </div>
           <div className="flex justify-center items-center mb-6">
-            <Submit />
+            <Button name={"Submit"} />
           </div>
         </div>
       </div>
