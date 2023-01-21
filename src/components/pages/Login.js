@@ -34,7 +34,7 @@ const Login = () => {
             <div className="">
               <div className="flex flex-row justify-between my-6">
                 <div>
-                  <Submit />
+                  <Submit name="Submit" />
                 </div>
                 <div className="flex flex-row justify-center items-center px-4">
                   <input type="checkbox" className="mr-3 h-4 w-4" />
