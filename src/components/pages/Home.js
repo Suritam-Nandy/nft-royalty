@@ -3,7 +3,11 @@ import React from "react";
 const Home = () => {
   const sidebarList = [
     { id: "home", name: "Home", icon: "home-icon.png" },
-    { id: "royalties", name: "Royalties", icon: "royalties-icon.png" },
+    {
+      id: "royalties",
+      name: "Royalties",
+      icon: "royalties-icon.png",
+    },
     {
       id: "collection-details",
       name: "Collection Details",
@@ -42,7 +46,7 @@ const Home = () => {
                         }  flex flex-row items-center h-10 px-3 rounded-lg text-gray-700 font-semibold bg-gray-100 hover:bg-grayLight`}
                       >
                         <span className="flex items-center justify-center text-lg text-gray-400">
-                          <img alt="home" src={el.icon} />
+                          <img alt={el.icon} src={el.icon} />
                         </span>
                         <span
                           className={`${
