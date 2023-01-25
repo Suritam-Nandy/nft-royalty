@@ -11,7 +11,7 @@ const Home = () => {
           <div className="main-content flex flex-col justify-center -mt-10 items-center flex-grow">
             <div className="flex flex-col justify-center items-center  flex-grow bg-white">
               <div className="max-w-full flex items-center justify-center h-screen m-auto ">
-                <div className="border-solid drop-shadow-xl rounded-lg py-8   px-10 bg-blueBg">
+                <div className="drop-shadow-xl rounded-lg py-8   px-10 bg-blueBg">
                   <div className=" flex flex-col content-center items-center place-items-evenly ">
                     <div className="">
                       <span className="text-lg font-semibold">
