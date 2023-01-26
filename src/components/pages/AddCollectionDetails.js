@@ -5,6 +5,49 @@ import Submit from "../layout/Button";
 import Input from "../layout/Input";
 
 const AddCollectionDetails = () => {
+  const contributorsInformationList = [
+    {
+      id: "collection-details",
+      name: "Contributor Name/Alias*",
+    },
+    {
+      id: "nft-contract-address",
+      name: "Email Address",
+    },
+    {
+      id: "total-supply",
+      name: "Phone Number",
+    },
+    {
+      id: "royalty-percentage",
+      name: "Wallet Address*",
+    },
+    {
+      id: "authorized-wallets",
+      name: "SSN(required for 1099s)",
+    },
+    {
+      id: "authorized-wallets",
+      name: "Collection-based  Royalty %*",
+    },
+    {
+      id: "authorized-wallets",
+      name: "Token-based Royalty %*",
+    },
+    {
+      id: "authorized-wallets",
+      name: "Token IDs(Leave blank ",
+    },
+    {
+      id: "authorized-wallets",
+      name: "Additional Flat Fee",
+    },
+    {
+      id: "authorized-wallets",
+      name: "Additional Notes",
+    },
+  ];
+
   const collectionDetailsList = [
     {
       id: "collection-details",
@@ -36,7 +79,7 @@ const AddCollectionDetails = () => {
             <div className=" flex flex-col justify-start items-center">
               <div className="flex flex-col  w-max flex-grow px-4">
                 <h1 className="text-3xl font-bold my-2">Collection Details</h1>
-                <div className="flex flex-row justify-between items-center my-8">
+                <div className="flex flex-row justify-between items-center my-4">
                   <div className="w-9/12 drop-shadow-xl rounded-lg py-8   px-10 bg-blueBg mr-28">
                     {collectionDetailsList.map((el) => {
                       return (
@@ -111,41 +154,47 @@ const AddCollectionDetails = () => {
                   Contributor(s) Information
                 </h1>
 
-                <div className="flex flex-col mt-8">
-                  <div className="w-full drop-shadow-xl rounded-lg py-8   px-10 bg-blueBg">
-                    <div className="flex flex-row w-max">
-                      <label className="block font-bold mr-5 justify-self-end">
-                        Contributor Name/Alias*
-                      </label>
-                      <Input />
-                    </div>
+                <div className="flex flex-col mt-4">
+                  <div className="w-full h-max drop-shadow-xl rounded-lg py-8   px-10 bg-blueBg">
+                    <div className="w-full grid grid-rows-5 grid-flow-col gap-4 ">
+                      {contributorsInformationList.map((el) => {
+                        return (
+                          <div className="flex flex-row w-max col-span-2">
+                            <label className="block font-bold mr-5 justify-self-end">
+                              {el.name}
+                            </label>
+                            <Input />
+                          </div>
+                        );
+                      })}
 
-                    <div className="flex flex-row w-max">
-                      <label className="block text-sm font-bold mr-5 justify-self-end">
-                        Email Address
-                      </label>
-                      <Input />
-                    </div>
+                      {/* <div className="flex flex-row w-max col-span-2">
+                        <label className="block text-sm font-bold mr-5 justify-self-end">
+                          Email Address
+                        </label>
+                        <Input />
+                      </div>
 
-                    <div className="flex flex-row w-max">
-                      <label className="block text-sm font-bold mr-5 justify-self-end">
-                        Phone Number
-                      </label>
-                      <Input />
-                    </div>
+                      <div className="flex flex-row w-max col-span-2">
+                        <label className="block text-sm font-bold mr-5 justify-self-end">
+                          Phone Number
+                        </label>
+                        <Input />
+                      </div>
 
-                    <div className="flex flex-row w-max">
-                      <label className="block text-sm font-bold mr-5 justify-self-end">
-                        Wallet Address*
-                      </label>
-                      <Input />
-                    </div>
+                      <div className="flex flex-row w-max col-span-2">
+                        <label className="block text-sm font-bold mr-5 justify-self-end">
+                          Wallet Address*
+                        </label>
+                        <Input />
+                      </div>
 
-                    <div className="flex flex-row w-max">
-                      <label className="block text-sm font-bold mr-5 justify-self-end">
-                        SSN<span>(required for 1099s)</span>
-                      </label>
-                      <Input />
+                      <div className="flex flex-row w-max col-span-2">
+                        <label className="block text-sm font-bold mr-5 justify-self-end">
+                          SSN<span>(required for 1099s)</span>
+                        </label>
+                        <Input />
+                      </div> */}
                     </div>
                   </div>
                 </div>
