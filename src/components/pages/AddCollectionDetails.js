@@ -78,7 +78,7 @@ const AddCollectionDetails = () => {
               <div className="flex flex-col  w-max flex-grow mt-2 px-4">
                 <h1 className="text-2xl font-bold my-2">Collection Details</h1>
                 <div className="flex flex-row justify-between items-center my-2">
-                  <div className="w-9/12 drop-shadow-xl rounded-lg py-4   px-10 bg-blueBg mr-28">
+                  <div className="w-9/12 drop-shadow-xl rounded-lg py-4   px-10 bg-blueBg mr-32">
                     {collectionDetailsList.map((el) => {
                       return (
                         <div className="grid grid-cols-2 w-max mb-4 justify-center items-center">
