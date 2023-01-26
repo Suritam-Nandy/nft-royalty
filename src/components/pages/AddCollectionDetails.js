@@ -203,33 +203,6 @@ const AddCollectionDetails = () => {
                           ></textarea>
                         </div>
                       </div>
-                      {/* <div className="flex flex-row w-max col-span-2">
-                        <label className="block text-sm font-bold mr-5 justify-self-end">
-                          Email Address
-                        </label>
-                        <Input />
-                      </div>
-
-                      <div className="flex flex-row w-max col-span-2">
-                        <label className="block text-sm font-bold mr-5 justify-self-end">
-                          Phone Number
-                        </label>
-                        <Input />
-                      </div>
-
-                      <div className="flex flex-row w-max col-span-2">
-                        <label className="block text-sm font-bold mr-5 justify-self-end">
-                          Wallet Address*
-                        </label>
-                        <Input />
-                      </div>
-
-                      <div className="flex flex-row w-max col-span-2">
-                        <label className="block text-sm font-bold mr-5 justify-self-end">
-                          SSN<span>(required for 1099s)</span>
-                        </label>
-                        <Input />
-                      </div> */}
                     </div>
                   </div>
                 </div>
