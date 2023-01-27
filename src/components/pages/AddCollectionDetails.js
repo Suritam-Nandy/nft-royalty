@@ -1,7 +1,7 @@
 import React from "react";
 import Sidebar from "../layout/Sidebar";
 import Footer from "../layout/Footer";
-import Submit from "../layout/Button";
+import Button from "../layout/Button";
 import Input from "../layout/Input";
 
 const AddCollectionDetails = () => {
@@ -76,7 +76,7 @@ const AddCollectionDetails = () => {
           <main className="main w-full flex flex-col justify-center items-center flex-grow ">
             <div className=" flex flex-col justify-start items-center">
               <div className="flex flex-col  w-max flex-grow px-4">
-                <h1 className="text-2xl font-bold mb-2">Collection Details</h1>
+                <h1 className="text-2xl font-bold my-2">Collection Details</h1>
                 <div className="flex flex-row justify-between items-center mb-2">
                   <div className="w-9/12 drop-shadow-xl rounded-lg pt-4 pb-1   px-10 bg-blueBg mr-32">
                     {collectionDetailsList.map((el) => {
@@ -147,7 +147,7 @@ const AddCollectionDetails = () => {
                     </div>
                   </div>
                 </div>
-                <h1 className="text-2xl font-bold mb-2">
+                <h1 className="text-2xl font-bold my-2">
                   Contributor(s) Information
                 </h1>
 
@@ -204,6 +204,14 @@ const AddCollectionDetails = () => {
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+                <div className="w-full flex flex-row justify-center items-center  my-3">
+                  <div className="">
+                    <Button name={"Add contributor"} />
+                  </div>
+                  <div className="ml-20">
+                    <Button name={"Submit"} />
                   </div>
                 </div>
               </div>
