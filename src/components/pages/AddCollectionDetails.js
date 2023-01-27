@@ -75,10 +75,10 @@ const AddCollectionDetails = () => {
         <div className="h-screen flex flex-col w-full">
           <main className="main w-full flex flex-col justify-center items-center flex-grow ">
             <div className=" flex flex-col justify-start items-center">
-              <div className="flex flex-col  w-max flex-grow mt-2 px-4">
-                <h1 className="text-2xl font-bold my-2">Collection Details</h1>
-                <div className="flex flex-row justify-between items-center my-2">
-                  <div className="w-9/12 drop-shadow-xl rounded-lg py-4   px-10 bg-blueBg mr-32">
+              <div className="flex flex-col  w-max flex-grow px-4">
+                <h1 className="text-2xl font-bold mb-2">Collection Details</h1>
+                <div className="flex flex-row justify-between items-center mb-2">
+                  <div className="w-9/12 drop-shadow-xl rounded-lg pt-4 pb-1   px-10 bg-blueBg mr-32">
                     {collectionDetailsList.map((el) => {
                       return (
                         <div className="grid grid-cols-2 w-max mb-4 justify-center items-center">
@@ -147,12 +147,12 @@ const AddCollectionDetails = () => {
                     </div>
                   </div>
                 </div>
-                <h1 className="text-2xl font-bold my-2">
+                <h1 className="text-2xl font-bold mb-2">
                   Contributor(s) Information
                 </h1>
 
                 <div className="flex flex-col mt-2">
-                  <div className="w-full h-max drop-shadow-xl rounded-lg py-8   px-10 bg-blueBg">
+                  <div className="w-full h-max drop-shadow-xl rounded-lg pb-1 pt-4   px-10 bg-blueBg">
                     <div className="flex flex-row w-full">
                       <div className="w-full flex flex-col  items-center justify-start ">
                         {contributorsInformationList.map((el) => {
@@ -187,7 +187,7 @@ const AddCollectionDetails = () => {
                         })}
                         <div
                           id="additional-notes"
-                          className="flex flex-row w-max col-span-2 h-min"
+                          className="grid grid-cols-2 w-max mb-6 h-min"
                         >
                           <label className="block font-bold mr-5 justify-self-end">
                             Additional Notes
@@ -199,7 +199,7 @@ const AddCollectionDetails = () => {
                             // value={user.description}
                             // onChange={onInputChange}
                             rows="3"
-                            className=" w-56 shadow appearance-none border rounded  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className=" w-48 shadow appearance-none border rounded  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                           ></textarea>
                         </div>
                       </div>
