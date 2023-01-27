@@ -76,7 +76,9 @@ const AddCollectionDetails = () => {
           <main className="main w-full flex flex-col justify-center items-center flex-grow ">
             <div className=" flex flex-col justify-start items-center">
               <div className="flex flex-col  w-max flex-grow px-4">
-                <h1 className="text-2xl font-bold my-2">Collection Details</h1>
+                <h1 className="text-3xl font-semibold my-2">
+                  Collection Details
+                </h1>
                 <div className="flex flex-row justify-between items-center mb-2">
                   <div className="w-9/12 drop-shadow-xl rounded-lg pt-4 pb-1   px-10 bg-blueBg mr-32">
                     {collectionDetailsList.map((el) => {
@@ -147,7 +149,7 @@ const AddCollectionDetails = () => {
                     </div>
                   </div>
                 </div>
-                <h1 className="text-2xl font-bold my-2">
+                <h1 className="text-3xl font-semibold my-2">
                   Contributor(s) Information
                 </h1>
 
