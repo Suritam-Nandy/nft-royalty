@@ -1,16 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
+import { useReducer } from "react";
 import Button from "../layout/Button";
 import Input from "../layout/Input";
 const Signup = () => {
+  const [value,setValues]=useState({
+    firstName:"",
+    lastName:"",
+    email:"",
+    phoneNumber:"",
+    walletAddress:"",
+    newPassword:"",
+    confirmPassword:"",
+  });
+
+  
   const signupList = [
-    { id: "first-name", name: "First Name", type: "text" },
-    { id: "last-name", name: "Last Name", type: "text" },
+    { id: "firstName", name: "First Name", type: "text"},
+    { id: "lastName", name: "First Name", type: "text" },
     { id: "email", name: "Email Address", type: "email" },
-    { id: "phone-number", name: "Phone Number", type: "tel" },
-    { id: "new-password", name: "New Password", type: "password" },
-    { id: "confirm-password", name: "Confirm Password", type: "password" },
+    { id: "phoneNumber", name: "Phone Number", type: "tel" },
+    { id:"walletAddress", name: "Wallet Address", type: "text"},
+    { id: "newPassword", name: "New Password", type: "password" },
+    { id: "confirmPassword", name: "Confirm Password", type: "password" },
   ];
 
+  const onInputChange = (e) => {
+    setValues({ ...value, [e.target.name]:e.target.value });
+  };
+  const handleSubmit=(event)=>{
+    event.preventDefault();
+    console.log(value);
+  }
+  console.log(value.firstName);
+  console.log("cggg");
   return (
     <>
       <div className="max-w-full flex items-center justify-center h-screen m-auto ">
@@ -23,6 +45,7 @@ const Signup = () => {
           </div>
           <div className="flex flex-row justify-center w-full pr-36 my-4">
             <div className="flex flex-col justify-center items-center w-full mt-6 mr-4">
+            <form onSubmit={handleSubmit}>
               {signupList.map((el) => {
                 return (
                   <div className="grid grid-cols-2 w-full mb-8 justify-center items-center">
@@ -32,7 +55,7 @@ const Signup = () => {
                     >
                       {el.name}
                     </label>
-                    <Input type={el.type} />
+                    <Input type={el.type} value={value.`${{el.id}}`} onChange={onInputChange}/>
                     {/* <input
                       type={el.type}
                       //   name="password"
@@ -43,13 +66,15 @@ const Signup = () => {
                   </div>
                 );
               })}
-            </div>
+            </form>
             <div className="w-40 h-28 bg-grayLight rounded-full flex justify-center items-center">
               <label className="text-sm font-bold">Upload Avatar</label>
             </div>
           </div>
+
           <div className="flex justify-center items-center mb-6">
-            <Button name={"Submit"} />
+            <Button name={"Submit"} onClick={handleSubmit} />
+          </div>
           </div>
         </div>
       </div>
