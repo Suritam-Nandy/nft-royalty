@@ -146,6 +146,12 @@ const AddCollectionDetails = () => {
                       <label className="block font-bold mr-5 justify-self-end">
                         Upload Documents
                       </label>
+                      <div className="w-48 border-2 border-dashed utline-dashed rounded-2xl flex flex-col justify-center items-center">
+                        <div>icon</div>
+                        <div>Drag & Drop</div>
+                        <label>or</label>
+                        <div>Choose File</div>
+                      </div>
                     </div>
                   </div>
                 </div>
