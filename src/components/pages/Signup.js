@@ -46,9 +46,12 @@ const Signup = () => {
               <img className="w-40" src="/Optima-Logo 1.png" />
             </div>
           </div>
-          <div className="flex flex-row justify-center w-full pr-36 my-4">
-            <form onSubmit={handleSubmit}>
-              <div className="flex flex-col justify-center items-center w-full mt-6 mr-4">
+          <form
+            className="flex flex-row justify-center w-full"
+            onSubmit={handleSubmit}
+          >
+            <div className="flex flex-row justify-center w-full pr-36 my-4">
+              <div className="flex flex-col  justify-center items-center w-full mt-6 mr-4">
                 <div className="grid grid-cols-2 w-full mb-8 justify-center items-center">
                   <label
                     className="block text-sm font-bold mr-5 justify-self-end"
@@ -196,15 +199,15 @@ const Signup = () => {
                       //   onChange={onInputChange}
                     /> */}
                 </div>
-                <div className="w-40 h-28 bg-grayLight rounded-full flex justify-center items-center">
-                  <label className="text-sm font-bold">Upload Avatar</label>
-                </div>
               </div>
 
-              <div className="flex justify-center items-center mb-6">
-                <Button name={"Submit"} onClick={handleSubmit} />
+              <div className="w-40 h-28 bg-grayLight rounded-full flex mt-2 justify-center items-center">
+                <label className="text-sm font-bold">Upload Avatar</label>
               </div>
-            </form>
+            </div>
+          </form>
+          <div className="flex justify-center items-center mb-6">
+            <Button name={"Submit"} onClick={handleSubmit} />
           </div>
         </div>
       </div>
