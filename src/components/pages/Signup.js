@@ -46,10 +46,7 @@ const Signup = () => {
               <img className="w-40" src="/Optima-Logo 1.png" />
             </div>
           </div>
-          <form
-            className="flex flex-row justify-center w-full"
-            onSubmit={handleSubmit}
-          >
+          <form className="w-full">
             <div className="flex flex-row justify-center w-full pr-36 my-4">
               <div className="flex flex-col  justify-center items-center w-full mt-6 mr-4">
                 <div className="grid grid-cols-2 w-full mb-8 justify-center items-center">
@@ -205,10 +202,14 @@ const Signup = () => {
                 <label className="text-sm font-bold">Upload Avatar</label>
               </div>
             </div>
+            <div className="flex justify-center items-center mb-6">
+              <Button
+                name={"Submit"}
+                onSubmit={handleSubmit}
+                onClick={handleSubmit}
+              />
+            </div>
           </form>
-          <div className="flex justify-center items-center mb-6">
-            <Button name={"Submit"} onClick={handleSubmit} />
-          </div>
         </div>
       </div>
     </>
