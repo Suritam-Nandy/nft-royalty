@@ -1,13 +1,21 @@
 import React from "react";
 
-const Input = () => {
+const Input = (props) => {
+  const {
+    type = "",
+    placeholder = "",
+    name = "name",
+    value = "",
+    onChange,
+  } = props;
   return (
     <input
-      // type={el.type}
-      //   name="password"
+      type={type}
       className="form-control w-48 shadow appearance-none border border-gray rounded text-xs  py-0.5 px-1 text-black leading-3 focus:outline-none focus:shadow-outline"
-      // placeholder="Enter Your Password"
-      //   onChange={onInputChange}
+      placeholder={placeholder}
+      name={name}
+      value={value}
+      onChange={onChange}
     />
   );
 };

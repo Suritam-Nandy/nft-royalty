@@ -7,6 +7,7 @@ module.exports = {
       graySidebar: "##FBF9F9",
       gray: "#62656C",
       grayLight: "#D9D9D9",
+      grayDark: "##545454",
       grayBg: "#E8E8E8",
       blue: "#2A36B8",
       blueBg: "#E8ECF4",

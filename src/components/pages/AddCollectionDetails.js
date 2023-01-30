@@ -76,9 +76,11 @@ const AddCollectionDetails = () => {
           <main className="main w-full flex flex-col justify-center items-center flex-grow ">
             <div className=" flex flex-col justify-start items-center">
               <div className="flex flex-col  w-max flex-grow px-4">
-                <h1 className="text-2xl font-bold my-2">Collection Details</h1>
+                <h1 className="text-3xl font-semibold my-2">
+                  Collection Details
+                </h1>
                 <div className="flex flex-row justify-between items-center mb-2">
-                  <div className="w-9/12 drop-shadow-xl rounded-lg pt-4 pb-1   px-10 bg-blueBg mr-32">
+                  <div className="w-9/12 drop-shadow-xl rounded-lg pt-3 pb-0   px-10 bg-blueBg mr-32">
                     {collectionDetailsList.map((el) => {
                       return (
                         <div className="grid grid-cols-2 w-max mb-4 justify-center items-center">
@@ -91,7 +93,7 @@ const AddCollectionDetails = () => {
                     })}
                   </div>
 
-                  <div className="w-9/12 h-full flex flex-col justify-between items-start drop-shadow-xl rounded-lg py-4 px-12 bg-blueBg text-base">
+                  <div className="w-9/12 h-full flex flex-col justify-between items-start drop-shadow-xl rounded-lg py-3 px-12 bg-blueBg text-base">
                     <div className="flex flex-row w-max">
                       <label className="block font-bold mr-5 justify-self-end">
                         Payment Schedule*
@@ -144,15 +146,21 @@ const AddCollectionDetails = () => {
                       <label className="block font-bold mr-5 justify-self-end">
                         Upload Documents
                       </label>
+                      <div className="w-48 border-2 border-dashed utline-dashed rounded-2xl flex flex-col justify-center items-center">
+                        <div>icon</div>
+                        <div>Drag & Drop</div>
+                        <label>or</label>
+                        <div>Choose File</div>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <h1 className="text-2xl font-bold my-2">
+                <h1 className="text-3xl font-semibold mt-2 mb-1">
                   Contributor(s) Information
                 </h1>
 
-                <div className="flex flex-col mt-2">
-                  <div className="w-full h-max drop-shadow-xl rounded-lg pb-1 pt-4   px-10 bg-blueBg">
+                <div className="flex flex-col mb-2.5 mt-2">
+                  <div className="w-full h-max drop-shadow-xl rounded-lg pb-0 pt-3   px-10 bg-blueBg">
                     <div className="flex flex-row w-full">
                       <div className="w-full flex flex-col  items-center justify-start ">
                         {contributorsInformationList.map((el) => {
@@ -208,7 +216,11 @@ const AddCollectionDetails = () => {
                 </div>
                 <div className="w-full flex flex-row justify-center items-center  my-3">
                   <div className="">
-                    <Button name={"Add contributor"} />
+                    <div className="bg-white w-max drop-shadow-lg  rounded-xl px-8 py-1 text-blue text-lg font-medium shadow-md hover:text-blueDark hover:shadow-lg focus:text-blueDark focus:shadow-lg focus:outline-none focus:ring-0 active:text-blueDark active:shadow-lg transition duration-150 ease-in-out">
+                      <label className="text-base font-bold">
+                        <span className="text-xl">+</span>Add contributor
+                      </label>
+                    </div>
                   </div>
                   <div className="ml-20">
                     <Button name={"Submit"} />
