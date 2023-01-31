@@ -1,11 +1,12 @@
 import { React, useState, useEffect } from "react";
 import Button from "../layout/Button";
 import Input from "../layout/Input";
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../firebase";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 const Signup = () => {
-  const navigate=useNavigate();
+  let history = useHistory();
+
   const [value, setValues] = useState({
     firstName: "",
     lastName: "",
@@ -16,48 +17,46 @@ const Signup = () => {
     confirmPassword: "",
   });
 
-  const signupList = [
-    { id: "firstName", name: "First Name", type: "text" },
-    { id: "lastName", name: "First Name", type: "text" },
-    { id: "email", name: "Email Address", type: "email" },
-    { id: "phoneNumber", name: "Phone Number", type: "tel" },
-    { id: "walletAddress", name: "Wallet Address", type: "text" },
-    { id: "newPassword", name: "New Password", type: "password" },
-    { id: "confirmPassword", name: "Confirm Password", type: "password" },
-  ];
-
   const onInputChange = (e) => {
     setValues({ ...value, [e.target.name]: e.target.value });
   };
-  const[errorMsg,setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!value.firstName || !value.lastName || !value.email || !value.phoneNumber || !value.walletAddress || !value.newPassword || !value.confirmPassword){
+    if (
+      !value.firstName ||
+      !value.lastName ||
+      !value.email ||
+      !value.phoneNumber ||
+      !value.walletAddress ||
+      !value.newPassword ||
+      !value.confirmPassword
+    ) {
       setErrorMsg("All Fields Mandatory");
       return;
     }
-    if(value.newPassword !== value.confirmPassword){
+    if (value.newPassword !== value.confirmPassword) {
       setErrorMsg("Password Does Not Match");
       return;
     }
     setErrorMsg("");
 
     setSubmitButtonDisabled(true);
-    createUserWithEmailAndPassword(auth,value.email,value.newPassword)
-    .then((res) => {
-      setSubmitButtonDisabled(false);
-      const user = res.user;
-      console.log(user);
-      navigate("/login");
-    })
-    .catch((err) =>{
-     setSubmitButtonDisabled(false);
-     setErrorMsg(err.message);
-    });
+    createUserWithEmailAndPassword(auth, value.email, value.newPassword)
+      .then((res) => {
+        setSubmitButtonDisabled(false);
+        const user = res.user;
+        console.log(user);
+        history.replace("/login");
+      })
+      .catch((err) => {
+        setSubmitButtonDisabled(false);
+        setErrorMsg(err.message);
+      });
   };
- 
+
   // Update the document title using the browser API
 
   return (
@@ -219,7 +218,7 @@ const Signup = () => {
                       // placeholder="Enter Your Password"
                       //   onChange={onInputChange}
                     /> */}
-                   <b className="text-40">{errorMsg}</b> 
+                  <b className="text-40">{errorMsg}</b>
                 </div>
               </div>
 
