@@ -1,8 +1,11 @@
 import { React, useState, useEffect } from "react";
 import Button from "../layout/Button";
 import Input from "../layout/Input";
-
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { auth } from "../../firebase";
+import { useNavigate } from "react-router-dom";
 const Signup = () => {
+  const navigate=useNavigate();
   const [value, setValues] = useState({
     firstName: "",
     lastName: "",
@@ -26,16 +29,37 @@ const Signup = () => {
   const onInputChange = (e) => {
     setValues({ ...value, [e.target.name]: e.target.value });
   };
-  console.log(value);
+  const[errorMsg,setErrorMsg] = useState("");
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log([value]);
+    if (!value.firstName || !value.lastName || !value.email || !value.phoneNumber || !value.walletAddress || !value.newPassword || !value.confirmPassword){
+      setErrorMsg("All Fields Mandatory");
+      return;
+    }
+    if(value.newPassword !== value.confirmPassword){
+      setErrorMsg("Password Does Not Match");
+      return;
+    }
+    setErrorMsg("");
+
+    setSubmitButtonDisabled(true);
+    createUserWithEmailAndPassword(auth,value.email,value.newPassword)
+    .then((res) => {
+      setSubmitButtonDisabled(false);
+      const user = res.user;
+      console.log(user);
+      navigate("/login");
+    })
+    .catch((err) =>{
+     setSubmitButtonDisabled(false);
+     setErrorMsg(err.message);
+    });
   };
-
+ 
   // Update the document title using the browser API
-  console.log("value : ", value);
 
-  console.log("cggg");
   return (
     <>
       <div className="max-w-full flex items-center justify-center h-screen m-auto ">
@@ -195,6 +219,7 @@ const Signup = () => {
                       // placeholder="Enter Your Password"
                       //   onChange={onInputChange}
                     /> */}
+                   <b className="text-40">{errorMsg}</b> 
                 </div>
               </div>
 
@@ -207,6 +232,7 @@ const Signup = () => {
                 name={"Submit"}
                 onSubmit={handleSubmit}
                 onClick={handleSubmit}
+                disabled={submitButtonDisabled}
               />
             </div>
           </form>
