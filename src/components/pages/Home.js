@@ -8,7 +8,7 @@ const Home = () => {
     <>
       <div>
         <div className="flex flex-row min-h-screen bg-gray-100 text-gray-800">
-          <Sidebar />
+          <Sidebar  />
           <div className="h-screen flex flex-col w-full">
             <main className="main w-full flex flex-col justify-center items-center flex-grow ">
               <div className="main-content flex flex-col justify-center items-center flex-grow">

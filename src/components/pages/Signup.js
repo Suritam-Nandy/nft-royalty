@@ -4,6 +4,7 @@ import Input from "../layout/Input";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../firebase";
 import { useHistory } from "react-router-dom";
+import { async } from "@firebase/util";
 const Signup = () => {
   let history = useHistory();
 
@@ -45,11 +46,15 @@ const Signup = () => {
 
     setSubmitButtonDisabled(true);
     createUserWithEmailAndPassword(auth, value.email, value.newPassword)
-      .then((res) => {
+      .then(async(res) => {
         setSubmitButtonDisabled(false);
         const user = res.user;
+        await updateProfile(user,{
+          displayName: value.firstName+" "+value.lastName,
+          walletAddress:value.walletAddress,
+        });
         console.log(user);
-        history.replace("/login");
+        history.replace("/");
       })
       .catch((err) => {
         setSubmitButtonDisabled(false);

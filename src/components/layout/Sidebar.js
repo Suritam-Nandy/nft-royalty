@@ -1,6 +1,6 @@
 import React from "react";
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   const sidebarList = [
     { id: "home", name: "Home", icon: "home-icon.png" },
     {
@@ -32,7 +32,7 @@ const Sidebar = () => {
         </div>
 
         <div className="my-1">
-          <span className="text-blue font-bold">0xd79...df2230 </span>
+          <span className="text-blue font-bold">{props.walletAddress} </span>
         </div>
       </div>
       <div className="sidebar-content px-4 py-6">
