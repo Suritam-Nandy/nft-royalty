@@ -47,7 +47,7 @@ const Signup = () => {
     setSubmitButtonDisabled(true);
     firebase
       .auth()
-      .createUserWithEmailAndPassword(value.email, value.password)
+      .createUserWithEmailAndPassword(value.email, value.newPassword)
       .then(async (resp) => {
         setSubmitButtonDisabled(false);
         firestore
