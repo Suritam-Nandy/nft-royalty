@@ -1,12 +1,12 @@
 import { React, useState, useEffect } from "react";
 import Button from "../layout/Button";
 import Input from "../layout/Input";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "../../firebase";
+import { useFirebase, useFirestore } from "react-redux-firebase";
 import { useHistory } from "react-router-dom";
-import { async } from "@firebase/util";
 const Signup = () => {
   let history = useHistory();
+  const firebase = useFirebase();
+  const firestore = useFirestore();
 
   const [value, setValues] = useState({
     firstName: "",
@@ -45,21 +45,36 @@ const Signup = () => {
     setErrorMsg("");
 
     setSubmitButtonDisabled(true);
-    createUserWithEmailAndPassword(auth, value.email, value.newPassword)
-      .then(async(res) => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(value.email, value.password)
+      .then(async (resp) => {
         setSubmitButtonDisabled(false);
-        const user = res.user;
-        await updateProfile(user,{
-          displayName: value.firstName+" "+value.lastName,
-          walletAddress:value.walletAddress,
-        });
-        console.log(user);
-        history.replace("/");
+        firestore
+          .collection("users")
+          .doc(resp.user.uid)
+
+          .set({
+            firstName: value.firstName,
+            lastName: value.lastName,
+            displayName: `${value.firstName} +" " + ${value.lastName}`,
+            email: value.email,
+            phoneNumber: value.phoneNumber,
+            walletAddress: value.walletAddress,
+            newPassword: value.newPassword,
+            confirmPassword: value.confirmPassword,
+            uid: resp.user.uid,
+            createdAt: firestore.FieldValue.serverTimestamp(),
+          })
+          .then(() => {
+            firebase.login(value);
+          });
       })
       .catch((err) => {
         setSubmitButtonDisabled(false);
         setErrorMsg(err.message);
       });
+    history.replace("/");
   };
 
   // Update the document title using the browser API

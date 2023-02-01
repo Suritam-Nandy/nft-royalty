@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import Hr from "../layout/Hr";
 import MetamaskLogin from "../layout/MetamaskLogin";
 import Button from "../layout/Button";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
-import { Link, useHistory } from "react-router-dom";
+import { useFirebase, useFirestore } from "react-redux-firebase";
+import { useParams, Link, useHistory } from "react-router-dom";
 import Input from "../layout/Input";
 
 const Login = () => {
   let history = useHistory();
+  const firebase = useFirebase();
+  const firestore = useFirestore();
   const [value, setValues] = useState({
     email: "",
     password: "",
@@ -19,7 +20,7 @@ const Login = () => {
   };
   const [errorMsg, setErrorMsg] = useState("");
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!value.email || !value.password) {
       setErrorMsg("All Fields Mandatory");
       return;
@@ -27,7 +28,9 @@ const Login = () => {
     setErrorMsg("");
 
     setSubmitButtonDisabled(true);
-    signInWithEmailAndPassword(auth, value.email, value.password)
+    const some = await firebase.login(value);
+    console
+      .log("logged in ", some)
       .then(async (res) => {
         setSubmitButtonDisabled(false);
 
