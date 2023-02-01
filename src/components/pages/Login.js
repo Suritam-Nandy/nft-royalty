@@ -7,7 +7,6 @@ import { auth } from "../../firebase";
 import { Link, useHistory } from "react-router-dom";
 import Input from "../layout/Input";
 
-
 const Login = () => {
   let history = useHistory();
   const [value, setValues] = useState({
@@ -31,7 +30,7 @@ const Login = () => {
     signInWithEmailAndPassword(auth, value.email, value.password)
       .then(async (res) => {
         setSubmitButtonDisabled(false);
-        
+
         history.replace("/");
       })
       .catch((err) => {
@@ -49,8 +48,9 @@ const Login = () => {
           <div className="my-3 px-4">
             <div className="flex flex-col ">
               <div className="flex flex-col">
-                <label className="text-sm text-gray mb-3 font-medium"
-                id="email"
+                <label
+                  className="text-sm text-gray mb-3 font-medium"
+                  id="email"
                 >
                   Email Address
                 </label>
@@ -62,9 +62,9 @@ const Login = () => {
                 />
               </div>
               <div className="flex flex-col my-4">
-                <label 
-                className="text-sm text-gray mb-3 font-medium"
-                id="password"
+                <label
+                  className="text-sm text-gray mb-3 font-medium"
+                  id="password"
                 >
                   Password
                 </label>
@@ -75,7 +75,6 @@ const Login = () => {
                   onChange={onInputChange}
                 />
                 <b className="text-40">{errorMsg}</b>
-
               </div>
             </div>
 
@@ -83,11 +82,11 @@ const Login = () => {
               <div className="flex flex-row justify-between my-6">
                 <div>
                   <Button
-                   name={"Submit"}
-                   onSubmit={handleSubmit}
-                   onClick={handleSubmit}
-                   disabled={submitButtonDisabled}
-                    />
+                    name={"Submit"}
+                    onSubmit={handleSubmit}
+                    onClick={handleSubmit}
+                    disabled={submitButtonDisabled}
+                  />
                 </div>
                 <div className="flex flex-row justify-center items-center px-4">
                   <input type="checkbox" className="mr-3 h-4 w-4" />
@@ -99,7 +98,9 @@ const Login = () => {
               <div className="flex flex-col items-center justify-center my-6 text-sm text-gray font-bold">
                 <div className="-ml-3.5">
                   Dont have an account?
-                  <Link className="text-blue ml-2" to="/signup">Sign up here</Link>
+                  <Link className="text-blue ml-2" to="/signup">
+                    Sign up here
+                  </Link>
                 </div>
                 <div className="flex justify-start">
                   Forgot your password?

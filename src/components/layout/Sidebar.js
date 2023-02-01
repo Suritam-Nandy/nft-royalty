@@ -32,7 +32,10 @@ const Sidebar = (props) => {
         </div>
 
         <div className="my-1">
-          <span className="text-blue font-bold">{props.walletAddress} </span>
+          <span className="text-blue font-bold">
+            {/* {props.walletAddress} */}
+            wwwwwwww
+          </span>
         </div>
       </div>
       <div className="sidebar-content px-4 py-6">
