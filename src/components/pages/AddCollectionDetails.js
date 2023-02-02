@@ -1,10 +1,64 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../layout/Sidebar";
 import Footer from "../layout/Footer";
 import Button from "../layout/Button";
 import Input from "../layout/Input";
+import { useSelector } from "react-redux";
+import { useParams, useHistory } from "react-router-dom";
+import { useFirestore, useFirebase } from "react-redux-firebase";
 
 const AddCollectionDetails = () => {
+  const firestore = useFirestore();
+  const firebase = useFirebase();
+  let history = useHistory();
+  const uid = useSelector((state) => state.firebase.auth.uid);
+
+  const docRef = uid
+    ? firestore.collection("users").doc(uid).collection("collections").doc(uid)
+    : null;
+
+    const [collection, setColection] = useState({
+      nftContractAddress: "",
+      royaltyPercentage: "",
+      authorizedWallet: "",
+      paymentSchedule: "monthly",
+      preparation: "yes",
+      nftImage:{},
+      contributors: [],
+    });
+
+    useEffect(()=>{
+      if(uid){
+
+      }
+    },[uid]);
+    const onInputChange = (e) => {
+      setColection({ ...collection, [e.target.name]: e.target.value });
+    };
+    const submitForm = async(e) =>{
+      e.preventDefault();
+      firestore
+          .collection("users")
+          .doc(uid)
+          .collection("collections")
+
+          .add({
+            ...collection,
+            userUid: uid,
+            createdAt: firestore.FieldValue.serverTimestamp(),
+          })
+          .then((docRef) => {
+            firestore
+              .collection("allcollections")
+              .doc(docRef.uid)
+              .set({
+                ...collection,
+                userUid:uid,
+                createdAt: firestore.FieldValue.serverTimestamp(),
+              });
+          });
+          history.push("/");
+    };
   const contributorsInformationList = [
     {
       id: "collection-details",

@@ -57,7 +57,7 @@ const Signup = () => {
           .set({
             firstName: value.firstName,
             lastName: value.lastName,
-            displayName: `${value.firstName} +" " + ${value.lastName}`,
+            displayName: `${value.firstName}" "${value.lastName}`,
             email: value.email,
             phoneNumber: value.phoneNumber,
             walletAddress: value.walletAddress,
