@@ -2,8 +2,14 @@ import React from "react";
 import Sidebar from "../layout/Sidebar";
 import Button from "../layout/Button";
 import Footer from "../layout/Footer";
+import { useFirebase } from "react-redux-firebase";
+import { Link } from "react-router-dom";
+
+
 
 const Home = () => {
+  const firebase = useFirebase();
+
   return (
     <>
       <div>
@@ -33,7 +39,14 @@ const Home = () => {
               </div>
             </main>
             <div className="mt-10">
-              <button>Logout</button>
+            <Link to="/login">
+                  <span
+                    onClick={() => firebase.logout()}
+                    className="text-sm  ml-2"
+                  >
+                    Logout
+                  </span>
+                </Link>
             </div>
             <Footer />
           </div>

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Sidebar = (props) => {
+const Sidebar = () => {
   const sidebarList = [
     { id: "home", name: "Home", icon: "home-icon.png" },
     {
