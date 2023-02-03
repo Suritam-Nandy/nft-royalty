@@ -13,51 +13,54 @@ const AddCollectionDetails = () => {
   let history = useHistory();
   const uid = useSelector((state) => state.firebase.auth.uid);
 
-  const docRef = uid
-    ? firestore.collection("users").doc(uid).collection("collections").doc(uid)
-    : null;
+  const [collection, setColection] = useState({
+    nftContractAddress: "",
+    royaltyPercentage: "",
+    authorizedWallet: "",
+    paymentSchedule: "monthly",
+    preparation: "yes",
+    nftImage: {},
+    contributors: [],
+  });
 
-    const [collection, setColection] = useState({
-      nftContractAddress: "",
-      royaltyPercentage: "",
-      authorizedWallet: "",
-      paymentSchedule: "monthly",
-      preparation: "yes",
-      nftImage:{},
-      contributors: [],
-    });
-
-    useEffect(()=>{
-      if(uid){
-
-      }
-    },[uid]);
-    const onInputChange = (e) => {
-      setColection({ ...collection, [e.target.name]: e.target.value });
-    };
-    const submitForm = async(e) =>{
+  useEffect(() => {
+    // console.log(collection);
+  }, [collection]);
+  const onInputChange = (e) => {
+    setColection({ ...collection, [e.target.name]: e.target.value });
+  };
+  const handleSubmit =
+    // async
+    (e) => {
       e.preventDefault();
       firestore
-          .collection("users")
-          .doc(uid)
-          .collection("collections")
+        .collection("users")
+        .doc(uid)
+        .collection("collections")
 
-          .add({
-            ...collection,
-            userUid: uid,
-            createdAt: firestore.FieldValue.serverTimestamp(),
-          })
-          .then((docRef) => {
-            firestore
-              .collection("allcollections")
-              .doc(docRef.uid)
-              .set({
-                ...collection,
-                userUid:uid,
-                createdAt: firestore.FieldValue.serverTimestamp(),
-              });
-          });
-          history.push("/");
+        .add({
+          ...collection,
+          userUid: uid,
+          createdAt: firestore.FieldValue.serverTimestamp(),
+        })
+        .then((docRef) => {
+          firestore
+            .collection("allCollections")
+            .doc(uid)
+            .collection("collections")
+
+            .doc(docRef.id)
+
+            .set({
+              ...collection,
+              userUid: uid,
+              docRef: docRef,
+
+              createdAt: firestore.FieldValue.serverTimestamp(),
+            });
+        });
+      history.push("/");
+      console.log(collection);
     };
   const contributorsInformationList = [
     {
@@ -102,23 +105,16 @@ const AddCollectionDetails = () => {
 
   const collectionDetailsList = [
     {
-      id: "collection-details",
-      name: "Collection Name*",
-    },
-    {
-      id: "nft-contract-address",
+      id: "nftContractAddress",
       name: "NFT Contract Address*",
     },
+
     {
-      id: "total-supply",
-      name: "Total Supply",
-    },
-    {
-      id: "royalty-percentage",
+      id: "royaltyPercentage",
       name: "Royalty Percentage",
     },
     {
-      id: "authorized-wallets",
+      id: "authorizedWallet",
       name: "Authorized Wallet(s)*",
     },
   ];
@@ -136,12 +132,22 @@ const AddCollectionDetails = () => {
                 <div className="flex flex-row justify-between items-center mb-2">
                   <div className="w-9/12 drop-shadow-xl rounded-lg pt-3 pb-0   px-10 bg-blueBg mr-32">
                     {collectionDetailsList.map((el) => {
+                      const key = el.id;
+
                       return (
-                        <div className="grid grid-cols-2 w-max mb-4 justify-center items-center">
+                        <div
+                          key={key}
+                          className="grid grid-cols-2 w-max mb-4 justify-center items-center"
+                        >
                           <label className="block text-base font-bold mr-6 justify-self-end">
                             {el.name}
                           </label>
-                          <Input type="text" />
+                          <Input
+                            type="text"
+                            name={el.id}
+                            value={collection[key]}
+                            onChange={onInputChange}
+                          />
                         </div>
                       );
                     })}
@@ -185,14 +191,14 @@ const AddCollectionDetails = () => {
                         type="radio"
                         value=""
                         name=" 1099s-preparation-radio"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                       />
                       <input
                         id=" 1099s-preparation-radio-2"
                         type="radio"
                         value=""
                         name=" 1099s-preparation-radio"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                       />
                     </div>
 
@@ -277,7 +283,7 @@ const AddCollectionDetails = () => {
                     </div>
                   </div>
                   <div className="ml-20">
-                    <Button name={"Submit"} />
+                    <Button name={"Submit"} onClick={handleSubmit} />
                   </div>
                 </div>
               </div>
