@@ -1,13 +1,14 @@
 import { React, useState, useEffect } from "react";
 import Button from "../layout/Button";
 import Input from "../layout/Input";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "../../firebase";
+import { useFirebase, useFirestore } from "react-redux-firebase";
 import { useHistory } from "react-router-dom";
 const Signup = () => {
   let history = useHistory();
+  const firebase = useFirebase();
+  const firestore = useFirestore();
 
-  const [value, setValues] = useState({
+  const [user, setUser] = useState({
     firstName: "",
     lastName: "",
     email: "",
@@ -18,43 +19,66 @@ const Signup = () => {
   });
 
   const onInputChange = (e) => {
-    setValues({ ...value, [e.target.name]: e.target.value });
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
   const [errorMsg, setErrorMsg] = useState("");
-  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
+  // const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (
-      !value.firstName ||
-      !value.lastName ||
-      !value.email ||
-      !value.phoneNumber ||
-      !value.walletAddress ||
-      !value.newPassword ||
-      !value.confirmPassword
-    ) {
-      setErrorMsg("All Fields Mandatory");
-      return;
-    }
-    if (value.newPassword !== value.confirmPassword) {
-      setErrorMsg("Password Does Not Match");
-      return;
-    }
-    setErrorMsg("");
+    // if (
+    //   !user.firstName ||
+    //   !user.lastName ||
+    //   !user.email ||
+    //   !user.phoneNumber ||
+    //   !user.walletAddress ||
+    //   !user.newPassword ||
+    //   !user.confirmPassword
+    // ) {
+    //   setErrorMsg("All Fields Mandatory");
+    //   return;
+    // }
+    // if (user.newPassword !== user.confirmPassword) {
+    //   setErrorMsg("Password Does Not Match");
+    //   return;
+    // }
+    // setErrorMsg("");
 
-    setSubmitButtonDisabled(true);
-    createUserWithEmailAndPassword(auth, value.email, value.newPassword)
-      .then((res) => {
-        setSubmitButtonDisabled(false);
-        const user = res.user;
-        console.log(user);
-        history.replace("/login");
+    // setSubmitButtonDisabled(true);
+    await firebase
+      .auth()
+      .createUserWithEmailAndPassword(user.email, user.newPassword)
+      .then(async (resp) => {
+        // setSubmitButtonDisabled(false);
+        await firestore
+          .collection("users")
+          .doc(resp.user.uid)
+
+          .set({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            displayName: `${user.firstName} ${user.lastName}`,
+            email: user.email,
+            phoneNumber: user.phoneNumber,
+            walletAddress: user.walletAddress,
+            newPassword: user.newPassword,
+            confirmPassword: user.confirmPassword,
+            uid: resp.user.uid,
+            createdAt: firestore.FieldValue.serverTimestamp(),
+          })
+          .then(async () => {
+            await firebase.login({
+              email: user.email,
+              password: user.confirmPassword,
+            });
+            console.log("logged in as : ", user.email, user.password);
+          });
       })
       .catch((err) => {
-        setSubmitButtonDisabled(false);
+        // setSubmitButtonDisabled(false);
         setErrorMsg(err.message);
       });
+    history.replace("/");
   };
 
   // Update the document title using the browser API
@@ -82,7 +106,7 @@ const Signup = () => {
                   <Input
                     name="firstName"
                     type="text"
-                    value={value.firstName}
+                    value={user.firstName}
                     onChange={onInputChange}
                   />
                   {/* <input
@@ -103,7 +127,7 @@ const Signup = () => {
                   <Input
                     type="text"
                     name="lastName"
-                    value={value.lastName}
+                    value={user.lastName}
                     onChange={onInputChange}
                   />
                   {/* <input
@@ -124,7 +148,7 @@ const Signup = () => {
                   <Input
                     name="email"
                     type={"email"}
-                    value={value.email}
+                    value={user.email}
                     onChange={onInputChange}
                   />
                   {/* <input
@@ -145,7 +169,7 @@ const Signup = () => {
                   <Input
                     name="phoneNumber"
                     type="tell"
-                    value={value.phoneNumber}
+                    value={user.phoneNumber}
                     onChange={onInputChange}
                   />
                   {/* <input
@@ -166,7 +190,7 @@ const Signup = () => {
                   <Input
                     name="walletAddress"
                     type="text"
-                    value={value.walletAddress}
+                    value={user.walletAddress}
                     onChange={onInputChange}
                   />
                   {/* <input
@@ -187,7 +211,7 @@ const Signup = () => {
                   <Input
                     name="newPassword"
                     type="password"
-                    value={value.newPassword}
+                    value={user.newPassword}
                     onChange={onInputChange}
                   />
                   {/* <input
@@ -208,7 +232,7 @@ const Signup = () => {
                   <Input
                     name="confirmPassword"
                     type="password"
-                    value={value.confirmPassword}
+                    value={user.confirmPassword}
                     onChange={onInputChange}
                   />
                   {/* <input
@@ -231,7 +255,7 @@ const Signup = () => {
                 name={"Submit"}
                 onSubmit={handleSubmit}
                 onClick={handleSubmit}
-                disabled={submitButtonDisabled}
+                // disabled={submitButtonDisabled}
               />
             </div>
           </form>
