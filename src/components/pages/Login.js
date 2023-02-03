@@ -21,25 +21,24 @@ const Login = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
   const handleSubmit = async () => {
-    if (!value.email || !value.password) {
-      setErrorMsg("All Fields Mandatory");
-      return;
-    }
-    setErrorMsg("");
+    // if (!value.email || !value.password) {
+    //   setErrorMsg("All Fields Mandatory");
+    //   return;
+    // }
+    // setErrorMsg("");
 
-    setSubmitButtonDisabled(true);
+    // setSubmitButtonDisabled(true);
     const some = await firebase.login(value);
-    console
-      .log("logged in ", some)
-      .then(async (res) => {
-        setSubmitButtonDisabled(false);
+    console.log("logged in ", some);
+    // .then(async () => {
+    //   // setSubmitButtonDisabled(false);
 
-        history.replace("/");
-      })
-      .catch((err) => {
-        setSubmitButtonDisabled(false);
-        setErrorMsg(err.message);
-      });
+    history.replace("/");
+    // })
+    // .catch((err) => {
+    //   // setSubmitButtonDisabled(false);
+    //   setErrorMsg(err.message);
+    // });
   };
 
   return (
@@ -88,7 +87,7 @@ const Login = () => {
                     name={"Submit"}
                     onSubmit={handleSubmit}
                     onClick={handleSubmit}
-                    disabled={submitButtonDisabled}
+                    // disabled={submitButtonDisabled}
                   />
                 </div>
                 <div className="flex flex-row justify-center items-center px-4">

@@ -11,25 +11,25 @@ import { createFirestoreInstance } from "redux-firestore"; // <- needed if using
 // import {getAuth} from 'firebase/auth';
 
 // ! am credentials
-const firebaseConfig = {
-  apiKey: "AIzaSyAWtZCluMN7ftbQLIHy3rneC_ZzwJvvNHc",
-  authDomain: "optima-payments.firebaseapp.com",
-  projectId: "optima-payments",
-  storageBucket: "optima-payments.appspot.com",
-  messagingSenderId: "693710911455",
-  appId: "1:693710911455:web:4e52d0f3bb240d6392766a",
-  measurementId: "G-D6S5PT1LB8",
-};
-// !sn credentials
 // const firebaseConfig = {
-//   apiKey: "AIzaSyDJMiCHRS5VCeoKxNoeTxtynP7dwIEFXwY",
-//   authDomain: "nft-royalty.firebaseapp.com",
-//   projectId: "nft-royalty",
-//   storageBucket: "nft-royalty.appspot.com",
-//   messagingSenderId: "281317255677",
-//   appId: "1:281317255677:web:c1324c028050768cf55194",
-//   measurementId: "G-YN4XNMHBYL",
+//   apiKey: "AIzaSyAWtZCluMN7ftbQLIHy3rneC_ZzwJvvNHc",
+//   authDomain: "optima-payments.firebaseapp.com",
+//   projectId: "optima-payments",
+//   storageBucket: "optima-payments.appspot.com",
+//   messagingSenderId: "693710911455",
+//   appId: "1:693710911455:web:4e52d0f3bb240d6392766a",
+//   measurementId: "G-D6S5PT1LB8",
 // };
+// !sn credentials
+const firebaseConfig = {
+  apiKey: "AIzaSyDJMiCHRS5VCeoKxNoeTxtynP7dwIEFXwY",
+  authDomain: "nft-royalty.firebaseapp.com",
+  projectId: "nft-royalty",
+  storageBucket: "nft-royalty.appspot.com",
+  messagingSenderId: "281317255677",
+  appId: "1:281317255677:web:c1324c028050768cf55194",
+  measurementId: "G-YN4XNMHBYL",
+};
 
 // react-redux-firebase config
 const rrfConfig = {

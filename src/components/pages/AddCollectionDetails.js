@@ -13,6 +13,7 @@ const AddCollectionDetails = () => {
   let history = useHistory();
   const uid = useSelector((state) => state.firebase.auth.uid);
 
+  const [contributors, setContributors] = useState([]);
   const [collection, setColection] = useState({
     nftContractAddress: "",
     royaltyPercentage: "",
@@ -20,85 +21,101 @@ const AddCollectionDetails = () => {
     paymentSchedule: "monthly",
     preparation: "yes",
     nftImage: {},
-    contributors: [],
+    artists: [],
   });
+  const [contributorsInformation, setContributorsInformationList] = useState({
+    contributorNameAlias: "",
+    emailAddress: "",
+    phoneNumber: "",
+    walletAddress: "",
+    SSN: "",
+    collectionBasedRoyalty: "",
+    tokenBasedRoyalty: "",
+    tokenIDs: "",
+    additionalFlatFee: "",
+    additionalNotes: "",
+  });
+  // useEffect(() => {
+  //   setContributors([...contributors, contributorsInformation]);
+  //   setColection({ ...collection, artists: contributors });
+  //   console.log(collection.artists);
+  //   console.log(contributors);
+  // }, [contributorsInformation]);
 
-  useEffect(() => {
-    // console.log(collection);
-  }, [collection]);
   const onInputChange = (e) => {
     setColection({ ...collection, [e.target.name]: e.target.value });
+    setContributorsInformationList({
+      ...contributorsInformation,
+      [e.target.name]: e.target.value,
+    });
   };
-  const handleSubmit =
-    // async
-    (e) => {
-      e.preventDefault();
-      firestore
-        .collection("users")
-        .doc(uid)
-        .collection("collections")
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await firestore
+      .collection("users")
+      .doc(uid)
+      .collection("collections")
 
-        .add({
-          ...collection,
-          userUid: uid,
-          createdAt: firestore.FieldValue.serverTimestamp(),
-        })
-        .then((docRef) => {
-          firestore
-            .collection("allCollections")
-            .doc(uid)
-            .collection("collections")
+      .add({
+        ...collection,
+        userUid: uid,
+        createdAt: firestore.FieldValue.serverTimestamp(),
+      })
+      .then((docRef) => {
+        firestore
+          .collection("allCollections")
+          .doc(uid)
+          .collection("collections")
+          .doc(docRef.id)
+          .set({
+            ...collection,
+            userUid: uid,
+            docRef: docRef,
 
-            .doc(docRef.id)
+            createdAt: firestore.FieldValue.serverTimestamp(),
+          });
+      });
+    history.push("/");
+    console.log(collection);
+  };
 
-            .set({
-              ...collection,
-              userUid: uid,
-              docRef: docRef,
-
-              createdAt: firestore.FieldValue.serverTimestamp(),
-            });
-        });
-      history.push("/");
-      console.log(collection);
-    };
   const contributorsInformationList = [
     {
-      id: "collection-details",
+      id: "contributorNameAlias",
       name: "Contributor Name/Alias*",
     },
     {
-      id: "nft-contract-address",
+      id: "emailAddress",
       name: "Email Address",
     },
     {
-      id: "total-supply",
+      id: "phoneNumber",
       name: "Phone Number",
     },
     {
-      id: "royalty-percentage",
+      id: "walletAddress",
       name: "Wallet Address*",
     },
     {
-      id: "authorized-wallets",
+      id: "SSN",
       name: "SSN(required for 1099s)",
     },
   ];
   const moreContributorsInformationList = [
     {
-      id: "authorized-wallets",
-      name: "Collection-based  Royalty %*",
+      id: "collectionBasedRoyalty",
+      name: "Collection-based Royalty %*",
     },
     {
-      id: "authorized-wallets",
+      id: "tokenBasedRoyalty",
       name: "Token-based Royalty %*",
     },
     {
-      id: "authorized-wallets",
+      id: "tokenIDs",
       name: "Token IDs(Leave blank ",
     },
     {
-      id: "authorized-wallets",
+      id: "additionalFlatFee",
       name: "Additional Flat Fee",
     },
   ];
@@ -224,6 +241,8 @@ const AddCollectionDetails = () => {
                     <div className="flex flex-row w-full">
                       <div className="w-full flex flex-col  items-center justify-start ">
                         {contributorsInformationList.map((el) => {
+                          const key = el.id;
+
                           return (
                             <div
                               id={el.id}
@@ -233,28 +252,40 @@ const AddCollectionDetails = () => {
                                 {el.name}
                               </label>
 
-                              <Input />
+                              <Input
+                                type="text"
+                                name={el.id}
+                                value={contributorsInformation[key]}
+                                onChange={onInputChange}
+                              />
                             </div>
                           );
                         })}
                       </div>
                       <div className="w-full flex flex-col  items-center justify-start ">
                         {moreContributorsInformationList.map((el) => {
+                          const key = el.id;
+
                           return (
                             <div
-                              id={el.id}
                               className="grid grid-cols-2 w-max mb-6 h-min"
+                              id={el.id}
                             >
                               <label className="block font-bold mr-5 justify-self-end">
                                 {el.name}
                               </label>
 
-                              <Input />
+                              <Input
+                                type="text"
+                                name={el.id}
+                                value={contributorsInformation[key]}
+                                onChange={onInputChange}
+                              />
                             </div>
                           );
                         })}
                         <div
-                          id="additional-notes"
+                          id="additionalNotes"
                           className="grid grid-cols-2 w-max mb-6 h-min"
                         >
                           <label className="block font-bold mr-5 justify-self-end">
@@ -263,9 +294,9 @@ const AddCollectionDetails = () => {
 
                           <textarea
                             placeholder="Provide details"
-                            name="description"
-                            // value={user.description}
-                            // onChange={onInputChange}
+                            name="additionalNotes"
+                            value={contributorsInformation["additionalNotes"]}
+                            onChange={onInputChange}
                             rows="3"
                             className=" w-48 shadow appearance-none border rounded  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                           ></textarea>

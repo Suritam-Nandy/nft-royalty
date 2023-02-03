@@ -4,8 +4,7 @@ import Button from "../layout/Button";
 import Footer from "../layout/Footer";
 import { useFirebase } from "react-redux-firebase";
 import { Link } from "react-router-dom";
-
-
+import AddCollectionDetails from "./AddCollectionDetails";
 
 const Home = () => {
   const firebase = useFirebase();
@@ -30,7 +29,9 @@ const Home = () => {
                           </span>
                         </div>
                         <div className="mt-10">
-                          <Button name={"Add NFT Collection "} />
+                          <Link to="addcollectiondetails">
+                            <Button name={"Add NFT Collection "} />
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -39,14 +40,14 @@ const Home = () => {
               </div>
             </main>
             <div className="mt-10">
-            <Link to="/login">
-                  <span
-                    onClick={() => firebase.logout()}
-                    className="text-sm  ml-2"
-                  >
-                    Logout
-                  </span>
-                </Link>
+              <Link to="/login">
+                <span
+                  onClick={() => firebase.logout()}
+                  className="text-sm  ml-2"
+                >
+                  Logout
+                </span>
+              </Link>
             </div>
             <Footer />
           </div>
