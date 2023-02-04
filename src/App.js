@@ -5,6 +5,8 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
 import Home from "./components/pages/Home";
+import Dashboard from "./components/pages/Dashboard";
+
 import AddCollectionDetails from "./components/pages/AddCollectionDetails";
 import { useEffect, useState } from "react";
 import { auth } from "./store";
@@ -21,6 +23,8 @@ function App() {
               component={Home}
               // walletAddress={walletAddress}
             />
+            <Route exact path="/dashboard" component={Dashboard} />
+
             <Route
               exact
               path="/addcollectiondetails"
