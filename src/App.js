@@ -5,6 +5,9 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
 import Home from "./components/pages/Home";
+import Dashboard from "./components/pages/Dashboard";
+import PrivateRoute from "./routes/PrivateRoute";
+
 import AddCollectionDetails from "./components/pages/AddCollectionDetails";
 import { useEffect, useState } from "react";
 import { auth } from "./store";
@@ -14,13 +17,14 @@ function App() {
       <ReactReduxFirebaseProvider {...rrfProps}>
         <BrowserRouter>
           <Switch>
-            <Route
+            <PrivateRoute
               exact
               path="/"
               // element={
               component={Home}
               // walletAddress={walletAddress}
             />
+            <PrivateRoute exact path="/dashboard" component={Dashboard} />
             <Route
               exact
               path="/addcollectiondetails"
