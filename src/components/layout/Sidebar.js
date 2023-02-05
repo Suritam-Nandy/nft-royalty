@@ -1,6 +1,26 @@
 import React from "react";
+import { useFirebase, useFirestoreConnect } from "react-redux-firebase";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
+  const firebase = useFirebase();
+  const uid = firebase.auth().currentUser.uid;
+
+  //mapping firestore data through redux
+  const user = useSelector((state) => state.firestore.data.user);
+
+  // fetching from firestore
+  useFirestoreConnect({
+    collection: `users/`,
+    doc: `${uid}`,
+    storeAs: "user",
+  });
+  // getting user details such as name
+  if (user) {
+    var name = firebase.auth().currentUser.displayName
+      ? firebase.auth().currentUser.displayName
+      : user.displayName;
+  }
   const sidebarList = [
     { id: "home", name: "Home", icon: "home-icon.png" },
     {
@@ -28,13 +48,13 @@ const Sidebar = () => {
         </div>
 
         <div className="my-1">
-          <span className="text-blue font-bold">USER PROFILE </span>
+          <span className="text-blue font-bold">{name} </span>
         </div>
 
         <div className="my-1">
-          <span className="text-blue font-bold">
-            {/* {props.walletAddress} */}
-            wwwwwwww
+          <span className="text-blue  font-bold">
+            {/* {user.walletAddress} */}
+            0xd79...df2230
           </span>
         </div>
       </div>
