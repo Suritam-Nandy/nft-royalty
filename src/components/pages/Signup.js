@@ -11,6 +11,7 @@ const Signup = () => {
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
+    displayName: "",
     email: "",
     phoneNumber: "",
     walletAddress: "",

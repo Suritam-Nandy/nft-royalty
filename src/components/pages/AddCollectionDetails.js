@@ -12,8 +12,21 @@ const AddCollectionDetails = () => {
   const firebase = useFirebase();
   let history = useHistory();
   const uid = useSelector((state) => state.firebase.auth.uid);
-
-  const [contributors, setContributors] = useState([]);
+  const [count, setCount] = useState(1);
+  const [contributors, setContributors] = useState([
+    {
+      contributorNameAlias: "",
+      emailAddress: "",
+      phoneNumber: "",
+      walletAddress: "",
+      SSN: "",
+      collectionBasedRoyalty: "",
+      tokenBasedRoyalty: "",
+      tokenIDs: "",
+      additionalFlatFee: "",
+      additionalNotes: "",
+    },
+  ]);
   const [collection, setColection] = useState({
     nftContractAddress: "",
     royaltyPercentage: "",
@@ -23,7 +36,7 @@ const AddCollectionDetails = () => {
     nftImage: {},
     artists: [],
   });
-  const [contributorsInformation, setContributorsInformationList] = useState({
+  const [contributorsInformation, setContributorsInformation] = useState({
     contributorNameAlias: "",
     emailAddress: "",
     phoneNumber: "",
@@ -44,10 +57,13 @@ const AddCollectionDetails = () => {
 
   const onInputChange = (e) => {
     setColection({ ...collection, [e.target.name]: e.target.value });
-    setContributorsInformationList({
+  };
+  const onContributorsDetailsChange = (e) => {
+    setContributorsInformation({
       ...contributorsInformation,
       [e.target.name]: e.target.value,
     });
+    setColection({ ...collection, artists: contributorsInformation });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -135,6 +151,28 @@ const AddCollectionDetails = () => {
       name: "Authorized Wallet(s)*",
     },
   ];
+  const addContributor = async (e) => {
+    if (count === 2) {
+      alert("Maximum Contributors added");
+      return;
+    }
+    e.preventDefault();
+    setContributors([...contributors, ...[contributorsInformation]]);
+    setContributorsInformation({
+      contributorNameAlias: "",
+      emailAddress: "",
+      phoneNumber: "",
+      walletAddress: "",
+      SSN: "",
+      collectionBasedRoyalty: "",
+      tokenBasedRoyalty: "",
+      tokenIDs: "",
+      additionalFlatFee: "",
+      additionalNotes: "",
+    });
+
+    setCount(2);
+  };
   return (
     <div>
       <div className="flex flex-row min-h-screen bg-gray-100 text-gray-800">
@@ -237,7 +275,10 @@ const AddCollectionDetails = () => {
                 </h1>
 
                 <div className="flex flex-col mb-2.5 mt-2">
-                  <div className="w-full h-max drop-shadow-xl rounded-lg pb-0 pt-3   px-10 bg-blueBg">
+                  <div className="w-full h-max drop-shadow-xl rounded-lg pb-0 pt-2   px-10 bg-blueBg">
+                    <h1 className="text-gray text-2xl font-semibold mb-1">
+                      Artist 1
+                    </h1>
                     <div className="flex flex-row w-full">
                       <div className="w-full flex flex-col  items-center justify-start ">
                         {contributorsInformationList.map((el) => {
@@ -256,7 +297,7 @@ const AddCollectionDetails = () => {
                                 type="text"
                                 name={el.id}
                                 value={contributorsInformation[key]}
-                                onChange={onInputChange}
+                                onChange={onContributorsDetailsChange}
                               />
                             </div>
                           );
@@ -279,7 +320,7 @@ const AddCollectionDetails = () => {
                                 type="text"
                                 name={el.id}
                                 value={contributorsInformation[key]}
-                                onChange={onInputChange}
+                                onChange={onContributorsDetailsChange}
                               />
                             </div>
                           );
@@ -296,7 +337,7 @@ const AddCollectionDetails = () => {
                             placeholder="Provide details"
                             name="additionalNotes"
                             value={contributorsInformation["additionalNotes"]}
-                            onChange={onInputChange}
+                            onChange={onContributorsDetailsChange}
                             rows="3"
                             className=" w-48 shadow appearance-none border rounded  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                           ></textarea>
@@ -308,7 +349,10 @@ const AddCollectionDetails = () => {
                 <div className="w-full flex flex-row justify-center items-center  my-3">
                   <div className="">
                     <div className="bg-white w-max drop-shadow-lg  rounded-xl px-8 py-1 text-blue text-lg font-medium shadow-md hover:text-blueDark hover:shadow-lg focus:text-blueDark focus:shadow-lg focus:outline-none focus:ring-0 active:text-blueDark active:shadow-lg transition duration-150 ease-in-out">
-                      <label className="text-base font-bold">
+                      <label
+                        onClick={addContributor}
+                        className="text-base font-bold"
+                      >
                         <span className="text-xl">+</span>Add contributor
                       </label>
                     </div>
