@@ -4,17 +4,62 @@ import Footer from "../layout/Footer";
 import Button from "../layout/Button";
 import Input from "../layout/Input";
 import { useSelector } from "react-redux";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useFirestore, useFirebase } from "react-redux-firebase";
 
 const AddCollectionDetails = () => {
   const firestore = useFirestore();
-  const firebase = useFirebase();
   let history = useHistory();
   const uid = useSelector((state) => state.firebase.auth.uid);
   const [count, setCount] = useState(1);
-  const [contributors, setContributors] = useState([
-    {
+
+  const [contributors, setContributors] = useState([]);
+  const [collection, setColection] = useState({
+    // nftContractAddress: "",
+    // royaltyPercentage: "",
+    // authorizedWallet: "",
+    // paymentSchedule: "monthly",
+    // preparation: "yes",
+    // nftImage: {},
+    // artists: [],
+  });
+  const [contributorsInformation, setContributorsInformation] = useState({
+    // contributorNameAlias: "",
+    // emailAddress: "",
+    // phoneNumber: "",
+    // walletAddress: "",
+    // SSN: "",
+    // collectionBasedRoyalty: "",
+    // tokenBasedRoyalty: "",
+    // tokenIDs: "",
+    // additionalFlatFee: "",
+    // additionalNotes: "",
+  });
+
+  const onInputChange = (e) => {
+    setColection({ ...collection, [e.target.name]: e.target.value });
+  };
+  const onContributorsDetailsChange = (e) => {
+    setContributorsInformation({
+      ...contributorsInformation,
+      [e.target.name]: e.target.value,
+    });
+
+    setColection({
+      ...collection,
+      artists: [...contributors, contributorsInformation],
+    });
+  };
+  const addContributor = async (e) => {
+    console.log("collection artist ", collection.artists);
+    console.log("collection  ", collection);
+
+    if (count === 2) {
+      alert("Maximum Contributors added");
+      return;
+    }
+    e.preventDefault();
+    setContributorsInformation({
       contributorNameAlias: "",
       emailAddress: "",
       phoneNumber: "",
@@ -25,48 +70,16 @@ const AddCollectionDetails = () => {
       tokenIDs: "",
       additionalFlatFee: "",
       additionalNotes: "",
-    },
-  ]);
-  const [collection, setColection] = useState({
-    nftContractAddress: "",
-    royaltyPercentage: "",
-    authorizedWallet: "",
-    paymentSchedule: "monthly",
-    preparation: "yes",
-    nftImage: {},
-    artists: [],
-  });
-  const [contributorsInformation, setContributorsInformation] = useState({
-    contributorNameAlias: "",
-    emailAddress: "",
-    phoneNumber: "",
-    walletAddress: "",
-    SSN: "",
-    collectionBasedRoyalty: "",
-    tokenBasedRoyalty: "",
-    tokenIDs: "",
-    additionalFlatFee: "",
-    additionalNotes: "",
-  });
-  // useEffect(() => {
-  //   setContributors([...contributors, contributorsInformation]);
-  //   setColection({ ...collection, artists: contributors });
-  //   console.log(collection.artists);
-  //   console.log(contributors);
-  // }, [contributorsInformation]);
-
-  const onInputChange = (e) => {
-    setColection({ ...collection, [e.target.name]: e.target.value });
-  };
-  const onContributorsDetailsChange = (e) => {
-    setContributorsInformation({
-      ...contributorsInformation,
-      [e.target.name]: e.target.value,
     });
-    setColection({ ...collection, artists: contributorsInformation });
+    setContributors([...contributors, contributorsInformation]);
+
+    setCount(2);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log(collection);
+
     await firestore
       .collection("users")
       .doc(uid)
@@ -92,7 +105,6 @@ const AddCollectionDetails = () => {
           });
       });
     history.push("/");
-    console.log(collection);
   };
 
   const contributorsInformationList = [
@@ -151,28 +163,7 @@ const AddCollectionDetails = () => {
       name: "Authorized Wallet(s)*",
     },
   ];
-  const addContributor = async (e) => {
-    if (count === 2) {
-      alert("Maximum Contributors added");
-      return;
-    }
-    e.preventDefault();
-    setContributors([...contributors, ...[contributorsInformation]]);
-    setContributorsInformation({
-      contributorNameAlias: "",
-      emailAddress: "",
-      phoneNumber: "",
-      walletAddress: "",
-      SSN: "",
-      collectionBasedRoyalty: "",
-      tokenBasedRoyalty: "",
-      tokenIDs: "",
-      additionalFlatFee: "",
-      additionalNotes: "",
-    });
 
-    setCount(2);
-  };
   return (
     <div>
       <div className="flex flex-row min-h-screen bg-gray-100 text-gray-800">
@@ -275,11 +266,28 @@ const AddCollectionDetails = () => {
                 </h1>
 
                 <div className="flex flex-col mb-2.5 mt-2">
-                  <div className="w-full h-max drop-shadow-xl rounded-lg pb-0 pt-2   px-10 bg-blueBg">
-                    <h1 className="text-gray text-2xl font-semibold mb-1">
+                  <div className="w-full h-max drop-shadow-xl rounded-lg pb-0 pt-2    bg-blueBg">
+                    <h1
+                      className="text-gray text-2xl font-semibold mb-1 px-10"
+                      // onClick={setCount(1)}
+                    >
                       Artist 1
                     </h1>
-                    <div className="flex flex-row w-full">
+                    {count === 2 && (
+                      <div
+                        className="px-10 rounded-t-lg mt-1.5"
+                        h-max
+                        style={{
+                          "box-shadow":
+                            "0 -8px 10px -6px rgba(115,115,115,0.75)",
+                        }}
+                      >
+                        <h1 className="text-gray text-2xl font-semibold mb-1  ">
+                          Artist {count}
+                        </h1>
+                      </div>
+                    )}
+                    <div className="flex flex-row w-full px-10">
                       <div className="w-full flex flex-col  items-center justify-start ">
                         {contributorsInformationList.map((el) => {
                           const key = el.id;
