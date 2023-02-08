@@ -13,17 +13,17 @@ export const options = {
       color: "#ffffff",
     },
     legend: {
-      borderRadius: 0,
-      borderColor: "silver",
-      enabled: true,
-      margin: 3,
-      itemMarginTop: 2,
-      itemMarginBottom: 2,
-      width: 400,
-      itemWidth: 100,
-      itemStyle: {
-        width: 100,
-      },
+      // borderRadius: 0,
+      // borderColor: "silver",
+      // enabled: true,
+      // margin: 3,
+      // itemMarginTop: 2,
+      // itemMarginBottom: 2,
+      // width: 400,
+      // itemWidth: 100,
+      // itemStyle: {
+      //   width: 100,
+      // },
       position: "right",
       labels: {
         boxHeight: 12,
