@@ -14,10 +14,6 @@ module.exports = {
       blueBg: "#E8ECF4",
       blueLight: "#10D4FF",
       blueDark: "#2A36a4",
-      custom: {
-        DEFAULT: "#10B981",
-        light: "#D1FAE5",
-      },
     },
     extend: {},
   },

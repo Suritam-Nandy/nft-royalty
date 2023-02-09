@@ -51,9 +51,6 @@ const AddCollectionDetails = () => {
     });
   };
   const addContributor = async (e) => {
-    console.log("collection artist ", collection.artists);
-    console.log("collection  ", collection);
-
     if (count === 2) {
       alert("Maximum Contributors added");
       return;
