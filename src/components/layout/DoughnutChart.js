@@ -12,8 +12,18 @@ export const options = {
     datalabels: {
       color: "#ffffff",
     },
-
     legend: {
+      // borderRadius: 0,
+      // borderColor: "silver",
+      // enabled: true,
+      // margin: 3,
+      // itemMarginTop: 2,
+      // itemMarginBottom: 2,
+      // width: 400,
+      // itemWidth: 100,
+      // itemStyle: {
+      //   width: 100,
+      // },
       position: "right",
       labels: {
         boxHeight: 12,
@@ -23,6 +33,9 @@ export const options = {
         },
       },
     },
+    // legend: {
+
+    // },
   },
 };
 export const data = {
@@ -60,7 +73,11 @@ export const data = {
 };
 
 const DoughnutChart = () => {
-  return <Doughnut options={options} data={data} />;
+  return (
+    <div>
+      <Doughnut options={options} data={data} />
+    </div>
+  );
 };
 
 export default DoughnutChart;

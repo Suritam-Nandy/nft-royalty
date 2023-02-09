@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const firebase = useFirebase();
-  const uid = firebase.auth().currentUser.uid;
-
+  // const uid = firebase.auth().currentUser.uid;
+  const { uid } = useSelector((state) => state.firebase.auth);
   //mapping firestore data through redux
   const user = useSelector((state) => state.firestore.data.user);
 
