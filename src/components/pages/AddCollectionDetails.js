@@ -101,7 +101,7 @@ const AddCollectionDetails = () => {
             createdAt: firestore.FieldValue.serverTimestamp(),
           });
       });
-    history.push("/");
+    history.push("/dashboard");
   };
 
   const contributorsInformationList = [

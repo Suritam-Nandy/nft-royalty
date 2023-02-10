@@ -24,6 +24,7 @@ export const options = {
       // itemStyle: {
       //   width: 100,
       // },
+      display: false,
       position: "right",
       labels: {
         boxHeight: 12,
@@ -38,18 +39,17 @@ export const options = {
     // },
   },
 };
-export const data = {
-  labels: [
-    "Artist Name 1",
-    "Artist Name 2",
-    "Partner Brand 1",
-    "Partner Brand 2",
-    "Artist Name 3",
-    "Artist Name 3",
-  ],
+export const dataDoughnut = {
   datasets: [
     {
-      label: "# of Votes",
+      labels: [
+        "Artist Name 1",
+        "Artist Name 2",
+        "Partner Brand 1",
+        "Partner Brand 2",
+        "Artist Name 3",
+        "Artist Name 3",
+      ],
       data: [29, 27, 7, 11, 11, 15],
       backgroundColor: [
         "rgba(255, 99, 132, 0.2)",
@@ -75,7 +75,7 @@ export const data = {
 const DoughnutChart = () => {
   return (
     <div>
-      <Doughnut options={options} data={data} />
+      <Doughnut options={options} data={dataDoughnut} />
     </div>
   );
 };
