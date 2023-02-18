@@ -1,122 +1,235 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { useFirestore } from "react-redux-firebase";
+
 import Sidebar from "../layout/Sidebar";
 import Button from "../layout/Button";
 import Footer from "../layout/Footer";
 import AreaChart, { data } from "../layout/AreaChart";
 import DoughnutChart, { dataDoughnut } from "../layout/DoughnutChart";
-
+import { useEffect, useState } from "react";
+import { useFirestoreConnect } from "react-redux-firebase";
+import Loading from "../layout/Loading.js";
 const Dashboard = () => {
+  const { uid } = useSelector((state) => state.firebase.auth);
+  const firestore = useFirestore();
+
+  const [collectionsL, setCollectionsL] = useState([]);
+  const collections = useSelector(
+    (state) => state.firestore.ordered.collections
+  );
+  useFirestoreConnect({
+    collection: `users/${uid}/collections`,
+    storeAs: "collections",
+  });
+
+  // setCollectionList({ ...collectionList, [e.target.name]: e.target.value })
+  // console.log(collections[0].nftContractAddress);
+  let img;
   const legend = {
     labels: [...dataDoughnut.datasets[0].labels],
     data: [...dataDoughnut.datasets[0].data],
     backgroundColor: [...dataDoughnut.datasets[0].backgroundColor],
   };
+  const params = {
+    chain_id: "ethereum",
+    contract_addresses: "",
+    // order: "asc",
+    // limit: "10",
+  };
+
+  const get = async (url, params) => {
+    const response = await fetch(url + "?" + new URLSearchParams(params), {
+      Method: "GET",
+      headers: {
+        "X-API-KEY": "zOxvNoHIt70IfXVHjVTF6bmwxJz1dswO",
+      },
+    });
+    const data = await response.json();
+
+    return data;
+  };
+
+  // // Call it with async:
+  // (async () => {
+  //   const data = await get(
+  //     "https://api.transpose.io/nft/sales-by-contract-address",
+  //     //   {
+  //     //   postId: 1,
+  //     // }
+  //     params
+  //   );
+
+  //   console.log(data);
+  // })();
+  // Calling it with then:
+  //   get(
+  //     "https://api.transpose.io/nft/collections-by-contract-address",
+  //     //   {
+  //     //   postId: 1,
+  //     // }
+  //     params
+  //   ).then((data) => {
+
+  //     console.log(data.image_url)
+  //   let img = data.image_url
+  // });
+  const loadCollections = async (collections) => {
+    try {
+      if (collections) {
+        setCollectionsL([...collections]);
+        params.contract_addresses = collections[0].nftContractAddress;
+
+        console.log(collectionsL);
+      } else {
+        console.log("No such document!");
+      }
+    } catch (error) {
+      console.log("Error getting document:", error);
+    }
+  };
+  useEffect(() => {
+    if (!collections) {
+      return <Loading />;
+    }
+
+    loadCollections(collections);
+    get(
+      "https://api.transpose.io/nft/collections-by-contract-address",
+      //   {
+      //   postId: 1,
+      // }
+      params
+    ).then((data) => {
+      console.log(data.results[0].image_url);
+      img = data.results[0].image_url;
+
+      // setColection({
+      //   nftImage: img,
+      // });
+      setCollectionsL([
+        {
+          ...collectionsL,
+          nftImage: img,
+          collectionName: data.results[0].name,
+        },
+      ]);
+      console.log(collectionsL[0]);
+    });
+  }, [collections]);
+  console.log(collectionsL[0]);
+
+  if (!collectionsL) {
+    return <Loading />;
+  } else {
+    console.log(collectionsL);
+  }
 
   const collectionList = [
     {
-      icon: "/OpenSea Logo.png",
+      icon: img,
       collectionName: "Pudgy Penguins",
       sales: "21 Sales",
       salesVolume: "51 Ξ",
       royaltyVolume: "4.3 Ξ",
       royaltyChange: "5.2%",
     },
-    {
-      icon: "/OpenSea Logo.png",
-      collectionName: "Pudgy Penguins",
-      sales: "21 Sales",
-      salesVolume: "51 Ξ",
-      royaltyVolume: "4.3 Ξ",
-      royaltyChange: "5.2%",
-    },
-    {
-      icon: "/OpenSea Logo.png",
-      collectionName: "Pudgy Penguins",
-      sales: "21 Sales",
-      salesVolume: "51 Ξ",
-      royaltyVolume: "4.3 Ξ",
-      royaltyChange: "5.2%",
-    },
-    {
-      icon: "/OpenSea Logo.png",
-      collectionName: "Pudgy Penguins",
-      sales: "21 Sales",
-      salesVolume: "51 Ξ",
-      royaltyVolume: "4.3 Ξ",
-      royaltyChange: "5.2%",
-    },
-    {
-      icon: "/OpenSea Logo.png",
-      collectionName: "Pudgy Penguins",
-      sales: "21 Sales",
-      salesVolume: "51 Ξ",
-      royaltyVolume: "4.3 Ξ",
-      royaltyChange: "5.2%",
-    },
-    {
-      icon: "/OpenSea Logo.png",
-      collectionName: "Pudgy Penguins",
-      sales: "21 Sales",
-      salesVolume: "51 Ξ",
-      royaltyVolume: "4.3 Ξ",
-      royaltyChange: "5.2%",
-    },
-    {
-      icon: "/OpenSea Logo.png",
-      collectionName: "Pudgy Penguins",
-      sales: "21 Sales",
-      salesVolume: "51 Ξ",
-      royaltyVolume: "4.3 Ξ",
-      royaltyChange: "5.2%",
-    },
-    {
-      icon: "/OpenSea Logo.png",
-      collectionName: "Pudgy Penguins",
-      sales: "21 Sales",
-      salesVolume: "51 Ξ",
-      royaltyVolume: "4.3 Ξ",
-      royaltyChange: "5.2%",
-    },
-    {
-      icon: "/OpenSea Logo.png",
-      collectionName: "Pudgy Penguins",
-      sales: "21 Sales",
-      salesVolume: "51 Ξ",
-      royaltyVolume: "4.3 Ξ",
-      royaltyChange: "5.2%",
-    },
-    {
-      icon: "/OpenSea Logo.png",
-      collectionName: "Pudgy Penguins",
-      sales: "21 Sales",
-      salesVolume: "51 Ξ",
-      royaltyVolume: "4.3 Ξ",
-      royaltyChange: "5.2%",
-    },
-    {
-      icon: "/OpenSea Logo.png",
-      collectionName: "Pudgy Penguins",
-      sales: "21 Sales",
-      salesVolume: "51 Ξ",
-      royaltyVolume: "4.3 Ξ",
-      royaltyChange: "5.2%",
-    },
-    {
-      icon: "/OpenSea Logo.png",
-      collectionName: "Pudgy Penguins",
-      sales: "21 Sales",
-      salesVolume: "51 Ξ",
-      royaltyVolume: "4.3 Ξ",
-      royaltyChange: "5.2%",
-    },
-    {
-      icon: "/OpenSea Logo.png",
-      collectionName: "Pudgy Penguins",
-      sales: "21 Sales",
-      salesVolume: "51 Ξ",
-      royaltyVolume: "4.3 Ξ",
-      royaltyChange: "5.2%",
-    },
+    // {
+    //   icon: "/OpenSea Logo.png",
+    //   collectionName: "Pudgy Penguins",
+    //   sales: "21 Sales",
+    //   salesVolume: "51 Ξ",
+    //   royaltyVolume: "4.3 Ξ",
+    //   royaltyChange: "5.2%",
+    // },
+    // {
+    //   icon: "/OpenSea Logo.png",
+    //   collectionName: "Pudgy Penguins",
+    //   sales: "21 Sales",
+    //   salesVolume: "51 Ξ",
+    //   royaltyVolume: "4.3 Ξ",
+    //   royaltyChange: "5.2%",
+    // },
+    // {
+    //   icon: "/OpenSea Logo.png",
+    //   collectionName: "Pudgy Penguins",
+    //   sales: "21 Sales",
+    //   salesVolume: "51 Ξ",
+    //   royaltyVolume: "4.3 Ξ",
+    //   royaltyChange: "5.2%",
+    // },
+    // {
+    //   icon: "/OpenSea Logo.png",
+    //   collectionName: "Pudgy Penguins",
+    //   sales: "21 Sales",
+    //   salesVolume: "51 Ξ",
+    //   royaltyVolume: "4.3 Ξ",
+    //   royaltyChange: "5.2%",
+    // },
+    // {
+    //   icon: "/OpenSea Logo.png",
+    //   collectionName: "Pudgy Penguins",
+    //   sales: "21 Sales",
+    //   salesVolume: "51 Ξ",
+    //   royaltyVolume: "4.3 Ξ",
+    //   royaltyChange: "5.2%",
+    // },
+    // {
+    //   icon: "/OpenSea Logo.png",
+    //   collectionName: "Pudgy Penguins",
+    //   sales: "21 Sales",
+    //   salesVolume: "51 Ξ",
+    //   royaltyVolume: "4.3 Ξ",
+    //   royaltyChange: "5.2%",
+    // },
+    // {
+    //   icon: "/OpenSea Logo.png",
+    //   collectionName: "Pudgy Penguins",
+    //   sales: "21 Sales",
+    //   salesVolume: "51 Ξ",
+    //   royaltyVolume: "4.3 Ξ",
+    //   royaltyChange: "5.2%",
+    // },
+    // {
+    //   icon: "/OpenSea Logo.png",
+    //   collectionName: "Pudgy Penguins",
+    //   sales: "21 Sales",
+    //   salesVolume: "51 Ξ",
+    //   royaltyVolume: "4.3 Ξ",
+    //   royaltyChange: "5.2%",
+    // },
+    // {
+    //   icon: "/OpenSea Logo.png",
+    //   collectionName: "Pudgy Penguins",
+    //   sales: "21 Sales",
+    //   salesVolume: "51 Ξ",
+    //   royaltyVolume: "4.3 Ξ",
+    //   royaltyChange: "5.2%",
+    // },
+    // {
+    //   icon: "/OpenSea Logo.png",
+    //   collectionName: "Pudgy Penguins",
+    //   sales: "21 Sales",
+    //   salesVolume: "51 Ξ",
+    //   royaltyVolume: "4.3 Ξ",
+    //   royaltyChange: "5.2%",
+    // },
+    // {
+    //   icon: "/OpenSea Logo.png",
+    //   collectionName: "Pudgy Penguins",
+    //   sales: "21 Sales",
+    //   salesVolume: "51 Ξ",
+    //   royaltyVolume: "4.3 Ξ",
+    //   royaltyChange: "5.2%",
+    // },
+    // {
+    //   icon: "/OpenSea Logo.png",
+    //   collectionName: "Pudgy Penguins",
+    //   sales: "21 Sales",
+    //   salesVolume: "51 Ξ",
+    //   royaltyVolume: "4.3 Ξ",
+    //   royaltyChange: "5.2%",
+    // },
   ];
   return (
     <>
@@ -249,7 +362,10 @@ const Dashboard = () => {
                     <div>
                       <div className="w-auto flex flex-row bg-blueBg p-3 px-4 mr-8 drop-shadow-xl rounded-lg  ">
                         <div className="flex flex-col w-full h-24 scrollbar-thin scrollbar-thumb-grayDark scrollbar-track-grayDarkText overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-                          {collectionList.map((el) => {
+                          {collectionsL.map((el) => {
+                            console.log("====================================");
+                            console.log(collectionsL.nftImage);
+                            console.log("====================================");
                             return (
                               <>
                                 <div className="w-full mb-2 flex flex-row justify-center items-center  text-base font-bold tracking-wide ">
@@ -257,22 +373,23 @@ const Dashboard = () => {
                                     <img
                                       className="w-7 h-7 mr-4"
                                       alt="icon"
-                                      src={`${el.icon}`}
+                                      src={`${el.nftImage}`}
                                     />
                                     {el.collectionName}
+                                    {/* Pudgy Penguins */}
                                   </div>
 
                                   <div className="w-1/6 text-grayDark flex justify-center">
-                                    {el.sales}
+                                    21 Sales
                                   </div>
                                   <div className="w-1/6 text-grayDark flex justify-center">
-                                    {el.salesVolume}
+                                    51 Ξ
                                   </div>
                                   <div className="w-1/6 text-grayDark flex justify-center">
-                                    {el.royaltyVolume}
+                                    4.3 Ξ
                                   </div>
                                   <div className="w-1/6 text-grayDark flex justify-center">
-                                    {el.royaltyChange}
+                                    5.2%
                                   </div>
                                 </div>
                               </>
