@@ -119,7 +119,7 @@ const Dashboard = () => {
   }, [collections]);
   console.log(collectionsL[0]);
 
-  if (!collectionsL) {
+  if (!collectionsL[0]) {
     return <Loading />;
   } else {
     console.log(collectionsL);
