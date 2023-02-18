@@ -42,7 +42,7 @@ const Dashboard = () => {
     const response = await fetch(url + "?" + new URLSearchParams(params), {
       Method: "GET",
       headers: {
-        "X-API-KEY": "zOxvNoHIt70IfXVHjVTF6bmwxJz1dswO",
+        "X-API-KEY": "RpUBpcEZTyWfQu3KZURa4Cfe6wiU3djU",
       },
     });
     const data = await response.json();
