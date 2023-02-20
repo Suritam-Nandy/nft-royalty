@@ -35,7 +35,21 @@ const AddCollectionDetails = () => {
     // additionalFlatFee: "",
     // additionalNotes: "",
   });
+  const params = {
+    chain_id: "ethereum",
+    contract_addresses: "",
+  };
+  const get = async (url, params) => {
+    const response = await fetch(url + "?" + new URLSearchParams(params), {
+      Method: "GET",
+      headers: {
+        "X-API-KEY": "FxKTp6MHpWQDaos8SRnSetdIZiUYLliS",
+      },
+    });
+    const data = await response.json();
 
+    return data;
+  };
   const onInputChange = (e) => {
     setColection({ ...collection, [e.target.name]: e.target.value });
   };
@@ -76,31 +90,52 @@ const AddCollectionDetails = () => {
     e.preventDefault();
 
     console.log(collection);
+    params.contract_addresses = collection.nftContractAddress;
 
-    await firestore
-      .collection("users")
-      .doc(uid)
-      .collection("collections")
+    get(
+      "https://api.transpose.io/nft/collections-by-contract-address",
 
-      .add({
+      params
+    ).then((data) => {
+      console.log("img", data.results[0]);
+      setColection({
         ...collection,
-        userUid: uid,
-        createdAt: firestore.FieldValue.serverTimestamp(),
-      })
-      .then((docRef) => {
-        firestore
-          .collection("allCollections")
-          .doc(uid)
-          .collection("collections")
-          .doc(docRef.id)
-          .set({
-            ...collection,
-            userUid: uid,
-            docRef: docRef,
-
-            createdAt: firestore.FieldValue.serverTimestamp(),
-          });
+        nftImage: data.results[0].image_url
+          ? data.results[0].image_url
+          : "null",
+        collectionName: data.results[0].name,
       });
+      firestore
+        .collection("users")
+        .doc(uid)
+        .collection("collections")
+
+        .add({
+          ...collection,
+          nftImage: data.results[0].image_url
+            ? data.results[0].image_url
+            : "null",
+          collectionName: data.results[0].name,
+          userUid: uid,
+          createdAt: firestore.FieldValue.serverTimestamp(),
+        })
+        .then((docRef) => {
+          firestore
+            .collection("allCollections")
+            .doc(uid)
+            .collection("collections")
+            .doc(docRef.id)
+            .set({
+              ...collection,
+              userUid: uid,
+              docRef: docRef,
+
+              createdAt: firestore.FieldValue.serverTimestamp(),
+            });
+        });
+    });
+    console.log(collection);
+
     history.push("/dashboard");
   };
 

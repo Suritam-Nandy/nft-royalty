@@ -10,11 +10,15 @@ import DoughnutChart, { dataDoughnut } from "../layout/DoughnutChart";
 import { useEffect, useState } from "react";
 import { useFirestoreConnect } from "react-redux-firebase";
 import Loading from "../layout/Loading.js";
-const Dashboard = () => {
+const D = () => {
   const { uid } = useSelector((state) => state.firebase.auth);
   const firestore = useFirestore();
 
   const [collectionsL, setCollectionsL] = useState([]);
+  const [collectionsLi, setCollectionsLi] = useState([]);
+
+  const [c, setC] = useState({});
+
   const collections = useSelector(
     (state) => state.firestore.ordered.collections
   );
@@ -26,6 +30,7 @@ const Dashboard = () => {
   // setCollectionList({ ...collectionList, [e.target.name]: e.target.value })
   // console.log(collections[0].nftContractAddress);
   let img;
+  let count = 0;
   const legend = {
     labels: [...dataDoughnut.datasets[0].labels],
     data: [...dataDoughnut.datasets[0].data],
@@ -73,13 +78,66 @@ const Dashboard = () => {
 
   //     console.log(data.image_url)
   //   let img = data.image_url
-  // });
-  const loadCollections = async (collections) => {
+  // }
+
+  useEffect(() => {
+    if (!collections) {
+      return <Loading />;
+    }
+    some = loadCollections();
+
+    console.log("some", some);
+    console.log("collectionsL", collectionsL);
+    console.log(collectionsL.length);
+  }, [collections]);
+  console.log("collectionsL", collectionsL);
+  let some = [];
+  const loadCollections = async () => {
     try {
       if (collections) {
-        setCollectionsL([...collections]);
-        params.contract_addresses = collections[0].nftContractAddress;
+        await collections.map((element) => {
+          console.log(element);
+          params.contract_addresses = element.nftContractAddress;
+          get(
+            "https://api.transpose.io/nft/collections-by-contract-address",
 
+            params
+          ).then((data) => {
+            console.log("img", data.results[0].name);
+            console.log("collectionsL", collectionsL);
+            some = {
+              ...element,
+              nftImage: data.results[0].image_url
+                ? data.results[0].image_url
+                : "null",
+              collectionName: data.results[0].name,
+            };
+            setC();
+            console.log(collectionsL.length);
+
+            setCollectionsL([
+              ...collectionsL,
+              ...[
+                {
+                  ...element,
+                  nftImage: data.results[0].image_url
+                    ? data.results[0].image_url
+                    : "null",
+                  collectionName: data.results[0].name,
+                },
+              ],
+            ]);
+            setCollectionsLi([...collectionsLi, ...collectionsL]);
+            console.log("some", some);
+            console.log("collectionsL", collectionsL);
+            console.log("f");
+
+            console.log("f", element);
+
+            console.log("collectionsL", collectionsL);
+          });
+          return some;
+        });
         console.log(collectionsL);
       } else {
         console.log("No such document!");
@@ -88,40 +146,15 @@ const Dashboard = () => {
       console.log("Error getting document:", error);
     }
   };
-  useEffect(() => {
-    if (!collections) {
-      return <Loading />;
-    }
 
-    // loadCollections(collections);
-    // get(
-    //   "https://api.transpose.io/nft/collections-by-contract-address",
-    //   //   {
-    //   //   postId: 1,
-    //   // }
-    //   params
-    // ).then((data) => {
-    //   console.log(data.results[0].image_url);
-    //   img = data.results[0].image_url;
-
-    //   // setColection({
-    //   //   nftImage: img,
-    //   // });
-    //   setCollectionsL([
-    //     {
-    //       ...collectionsL,
-    //       nftImage: img,
-    //       collectionName: data.results[0].name,
-    //     },
-    //   ]);
-    //   console.log(collectionsL[0]);
-    // });
-  }, [collections]);
+  console.log("collectionsL", collectionsL);
 
   if (!collections) {
     return <Loading />;
   } else {
+    console.log(collectionsL.length);
     console.log(collectionsL);
+    console.log(collectionsLi);
   }
 
   const collectionList = [
@@ -361,9 +394,9 @@ const Dashboard = () => {
                     <div>
                       <div className="w-auto flex flex-row bg-blueBg p-3 px-4 mr-8 drop-shadow-xl rounded-lg  ">
                         <div className="flex flex-col w-full h-24 scrollbar-thin scrollbar-thumb-grayDark scrollbar-track-grayDarkText overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-                          {collections.map((el) => {
+                          {collectionsL.map((el) => {
                             console.log("====================================");
-                            console.log(collectionsL.nftImage);
+                            console.log(el.nftImage);
                             console.log("====================================");
                             return (
                               <>
@@ -409,4 +442,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default D;
