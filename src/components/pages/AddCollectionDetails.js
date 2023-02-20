@@ -127,6 +127,10 @@ const AddCollectionDetails = () => {
             .doc(docRef.id)
             .set({
               ...collection,
+              nftImage: data.results[0].image_url
+                ? data.results[0].image_url
+                : "null",
+              collectionName: data.results[0].name,
               userUid: uid,
               docRef: docRef,
 
