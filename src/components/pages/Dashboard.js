@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
-
+import { Link } from "react-router-dom";
 import Sidebar from "../layout/Sidebar";
 import Button from "../layout/Button";
 import Footer from "../layout/Footer";
@@ -14,18 +14,14 @@ const Dashboard = () => {
   const { uid } = useSelector((state) => state.firebase.auth);
   const firestore = useFirestore();
 
-  const [collectionsL, setCollectionsL] = useState([]);
   const collections = useSelector(
     (state) => state.firestore.ordered.collections
   );
   useFirestoreConnect({
-    collection: `users/${uid}/collections`,
+    collection: `allCollections/${uid}/collections`,
     storeAs: "collections",
   });
 
-  // setCollectionList({ ...collectionList, [e.target.name]: e.target.value })
-  // console.log(collections[0].nftContractAddress);
-  let img;
   const legend = {
     labels: [...dataDoughnut.datasets[0].labels],
     data: [...dataDoughnut.datasets[0].data],
@@ -33,9 +29,10 @@ const Dashboard = () => {
   };
   const params = {
     chain_id: "ethereum",
-    contract_addresses: "",
+    contract_address: "",
+    sold_after: "2023-02-01T00:00:00Z",
     // order: "asc",
-    // limit: "10",
+    limit: "10000",
   };
 
   const get = async (url, params) => {
@@ -73,14 +70,53 @@ const Dashboard = () => {
 
   //     console.log(data.image_url)
   //   let img = data.image_url
-  // });
-  const loadCollections = async (collections) => {
+  let some = [];
+  let salesVolume = 0;
+  let sales = 0;
+
+  const loadCollections = async () => {
     try {
       if (collections) {
-        setCollectionsL([...collections]);
-        params.contract_addresses = collections[0].nftContractAddress;
+        // setTimeout(() => {
+        await collections.map((element) => {
+          console.log(element);
+          params.contract_address = element.nftContractAddress;
 
-        console.log(collectionsL);
+          get(
+            "https://api.transpose.io/nft/sales-by-contract-address",
+
+            params
+          ).then((data) => {
+            salesVolume = 0;
+            sales = 0;
+
+            console.log("data", data.results.length);
+            data.results.map((e) => {
+              salesVolume = salesVolume + e.eth_price;
+              sales = sales + e.quantity;
+
+              return { salesVolume, sales };
+            });
+            console.log((Math.round(salesVolume * 100) / 100).toFixed(2));
+            salesVolume = (Math.round(salesVolume * 100) / 100).toFixed(2);
+            // sales = (Math.round(sales * 100) / 100).toFixed(2);
+
+            firestore
+              .collection("allCollections")
+              .doc(uid)
+              .collection("collections")
+              .doc(element.docRef.id)
+              .set({
+                ...element,
+                salesVolume,
+                sales,
+                createdAt: firestore.FieldValue.serverTimestamp(),
+              });
+            console.log("sdrfgjknfsdkjghfsdjkgb");
+          });
+          return some;
+        });
+        // }, 2000);
       } else {
         console.log("No such document!");
       }
@@ -92,7 +128,7 @@ const Dashboard = () => {
     if (!collections) {
       return <Loading />;
     }
-
+    loadCollections();
     // loadCollections(collections);
     // get(
     //   "https://api.transpose.io/nft/collections-by-contract-address",
@@ -117,16 +153,15 @@ const Dashboard = () => {
     //   console.log(collectionsL[0]);
     // });
   }, [collections]);
-
   if (!collections) {
     return <Loading />;
   } else {
-    console.log(collectionsL);
+    console.log(collections);
   }
 
   const collectionList = [
     {
-      icon: img,
+      icon: "",
       collectionName: "Pudgy Penguins",
       sales: "21 Sales",
       salesVolume: "51 Ξ",
@@ -363,26 +398,32 @@ const Dashboard = () => {
                         <div className="flex flex-col w-full h-24 scrollbar-thin scrollbar-thumb-grayDark scrollbar-track-grayDarkText overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
                           {collections.map((el) => {
                             console.log("====================================");
-                            console.log(collectionsL.nftImage);
+                            console.log(el.nftImage);
                             console.log("====================================");
                             return (
                               <>
                                 <div className="w-full mb-2 flex flex-row justify-center items-center  text-base font-bold tracking-wide ">
                                   <div className="w-2/6 flex flex-row justify-start items-center text-grayDark">
-                                    <img
-                                      className="w-7 h-7 mr-4"
-                                      alt="icon"
-                                      src={`${el.nftImage}`}
-                                    />
+                                    <Link
+                                      to={`${el.nftImage}`}
+                                      target="__blank"
+                                      rel="noopener noreferrer"
+                                    >
+                                      <img
+                                        className="w-7 h-7 mr-4"
+                                        alt="icon"
+                                        src={`${el.nftImage}`}
+                                      />
+                                    </Link>
                                     {el.collectionName}
                                     {/* Pudgy Penguins */}
                                   </div>
 
                                   <div className="w-1/6 text-grayDark flex justify-center">
-                                    21 Sales
+                                    {el.sales ? el.sales : "0"} Sales
                                   </div>
                                   <div className="w-1/6 text-grayDark flex justify-center">
-                                    51 Ξ
+                                    {el.salesVolume} Ξ
                                   </div>
                                   <div className="w-1/6 text-grayDark flex justify-center">
                                     4.3 Ξ
