@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useSelector } from "react-redux";
-import { useFirestore } from "react-redux-firebase";
+import { useFirestore, useFirebase } from "react-redux-firebase";
 import { Link, Redirect } from "react-router-dom";
 import Sidebar from "../layout/Sidebar";
 import Button from "../layout/Button";
@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import { useFirestoreConnect } from "react-redux-firebase";
 import Loading from "../layout/Loading.js";
 const Dashboard = () => {
+  const firebase = useFirebase();
+
   const { uid } = useSelector((state) => state.firebase.auth);
   const firestore = useFirestore();
   const [count, setCount] = useState(0);
@@ -446,6 +448,16 @@ const Dashboard = () => {
                 </div>
               </div>
             </main>
+            <div className="mt-10">
+              <Link to="/login">
+                <span
+                  onClick={() => firebase.logout()}
+                  className="text-sm  ml-2"
+                >
+                  Logout
+                </span>
+              </Link>
+            </div>
             <Footer />
           </div>
         </div>
