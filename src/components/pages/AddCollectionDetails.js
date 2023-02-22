@@ -43,7 +43,7 @@ const AddCollectionDetails = () => {
     const response = await fetch(url + "?" + new URLSearchParams(params), {
       Method: "GET",
       headers: {
-        "X-API-KEY": "FxKTp6MHpWQDaos8SRnSetdIZiUYLliS",
+        "X-API-KEY": "OxrtPGDKVUIlRIUPYSPfLQICWbf9JumQ",
       },
     });
     const data = await response.json();
@@ -89,7 +89,6 @@ const AddCollectionDetails = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(collection);
     params.contract_addresses = collection.nftContractAddress;
 
     get(
@@ -97,7 +96,6 @@ const AddCollectionDetails = () => {
 
       params
     ).then((data) => {
-      console.log("img", data.results[0]);
       setColection({
         ...collection,
         nftImage: data.results[0].image_url
@@ -138,7 +136,6 @@ const AddCollectionDetails = () => {
             });
         });
     });
-    console.log(collection);
 
     history.push("/dashboard");
   };

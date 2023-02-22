@@ -1,7 +1,8 @@
 import React from "react";
+
 import { useSelector } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Sidebar from "../layout/Sidebar";
 import Button from "../layout/Button";
 import Footer from "../layout/Footer";
@@ -13,15 +14,30 @@ import Loading from "../layout/Loading.js";
 const Dashboard = () => {
   const { uid } = useSelector((state) => state.firebase.auth);
   const firestore = useFirestore();
+  const [count, setCount] = useState(0);
+  const [collectionsLi, setCollectionsLi] = useState([]);
 
+  const [collection, setCollection] = useState({
+    nftContractAddress: "",
+    royaltyPercentage: "",
+    authorizedWallet: "",
+    paymentSchedule: "monthly",
+    preparation: "yes",
+    nftImage: "",
+    artists: [],
+  });
   const collections = useSelector(
     (state) => state.firestore.ordered.collections
   );
+  const users = useSelector((state) => state.firestore.ordered.collections);
   useFirestoreConnect({
     collection: `allCollections/${uid}/collections`,
     storeAs: "collections",
   });
-
+  useFirestoreConnect({
+    collection: `users/${uid}/collections`,
+    storeAs: "users",
+  });
   const legend = {
     labels: [...dataDoughnut.datasets[0].labels],
     data: [...dataDoughnut.datasets[0].data],
@@ -39,7 +55,7 @@ const Dashboard = () => {
     const response = await fetch(url + "?" + new URLSearchParams(params), {
       Method: "GET",
       headers: {
-        "X-API-KEY": "FxKTp6MHpWQDaos8SRnSetdIZiUYLliS",
+        "X-API-KEY": "OxrtPGDKVUIlRIUPYSPfLQICWbf9JumQ",
       },
     });
     const data = await response.json();
@@ -73,13 +89,15 @@ const Dashboard = () => {
   let some = [];
   let salesVolume = 0;
   let sales = 0;
-
   const loadCollections = async () => {
     try {
-      if (collections) {
+      if (count < 4) {
+        setCount(count + 1);
+
+        // console.log("count", count);
         // setTimeout(() => {
+        // setCount(count + 1);
         await collections.map((element) => {
-          console.log(element);
           params.contract_address = element.nftContractAddress;
 
           get(
@@ -90,17 +108,20 @@ const Dashboard = () => {
             salesVolume = 0;
             sales = 0;
 
-            console.log("data", data.results.length);
             data.results.map((e) => {
               salesVolume = salesVolume + e.eth_price;
               sales = sales + e.quantity;
 
               return { salesVolume, sales };
             });
-            console.log((Math.round(salesVolume * 100) / 100).toFixed(2));
             salesVolume = (Math.round(salesVolume * 100) / 100).toFixed(2);
             // sales = (Math.round(sales * 100) / 100).toFixed(2);
-
+            setCollection({
+              ...element,
+              salesVolume,
+              sales,
+              createdAt: firestore.FieldValue.serverTimestamp(),
+            });
             firestore
               .collection("allCollections")
               .doc(uid)
@@ -112,13 +133,11 @@ const Dashboard = () => {
                 sales,
                 createdAt: firestore.FieldValue.serverTimestamp(),
               });
-            console.log("sdrfgjknfsdkjghfsdjkgb");
           });
           return some;
         });
-        // }, 2000);
       } else {
-        console.log("No such document!");
+        console.log("transpose updated sales");
       }
     } catch (error) {
       console.log("Error getting document:", error);
@@ -127,36 +146,21 @@ const Dashboard = () => {
   useEffect(() => {
     if (!collections) {
       return <Loading />;
+    } else {
     }
-    loadCollections();
-    // loadCollections(collections);
-    // get(
-    //   "https://api.transpose.io/nft/collections-by-contract-address",
-    //   //   {
-    //   //   postId: 1,
-    //   // }
-    //   params
-    // ).then((data) => {
-    //   console.log(data.results[0].image_url);
-    //   img = data.results[0].image_url;
+    loadCollections(collections);
+  }, [users]);
 
-    //   // setColection({
-    //   //   nftImage: img,
-    //   // });
-    //   setCollectionsL([
-    //     {
-    //       ...collectionsL,
-    //       nftImage: img,
-    //       collectionName: data.results[0].name,
-    //     },
-    //   ]);
-    //   console.log(collectionsL[0]);
-    // });
-  }, [collections]);
-  if (!collections) {
+  if (!users) {
     return <Loading />;
   } else {
-    console.log(collections);
+    // console.log(collections);
+    // console.log(count);
+    // let l = collections.length;
+    // if (count < 4) {
+    //   // setInterval(loadCollections, 100000);
+    //   setCount(count + 1);
+    // }
   }
 
   const collectionList = [
@@ -397,9 +401,9 @@ const Dashboard = () => {
                       <div className="w-auto flex flex-row bg-blueBg p-3 px-4 mr-8 drop-shadow-xl rounded-lg  ">
                         <div className="flex flex-col w-full h-24 scrollbar-thin scrollbar-thumb-grayDark scrollbar-track-grayDarkText overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
                           {collections.map((el) => {
-                            console.log("====================================");
-                            console.log(el.nftImage);
-                            console.log("====================================");
+                            if (!collection) {
+                              <Redirect to="/" />;
+                            }
                             return (
                               <>
                                 <div className="w-full mb-2 flex flex-row justify-center items-center  text-base font-bold tracking-wide ">

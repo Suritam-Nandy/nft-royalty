@@ -33,7 +33,7 @@ const Login = () => {
     // .then(async () => {
     //   // setSubmitButtonDisabled(false);
 
-    history.replace("/");
+    history.replace("/dashboard");
     // })
     // .catch((err) => {
     //   // setSubmitButtonDisabled(false);
