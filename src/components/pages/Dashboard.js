@@ -448,16 +448,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </main>
-            <div className="mt-10">
-              <Link to="/login">
-                <span
-                  onClick={() => firebase.logout()}
-                  className="text-sm  ml-2"
-                >
-                  Logout
-                </span>
-              </Link>
-            </div>
+
             <Footer />
           </div>
         </div>
