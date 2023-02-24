@@ -52,19 +52,17 @@ const Dashboard = () => {
     // order: "asc",
     limit: "10000",
   };
-
   const get = async (url, params) => {
     const response = await fetch(url + "?" + new URLSearchParams(params), {
       Method: "GET",
       headers: {
-        "X-API-KEY": "OxrtPGDKVUIlRIUPYSPfLQICWbf9JumQ",
+        "X-API-KEY": "FxKTp6MHpWQDaos8SRnSetdIZiUYLliS",
       },
     });
     const data = await response.json();
 
     return data;
   };
-
   // // Call it with async:
   // (async () => {
   //   const data = await get(
@@ -150,7 +148,7 @@ const Dashboard = () => {
       return <Loading />;
     } else {
     }
-    loadCollections(collections);
+    setInterval(loadCollections(collections), 120000);
   }, [users]);
 
   if (!users) {
