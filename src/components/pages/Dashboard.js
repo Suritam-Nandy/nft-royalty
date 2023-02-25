@@ -13,20 +13,20 @@ import { useFirestoreConnect } from "react-redux-firebase";
 import Loading from "../layout/Loading.js";
 const Dashboard = () => {
   const firebase = useFirebase();
-
+  const [flag, setFlag] = useState();
   const { uid } = useSelector((state) => state.firebase.auth);
   const firestore = useFirestore();
   const [count, setCount] = useState(0);
   const [collectionsLi, setCollectionsLi] = useState([]);
 
   const [collection, setCollection] = useState({
-    nftContractAddress: "",
-    royaltyPercentage: "",
-    authorizedWallet: "",
-    paymentSchedule: "monthly",
-    preparation: "yes",
-    nftImage: "",
-    artists: [],
+    // nftContractAddress: "",
+    // royaltyPercentage: "",
+    // authorizedWallet: "",
+    // paymentSchedule: "monthly",
+    // preparation: "yes",
+    // nftImage: "",
+    // artists: [],
   });
   const collections = useSelector(
     (state) => state.firestore.ordered.collections
@@ -93,10 +93,7 @@ const Dashboard = () => {
     try {
       if (count < 4) {
         setCount(count + 1);
-
-        // console.log("count", count);
-        // setTimeout(() => {
-        // setCount(count + 1);
+        setFlag(true);
         await collections.map((element) => {
           params.contract_address = element.nftContractAddress;
 
@@ -107,8 +104,10 @@ const Dashboard = () => {
           ).then((data) => {
             salesVolume = 0;
             sales = 0;
-
+            console.log("transpose successfull");
             data.results.map((e) => {
+              console.log("transpose mapped successfull");
+
               salesVolume = salesVolume + e.eth_price;
               sales = sales + e.quantity;
 
@@ -122,6 +121,8 @@ const Dashboard = () => {
               sales,
               createdAt: firestore.FieldValue.serverTimestamp(),
             });
+            setCollectionsLi([...collectionsLi, collections]);
+
             firestore
               .collection("allCollections")
               .doc(uid)
@@ -143,14 +144,15 @@ const Dashboard = () => {
       console.log("Error getting document:", error);
     }
   };
+
   useEffect(() => {
     if (!collections) {
       return <Loading />;
     } else {
     }
-    setInterval(loadCollections(collections), 120000);
-  }, [users]);
-
+    loadCollections();
+  }, [flag]);
+  console.log(flag);
   if (!users) {
     return <Loading />;
   } else {
@@ -400,45 +402,47 @@ const Dashboard = () => {
                     <div>
                       <div className="w-auto flex flex-row bg-blueBg p-3 px-4 mr-8 drop-shadow-xl rounded-lg  ">
                         <div className="flex flex-col w-full h-24 scrollbar-thin scrollbar-thumb-grayDark scrollbar-track-grayDarkText overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-                          {collections.map((el) => {
-                            if (!collection) {
-                              <Redirect to="/" />;
-                            }
-                            return (
-                              <>
-                                <div className="w-full mb-2 flex flex-row justify-center items-center  text-base font-bold tracking-wide ">
-                                  <div className="w-2/6 flex flex-row justify-start items-center text-grayDark">
-                                    <Link
-                                      to={`${el.nftImage}`}
-                                      target="__blank"
-                                      rel="noopener noreferrer"
-                                    >
-                                      <img
-                                        className="w-7 h-7 mr-4"
-                                        alt="icon"
-                                        src={`${el.nftImage}`}
-                                      />
-                                    </Link>
-                                    {el.collectionName}
-                                    {/* Pudgy Penguins */}
-                                  </div>
+                          {collection &&
+                            collections.map((el) => {
+                              // if (el.sales === 0) return <Loading />;
+                              if (!collection) {
+                                <Redirect to="/" />;
+                              }
+                              return (
+                                <>
+                                  <div className="w-full mb-2 flex flex-row justify-center items-center  text-base font-bold tracking-wide ">
+                                    <div className="w-2/6 flex flex-row justify-start items-center text-grayDark">
+                                      <Link
+                                        to={`${el.nftImage}`}
+                                        target="__blank"
+                                        rel="noopener noreferrer"
+                                      >
+                                        <img
+                                          className="w-7 h-7 mr-4"
+                                          alt="icon"
+                                          src={`${el.nftImage}`}
+                                        />
+                                      </Link>
+                                      {el.collectionName}
+                                      {/* Pudgy Penguins */}
+                                    </div>
 
-                                  <div className="w-1/6 text-grayDark flex justify-center">
-                                    {el.sales ? el.sales : "0"} Sales
+                                    <div className="w-1/6 text-grayDark flex justify-center">
+                                      {el.sales ? el.sales : "0"} Sales
+                                    </div>
+                                    <div className="w-1/6 text-grayDark flex justify-center">
+                                      {el.salesVolume} Ξ
+                                    </div>
+                                    <div className="w-1/6 text-grayDark flex justify-center">
+                                      4.3 Ξ
+                                    </div>
+                                    <div className="w-1/6 text-grayDark flex justify-center">
+                                      5.2%
+                                    </div>
                                   </div>
-                                  <div className="w-1/6 text-grayDark flex justify-center">
-                                    {el.salesVolume} Ξ
-                                  </div>
-                                  <div className="w-1/6 text-grayDark flex justify-center">
-                                    4.3 Ξ
-                                  </div>
-                                  <div className="w-1/6 text-grayDark flex justify-center">
-                                    5.2%
-                                  </div>
-                                </div>
-                              </>
-                            );
-                          })}
+                                </>
+                              );
+                            })}
                         </div>
                       </div>
                     </div>
