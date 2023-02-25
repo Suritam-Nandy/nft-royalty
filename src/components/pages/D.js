@@ -1,8 +1,7 @@
 import React from "react";
-
 import { useSelector } from "react-redux";
-import { useFirestore, useFirebase } from "react-redux-firebase";
-import { Link, Redirect } from "react-router-dom";
+import { useFirestore } from "react-redux-firebase";
+
 import Sidebar from "../layout/Sidebar";
 import Button from "../layout/Button";
 import Footer from "../layout/Footer";
@@ -11,35 +10,27 @@ import DoughnutChart, { dataDoughnut } from "../layout/DoughnutChart";
 import { useEffect, useState } from "react";
 import { useFirestoreConnect } from "react-redux-firebase";
 import Loading from "../layout/Loading.js";
-const Dashboard = () => {
-  const firebase = useFirebase();
-  const [flag, setFlag] = useState();
+const D = () => {
   const { uid } = useSelector((state) => state.firebase.auth);
   const firestore = useFirestore();
-  const [count, setCount] = useState(0);
+
+  const [collectionsL, setCollectionsL] = useState([]);
   const [collectionsLi, setCollectionsLi] = useState([]);
 
-  const [collection, setCollection] = useState({
-    // nftContractAddress: "",
-    // royaltyPercentage: "",
-    // authorizedWallet: "",
-    // paymentSchedule: "monthly",
-    // preparation: "yes",
-    // nftImage: "",
-    // artists: [],
-  });
+  const [c, setC] = useState({});
+
   const collections = useSelector(
     (state) => state.firestore.ordered.collections
   );
-  const users = useSelector((state) => state.firestore.ordered.collections);
-  useFirestoreConnect({
-    collection: `allCollections/${uid}/collections`,
-    storeAs: "collections",
-  });
   useFirestoreConnect({
     collection: `users/${uid}/collections`,
-    storeAs: "users",
+    storeAs: "collections",
   });
+
+  // setCollectionList({ ...collectionList, [e.target.name]: e.target.value })
+  // console.log(collections[0].nftContractAddress);
+  let img;
+  let count = 0;
   const legend = {
     labels: [...dataDoughnut.datasets[0].labels],
     data: [...dataDoughnut.datasets[0].data],
@@ -47,11 +38,11 @@ const Dashboard = () => {
   };
   const params = {
     chain_id: "ethereum",
-    contract_address: "",
-    sold_after: "2023-02-01T00:00:00Z",
+    contract_addresses: "",
     // order: "asc",
-    limit: "10000",
+    // limit: "10",
   };
+
   const get = async (url, params) => {
     const response = await fetch(url + "?" + new URLSearchParams(params), {
       Method: "GET",
@@ -63,6 +54,7 @@ const Dashboard = () => {
 
     return data;
   };
+
   // // Call it with async:
   // (async () => {
   //   const data = await get(
@@ -86,88 +78,88 @@ const Dashboard = () => {
 
   //     console.log(data.image_url)
   //   let img = data.image_url
+  // }
+
+  useEffect(() => {
+    if (!collections) {
+      return <Loading />;
+    }
+    some = loadCollections();
+
+    console.log("some", some);
+    console.log("collectionsL", collectionsL);
+    console.log(collectionsL.length);
+  }, [collections]);
+  console.log("collectionsL", collectionsL);
   let some = [];
-  let salesVolume = 0;
-  let sales = 0;
   const loadCollections = async () => {
     try {
-      if (count < 4) {
-        setCount(count + 1);
-        setFlag(true);
+      if (collections) {
         await collections.map((element) => {
-          params.contract_address = element.nftContractAddress;
-
+          console.log(element);
+          params.contract_addresses = element.nftContractAddress;
           get(
-            "https://api.transpose.io/nft/sales-by-contract-address",
+            "https://api.transpose.io/nft/collections-by-contract-address",
 
             params
           ).then((data) => {
-            salesVolume = 0;
-            sales = 0;
-            console.log("transpose successfull");
-            data.results.map((e) => {
-              console.log("transpose mapped successfull");
-
-              salesVolume = salesVolume + e.eth_price;
-              sales = sales + e.quantity;
-
-              return { salesVolume, sales };
-            });
-            salesVolume = (Math.round(salesVolume * 100) / 100).toFixed(2);
-            // sales = (Math.round(sales * 100) / 100).toFixed(2);
-            setCollection({
+            console.log("img", data.results[0].name);
+            console.log("collectionsL", collectionsL);
+            some = {
               ...element,
-              salesVolume,
-              sales,
-              createdAt: firestore.FieldValue.serverTimestamp(),
-            });
-            setCollectionsLi([...collectionsLi, collections]);
+              nftImage: data.results[0].image_url
+                ? data.results[0].image_url
+                : "null",
+              collectionName: data.results[0].name,
+            };
+            setC();
+            console.log(collectionsL.length);
 
-            firestore
-              .collection("allCollections")
-              .doc(uid)
-              .collection("collections")
-              .doc(element.docRef.id)
-              .set({
-                ...element,
-                salesVolume,
-                sales,
-                createdAt: firestore.FieldValue.serverTimestamp(),
-              });
+            setCollectionsL([
+              ...collectionsL,
+              ...[
+                {
+                  ...element,
+                  nftImage: data.results[0].image_url
+                    ? data.results[0].image_url
+                    : "null",
+                  collectionName: data.results[0].name,
+                },
+              ],
+            ]);
+            setCollectionsLi([...collectionsLi, ...collectionsL]);
+            console.log("some", some);
+            console.log("collectionsL", collectionsL);
+            console.log("f");
+
+            console.log("f", element);
+
+            console.log("collectionsL", collectionsL);
           });
           return some;
         });
+        console.log(collectionsL);
       } else {
-        console.log("transpose updated sales");
+        console.log("No such document!");
       }
     } catch (error) {
       console.log("Error getting document:", error);
     }
   };
 
-  useEffect(() => {
-    if (!collections) {
-      return <Loading />;
-    } else {
-    }
-    loadCollections();
-  }, [flag]);
-  console.log(flag);
-  if (!users) {
+  console.log("collectionsL", collectionsL);
+
+  if (!collections) {
     return <Loading />;
   } else {
-    // console.log(collections);
-    // console.log(count);
-    // let l = collections.length;
-    // if (count < 4) {
-    //   // setInterval(loadCollections, 100000);
-    //   setCount(count + 1);
-    // }
+    console.log(collectionsL.length);
+    console.log(collectionsL);
+    console.log(collectionsLi);
   }
 
   const collectionList = [
     {
-      icon: "",
+      icon: img,
       collectionName: "Pudgy Penguins",
       sales: "21 Sales",
       salesVolume: "51 Ξ",
@@ -402,47 +394,39 @@ const Dashboard = () => {
                     <div>
                       <div className="w-auto flex flex-row bg-blueBg p-3 px-4 mr-8 drop-shadow-xl rounded-lg  ">
                         <div className="flex flex-col w-full h-24 scrollbar-thin scrollbar-thumb-grayDark scrollbar-track-grayDarkText overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-                          {collection &&
-                            collections.map((el) => {
-                              // if (el.sales === 0) return <Loading />;
-                              if (!collection) {
-                                <Redirect to="/" />;
-                              }
-                              return (
-                                <>
-                                  <div className="w-full mb-2 flex flex-row justify-center items-center  text-base font-bold tracking-wide ">
-                                    <div className="w-2/6 flex flex-row justify-start items-center text-grayDark">
-                                      <Link
-                                        to={`${el.nftImage}`}
-                                        target="__blank"
-                                        rel="noopener noreferrer"
-                                      >
-                                        <img
-                                          className="w-7 h-7 mr-4"
-                                          alt="icon"
-                                          src={`${el.nftImage}`}
-                                        />
-                                      </Link>
-                                      {el.collectionName}
-                                      {/* Pudgy Penguins */}
-                                    </div>
-
-                                    <div className="w-1/6 text-grayDark flex justify-center">
-                                      {el.sales ? el.sales : "0"} Sales
-                                    </div>
-                                    <div className="w-1/6 text-grayDark flex justify-center">
-                                      {el.salesVolume} Ξ
-                                    </div>
-                                    <div className="w-1/6 text-grayDark flex justify-center">
-                                      4.3 Ξ
-                                    </div>
-                                    <div className="w-1/6 text-grayDark flex justify-center">
-                                      5.2%
-                                    </div>
+                          {collectionsL.map((el) => {
+                            console.log("====================================");
+                            console.log(el.nftImage);
+                            console.log("====================================");
+                            return (
+                              <>
+                                <div className="w-full mb-2 flex flex-row justify-center items-center  text-base font-bold tracking-wide ">
+                                  <div className="w-2/6 flex flex-row justify-start items-center text-grayDark">
+                                    <img
+                                      className="w-7 h-7 mr-4"
+                                      alt="icon"
+                                      src={`${el.nftImage}`}
+                                    />
+                                    {el.collectionName}
+                                    {/* Pudgy Penguins */}
                                   </div>
-                                </>
-                              );
-                            })}
+
+                                  <div className="w-1/6 text-grayDark flex justify-center">
+                                    21 Sales
+                                  </div>
+                                  <div className="w-1/6 text-grayDark flex justify-center">
+                                    51 Ξ
+                                  </div>
+                                  <div className="w-1/6 text-grayDark flex justify-center">
+                                    4.3 Ξ
+                                  </div>
+                                  <div className="w-1/6 text-grayDark flex justify-center">
+                                    5.2%
+                                  </div>
+                                </div>
+                              </>
+                            );
+                          })}
                         </div>
                       </div>
                     </div>
@@ -450,7 +434,6 @@ const Dashboard = () => {
                 </div>
               </div>
             </main>
-
             <Footer />
           </div>
         </div>
@@ -459,4 +442,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default D;

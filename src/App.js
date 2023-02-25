@@ -25,7 +25,7 @@ function App() {
               // walletAddress={walletAddress}
             />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
-            <Route
+            <PrivateRoute
               exact
               path="/addcollectiondetails"
               component={AddCollectionDetails}
