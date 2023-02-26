@@ -11,6 +11,7 @@ import DoughnutChart, { dataDoughnut } from "../layout/DoughnutChart";
 import { useEffect, useState } from "react";
 import { useFirestoreConnect } from "react-redux-firebase";
 import Loading from "../layout/Loading.js";
+import CollectionTable from "../layout/CollectionTable";
 const Dashboard = () => {
   const firebase = useFirebase();
   const [flag, setFlag] = useState();
@@ -86,72 +87,75 @@ const Dashboard = () => {
 
   //     console.log(data.image_url)
   //   let img = data.image_url
-  let some = [];
-  let salesVolume = 0;
-  let sales = 0;
-  const loadCollections = async () => {
-    try {
-      if (count < 4) {
-        setCount(count + 1);
-        setFlag(true);
-        await collections.map((element) => {
-          params.contract_address = element.nftContractAddress;
 
-          get(
-            "https://api.transpose.io/nft/sales-by-contract-address",
+  // const loadCollections = async () => {
+  //   let some = [];
+  //   let salesVolume = 0;
+  //   let sales = 0;
+  //   try {
+  //     if (count < 4) {
+  //       setCount(count + 1);
+  //       setFlag(true);
+  //       console.log("transpose successfull");
 
-            params
-          ).then((data) => {
-            salesVolume = 0;
-            sales = 0;
-            console.log("transpose successfull");
-            data.results.map((e) => {
-              console.log("transpose mapped successfull");
+  //       await collections.map((element) => {
+  //         params.contract_address = element.nftContractAddress;
 
-              salesVolume = salesVolume + e.eth_price;
-              sales = sales + e.quantity;
+  //         get(
+  //           "https://api.transpose.io/nft/sales-by-contract-address",
 
-              return { salesVolume, sales };
-            });
-            salesVolume = (Math.round(salesVolume * 100) / 100).toFixed(2);
-            // sales = (Math.round(sales * 100) / 100).toFixed(2);
-            setCollection({
-              ...element,
-              salesVolume,
-              sales,
-              createdAt: firestore.FieldValue.serverTimestamp(),
-            });
-            setCollectionsLi([...collectionsLi, collections]);
+  //           params
+  //         ).then((data) => {
+  //           salesVolume = 0;
+  //           sales = 0;
+  //           console.log("transpose successfull");
+  //           data.results.map((e) => {
+  //             console.log("transpose mapped successfull");
 
-            firestore
-              .collection("allCollections")
-              .doc(uid)
-              .collection("collections")
-              .doc(element.docRef.id)
-              .set({
-                ...element,
-                salesVolume,
-                sales,
-                createdAt: firestore.FieldValue.serverTimestamp(),
-              });
-          });
-          return some;
-        });
-      } else {
-        console.log("transpose updated sales");
-      }
-    } catch (error) {
-      console.log("Error getting document:", error);
-    }
-  };
+  //             salesVolume = salesVolume + e.eth_price;
+  //             sales = sales + e.quantity;
 
-  useEffect(() => {
-    if (!collections) {
-      return <Loading />;
-    } else {
-    }
-    loadCollections();
-  }, [flag]);
+  //             return { salesVolume, sales };
+  //           });
+  //           salesVolume = (Math.round(salesVolume * 100) / 100).toFixed(2);
+  //           // sales = (Math.round(sales * 100) / 100).toFixed(2);
+  //           setCollection({
+  //             ...element,
+  //             salesVolume,
+  //             sales,
+  //             createdAt: firestore.FieldValue.serverTimestamp(),
+  //           });
+  //           setCollectionsLi([...collectionsLi, collection]);
+
+  //           firestore
+  //             .collection("allCollections")
+  //             .doc(uid)
+  //             .collection("collections")
+  //             .doc(element.docRef.id)
+  //             .set({
+  //               ...element,
+  //               salesVolume,
+  //               sales,
+  //               createdAt: firestore.FieldValue.serverTimestamp(),
+  //             });
+  //         });
+  //         return some;
+  //       });
+  //     } else {
+  //       console.log("transpose updated sales");
+  //     }
+  //   } catch (error) {
+  //     console.log("Error getting document:", error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (!collections) {
+  //     return <Loading />;
+  //   } else {
+  //   }
+  //   // loadCollections();
+  // }, [users]);
   console.log(flag);
   if (!users) {
     return <Loading />;
@@ -402,7 +406,7 @@ const Dashboard = () => {
                     <div>
                       <div className="w-auto flex flex-row bg-blueBg p-3 px-4 mr-8 drop-shadow-xl rounded-lg  ">
                         <div className="flex flex-col w-full h-24 scrollbar-thin scrollbar-thumb-grayDark scrollbar-track-grayDarkText overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-                          {collection &&
+                          {/* {collection &&
                             collections.map((el) => {
                               // if (el.sales === 0) return <Loading />;
                               if (!collection) {
@@ -424,7 +428,6 @@ const Dashboard = () => {
                                         />
                                       </Link>
                                       {el.collectionName}
-                                      {/* Pudgy Penguins */}
                                     </div>
 
                                     <div className="w-1/6 text-grayDark flex justify-center">
@@ -442,7 +445,8 @@ const Dashboard = () => {
                                   </div>
                                 </>
                               );
-                            })}
+                            })} */}
+                          <CollectionTable />
                         </div>
                       </div>
                     </div>

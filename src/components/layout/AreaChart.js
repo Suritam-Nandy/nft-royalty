@@ -37,15 +37,13 @@ const AreaChart = () => {
     let s = 0;
     await axios
       .get(
-        "https://api.transpose.io/nft/sales-by-contract-address?chain_id=ethereum&contract_address=0x49cF6f5d44E70224e2E23fDcdd2C053F30aDA28B&sold_after=2023-02-01T00:00:00Z&limit=10000",
+        "https://api.transpose.io/nft/sales-by-contract-address?chain_id=ethereum&contract_address=0x1bB6edF7b129967d512086FbDf489ED659580916&sold_after=2023-02-01T00:00:00Z&limit=10000",
         config
       )
       .then((res) => {
-        console.log("transpose successfull");
+        console.log("transpose request chart successfull");
 
         res.data.results.map((ele) => {
-          console.log("transpose mapped successfull");
-
           if (
             xValues[xValues.length - 1] !== new Date(ele.timestamp).getDate()
           ) {
