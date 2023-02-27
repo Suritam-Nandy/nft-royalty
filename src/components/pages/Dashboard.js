@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useFirestoreConnect } from "react-redux-firebase";
 import Loading from "../layout/Loading.js";
 import CollectionTable from "../layout/CollectionTable";
+import Banner from "../layout/Banner";
 const Dashboard = () => {
   const firebase = useFirebase();
   const [flag, setFlag] = useState();
@@ -302,37 +303,7 @@ const Dashboard = () => {
                     </div>
                   </div>
 
-                  <div className="w-full bg-blueBg p-2 py-1  drop-shadow-xl rounded-lg ">
-                    <div className="w-full flex flex-row justify-around items-center text-grayDark">
-                      <div className="w-max flex flex-col justify-center items-center text-grayText font-bold ">
-                        <label>Current Balance</label>
-                        <label className="flex flex-col justify-center items-center text-2xl -mt-1">
-                          31.8 Ξ{" "}
-                          <span className="text-sm font-normal text-grayDarkText tracking-wide -mt-1">
-                            $38,160 USD
-                          </span>
-                        </label>
-                      </div>
-                      <div className="w-max flex flex-col justify-center items-center text-grayText  font-bold ">
-                        <label>Net Income</label>
-                        <label className="flex flex-col justify-center items-center text-2xl -mt-1">
-                          21.2 Ξ
-                          <span className="text-sm font-normal text-grayDarkText tracking-wide -mt-1">
-                            $25,440 USD
-                          </span>
-                        </label>
-                      </div>
-                      <div className="w-max flex flex-col justify-center items-center text-grayText  font-bold ">
-                        <label>Contributor Earnings</label>
-                        <label className="flex flex-col justify-center items-center text-2xl -mt-1">
-                          10.6 Ξ{" "}
-                          <span className="text-sm font-normal text-grayDarkText tracking-wide -mt-1">
-                            $12,720 USD
-                          </span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
+                  <Banner/>
 
                   <div className="w-full mx-8 my-2">
                     <div className=" flex flex-row justify-start items-center mb-1">
