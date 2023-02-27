@@ -65,7 +65,7 @@ const Sidebar = () => {
               <>
                 <li className="my-px">
                   <a
-                    href="#"
+                    href="/"
                     className={`
                     flex flex-row items-center h-10 px-3 rounded-lg  font-semibold bg-gray-100 hover:text-blueLight`}
                   >
