@@ -3,19 +3,31 @@ import React from 'react';
 
 
 const Banner = () => {
-    const querystring = 'querystring';
-    const params = {
-        chain_id: "ethereum",
-        limit: "1",
-    };
-    var options = {
-        hostname: 'api.transpose.io',
-        path: '/block/transactions-by-block?' + querystring.stringify(params),
-        method: 'GET',
-        headers: {
-            'X-API-KEY': 'FxKTp6MHpWQDaos8SRnSetdIZiUYLliS'
-        }
-    };
+        // const querystring = 'querystring';
+         const params = {
+             chain_id: "ethereum",
+         };
+        // var options = {
+        //     hostname: 'api.transpose.io',
+        //     path: '/block/transactions-by-block?' + querystring.stringify(params),
+        //     method: 'GET',
+        //     headers: {
+        //         'X-API-KEY': 'FxKTp6MHpWQDaos8SRnSetdIZiUYLliS'
+        //     }
+        // };
+        const get = async (params) => {
+            const response = await fetch('/block/transactions-by-block?' + new URLSearchParams(params), {
+              Method: "GET",
+              headers: {
+                "X-API-KEY": "FxKTp6MHpWQDaos8SRnSetdIZiUYLliS",
+              },
+            });
+            const data = await response.json();
+        
+            return data;
+          };
+          
+
   return (
     <div>
         
