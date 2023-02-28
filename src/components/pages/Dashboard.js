@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 import { useSelector } from "react-redux";
 import { useFirestore, useFirebase } from "react-redux-firebase";
@@ -11,7 +11,7 @@ import DoughnutChart, { dataDoughnut } from "../layout/DoughnutChart";
 import { useEffect, useState } from "react";
 import { useFirestoreConnect } from "react-redux-firebase";
 import Loading from "../layout/Loading.js";
-import CollectionTable from "../layout/CollectionTable";
+const CollectionTable = React.lazy(() => import("../layout/CollectionTable"));
 const Dashboard = () => {
   const firebase = useFirebase();
   const [flag, setFlag] = useState();
@@ -446,7 +446,9 @@ const Dashboard = () => {
                                 </>
                               );
                             })} */}
-                          <CollectionTable />
+                          <Suspense fallback={<h1>Loading posts...</h1>}>
+                            <CollectionTable />
+                          </Suspense>
                         </div>
                       </div>
                     </div>

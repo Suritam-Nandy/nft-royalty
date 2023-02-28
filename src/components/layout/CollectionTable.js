@@ -27,6 +27,7 @@ const CollectionTable = () => {
     sold_after: "2023-02-01T00:00:00Z",
     limit: "10000",
   };
+
   const get = async (url, params) => {
     const response = await fetch(url + "?" + new URLSearchParams(params), {
       Method: "GET",
