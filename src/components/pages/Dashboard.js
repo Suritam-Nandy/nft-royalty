@@ -350,7 +350,9 @@ const Dashboard = () => {
                           Sales Transfers by Collection
                         </h1>
                         <div className="h-full w-full">
-                          <AreaChart />
+                          <Suspense fallback={<Loading />}>
+                            <AreaChart />
+                          </Suspense>
                         </div>
                       </div>
                       <div className="w-1/3">
@@ -446,7 +448,7 @@ const Dashboard = () => {
                                 </>
                               );
                             })} */}
-                          <Suspense fallback={<h1>Loading posts...</h1>}>
+                          <Suspense fallback={<Loading />}>
                             <CollectionTable />
                           </Suspense>
                         </div>

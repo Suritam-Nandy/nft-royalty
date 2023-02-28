@@ -103,7 +103,7 @@ const CollectionTable = () => {
       return <Loading />;
     } else {
     }
-    setInterval(loadCollections(), 16000);
+    setInterval(loadCollections(), 12000);
   }, [collections]);
   console.log(flag);
   if (!collectionsLi) {
