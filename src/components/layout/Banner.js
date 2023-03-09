@@ -26,7 +26,8 @@ const Banner = () => {
       <div className="w-max flex flex-col justify-center items-center text-grayText font-bold ">
         <label>Current Balance</label>
         <label className="flex flex-col justify-center items-center text-2xl -mt-1">
-          {user[0].firstName}Ξ{" "}
+          31.8
+          {user[0].walletAddress}Ξ{" "}
           <span className="text-sm font-normal text-grayDarkText tracking-wide -mt-1">
             $38,160 USD
           </span>
@@ -35,8 +36,7 @@ const Banner = () => {
       <div className="w-max flex flex-col justify-center items-center text-grayText  font-bold ">
         <label>Net Income</label>
         <label className="flex flex-col justify-center items-center text-2xl -mt-1">
-          21.2
-          {user[0].walletAddress}Ξ
+          21.2 Ξ
           <span className="text-sm font-normal text-grayDarkText tracking-wide -mt-1">
             $25,440 USD
           </span>
