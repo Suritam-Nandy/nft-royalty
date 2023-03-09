@@ -6,18 +6,23 @@ import { Link, Redirect } from "react-router-dom";
 import Sidebar from "../layout/Sidebar";
 import Button from "../layout/Button";
 import Footer from "../layout/Footer";
+import Banner from "../layout/Banner";
 import AreaChart, { data } from "../layout/AreaChart";
 import DoughnutChart, { dataDoughnut } from "../layout/DoughnutChart";
 import { useEffect, useState } from "react";
 import { useFirestoreConnect } from "react-redux-firebase";
 import Loading from "../layout/Loading.js";
 const CollectionTable = React.lazy(() => import("../layout/CollectionTable"));
+// const options = ["Italy", "Spain", "Greece"];
 const Dashboard = () => {
   const firebase = useFirebase();
   const [flag, setFlag] = useState();
   const { uid } = useSelector((state) => state.firebase.auth);
+  const [open, setOpen] = useState(false);
+  const [contract_address, setContract_address] = useState("");
+
   const firestore = useFirestore();
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
   const [collectionsLi, setCollectionsLi] = useState([]);
 
   const [collection, setCollection] = useState({
@@ -32,15 +37,17 @@ const Dashboard = () => {
   const collections = useSelector(
     (state) => state.firestore.ordered.collections
   );
-  const users = useSelector((state) => state.firestore.ordered.collections);
+  // const users = useSelector((state) => state.firestore.ordered.users);
   useFirestoreConnect({
     collection: `allCollections/${uid}/collections`,
     storeAs: "collections",
   });
-  useFirestoreConnect({
-    collection: `users/${uid}/collections`,
-    storeAs: "users",
-  });
+  // useFirestoreConnect({
+  //   collection: `users/${uid}/collections`,
+  //   storeAs: "users",
+  // });
+  const [selected, setSelected] = useState();
+
   const legend = {
     labels: [...dataDoughnut.datasets[0].labels],
     data: [...dataDoughnut.datasets[0].data],
@@ -149,132 +156,25 @@ const Dashboard = () => {
   //   }
   // };
 
-  // useEffect(() => {
-  //   if (!collections) {
-  //     return <Loading />;
-  //   } else {
-  //   }
-  //   // loadCollections();
-  // }, [users]);
+  useEffect(() => {
+    if (!collections) {
+      return <Loading />;
+    } else {
+    }
+    setSelected(collections[0].nftContractAddress);
+  }, []);
+
   console.log(flag);
-  if (!users) {
+  if (!collections) {
     return <Loading />;
   } else {
-    // console.log(collections);
-    // console.log(count);
-    // let l = collections.length;
-    // if (count < 4) {
-    //   // setInterval(loadCollections, 100000);
-    //   setCount(count + 1);
-    // }
   }
 
-  const collectionList = [
-    {
-      icon: "",
-      collectionName: "Pudgy Penguins",
-      sales: "21 Sales",
-      salesVolume: "51 Ξ",
-      royaltyVolume: "4.3 Ξ",
-      royaltyChange: "5.2%",
-    },
-    // {
-    //   icon: "/OpenSea Logo.png",
-    //   collectionName: "Pudgy Penguins",
-    //   sales: "21 Sales",
-    //   salesVolume: "51 Ξ",
-    //   royaltyVolume: "4.3 Ξ",
-    //   royaltyChange: "5.2%",
-    // },
-    // {
-    //   icon: "/OpenSea Logo.png",
-    //   collectionName: "Pudgy Penguins",
-    //   sales: "21 Sales",
-    //   salesVolume: "51 Ξ",
-    //   royaltyVolume: "4.3 Ξ",
-    //   royaltyChange: "5.2%",
-    // },
-    // {
-    //   icon: "/OpenSea Logo.png",
-    //   collectionName: "Pudgy Penguins",
-    //   sales: "21 Sales",
-    //   salesVolume: "51 Ξ",
-    //   royaltyVolume: "4.3 Ξ",
-    //   royaltyChange: "5.2%",
-    // },
-    // {
-    //   icon: "/OpenSea Logo.png",
-    //   collectionName: "Pudgy Penguins",
-    //   sales: "21 Sales",
-    //   salesVolume: "51 Ξ",
-    //   royaltyVolume: "4.3 Ξ",
-    //   royaltyChange: "5.2%",
-    // },
-    // {
-    //   icon: "/OpenSea Logo.png",
-    //   collectionName: "Pudgy Penguins",
-    //   sales: "21 Sales",
-    //   salesVolume: "51 Ξ",
-    //   royaltyVolume: "4.3 Ξ",
-    //   royaltyChange: "5.2%",
-    // },
-    // {
-    //   icon: "/OpenSea Logo.png",
-    //   collectionName: "Pudgy Penguins",
-    //   sales: "21 Sales",
-    //   salesVolume: "51 Ξ",
-    //   royaltyVolume: "4.3 Ξ",
-    //   royaltyChange: "5.2%",
-    // },
-    // {
-    //   icon: "/OpenSea Logo.png",
-    //   collectionName: "Pudgy Penguins",
-    //   sales: "21 Sales",
-    //   salesVolume: "51 Ξ",
-    //   royaltyVolume: "4.3 Ξ",
-    //   royaltyChange: "5.2%",
-    // },
-    // {
-    //   icon: "/OpenSea Logo.png",
-    //   collectionName: "Pudgy Penguins",
-    //   sales: "21 Sales",
-    //   salesVolume: "51 Ξ",
-    //   royaltyVolume: "4.3 Ξ",
-    //   royaltyChange: "5.2%",
-    // },
-    // {
-    //   icon: "/OpenSea Logo.png",
-    //   collectionName: "Pudgy Penguins",
-    //   sales: "21 Sales",
-    //   salesVolume: "51 Ξ",
-    //   royaltyVolume: "4.3 Ξ",
-    //   royaltyChange: "5.2%",
-    // },
-    // {
-    //   icon: "/OpenSea Logo.png",
-    //   collectionName: "Pudgy Penguins",
-    //   sales: "21 Sales",
-    //   salesVolume: "51 Ξ",
-    //   royaltyVolume: "4.3 Ξ",
-    //   royaltyChange: "5.2%",
-    // },
-    // {
-    //   icon: "/OpenSea Logo.png",
-    //   collectionName: "Pudgy Penguins",
-    //   sales: "21 Sales",
-    //   salesVolume: "51 Ξ",
-    //   royaltyVolume: "4.3 Ξ",
-    //   royaltyChange: "5.2%",
-    // },
-    // {
-    //   icon: "/OpenSea Logo.png",
-    //   collectionName: "Pudgy Penguins",
-    //   sales: "21 Sales",
-    //   salesVolume: "51 Ξ",
-    //   royaltyVolume: "4.3 Ξ",
-    //   royaltyChange: "5.2%",
-    // },
-  ];
+  const handleOpen = (contract_address) => {
+    setOpen(!open);
+    setContract_address(contract_address);
+  };
+  console.log();
   return (
     <>
       <div>
@@ -303,55 +203,85 @@ const Dashboard = () => {
                   </div>
 
                   <div className="w-full bg-blueBg p-2 py-1  drop-shadow-xl rounded-lg ">
-                    <div className="w-full flex flex-row justify-around items-center text-grayDark">
-                      <div className="w-max flex flex-col justify-center items-center text-grayText font-bold ">
-                        <label>Current Balance</label>
-                        <label className="flex flex-col justify-center items-center text-2xl -mt-1">
-                          31.8 Ξ{" "}
-                          <span className="text-sm font-normal text-grayDarkText tracking-wide -mt-1">
-                            $38,160 USD
-                          </span>
-                        </label>
-                      </div>
-                      <div className="w-max flex flex-col justify-center items-center text-grayText  font-bold ">
-                        <label>Net Income</label>
-                        <label className="flex flex-col justify-center items-center text-2xl -mt-1">
-                          21.2 Ξ
-                          <span className="text-sm font-normal text-grayDarkText tracking-wide -mt-1">
-                            $25,440 USD
-                          </span>
-                        </label>
-                      </div>
-                      <div className="w-max flex flex-col justify-center items-center text-grayText  font-bold ">
-                        <label>Contributor Earnings</label>
-                        <label className="flex flex-col justify-center items-center text-2xl -mt-1">
-                          10.6 Ξ{" "}
-                          <span className="text-sm font-normal text-grayDarkText tracking-wide -mt-1">
-                            $12,720 USD
-                          </span>
-                        </label>
-                      </div>
-                    </div>
+                    <Banner />
                   </div>
 
-                  <div className="w-full mx-8 my-2">
+                  <div className="w-full mx-8 my-2 ">
                     <div className=" flex flex-row justify-start items-center mb-1">
-                      <h1 className="mr-10 font-bold tracking-wide text-2xl">
+                      <h1 className="mr-6 font-bold tracking-wide text-2xl">
                         Summary Statistics{" "}
                       </h1>
-                      <div>Monthly...</div>
-                      <div>Collection...</div>
+                      <div className="w-40 ml-4 px-1 py-1 rounded-full border flex flex-row justify-around items-center text-sm font-semibold">
+                        <label classname="mr-2 text-xs ">Monthly </label>
+                        <div>.</div>
+                      </div>
+                      {/* <div className="">
+                        <div
+                          onClick={handleOpen}
+                          className="w-40  ml-4 px-1 py-1 rounded-full border flex flex-row justify-around items-center text-sm font-semibold"
+                        >
+                          <button classname="mr-2 text-xs">Collection </button>
+                          <div>.</div>
+                        </div>
+
+                        <div
+                          id="dropdown"
+                          className={`
+                          
+                          ${open ? "block" : "hidden"}
+                     
+                          ml-4 z-10 absolute  bg-gray divide-y divide-gray rounded-lg shadow w-40 dark:bg-grayDark`}
+                        >
+                          <ul
+                            className="py-2 text-sm text-grayDark dark:text-grayLight"
+                            aria-labelledby="dropdownHoverButton"
+                          >
+                            {collections.map((el) => {
+                              return (
+                                <>
+                                  <div
+                                  // onClick={}
+                                  >
+                                    <a className="block px-4 py-2 hover:bg-grayLight dark:hover:bg-grayDark dark:hover:text-white">
+                                      {el.collectionName}
+                                    </a>
+                                  </div>
+                                </>
+                              );
+                            })}
+                          </ul>
+                        </div>
+                      </div> */}
+
+                      {collections && (
+                        <form>
+                          <select
+                            value={selected}
+                            onChange={(e) => setSelected(e.target.value)}
+                            className="w-44  ml-4 px-2 py-1 rounded-full border flex flex-row justify-around items-center text-sm font-semibold"
+                          >
+                            {collections.map((el) => (
+                              <option
+                                value={el.nftContractAddress}
+                                key={el.collectionName}
+                              >
+                                {el.collectionName}
+                              </option>
+                            ))}
+                          </select>
+                        </form>
+                      )}
                     </div>
 
                     <div className="w-full flex flex-row  justify-start items-around ">
-                      <div className="w-2/3 flex flex-col justify-evenly items-start mr-10 ">
-                        <h1 className="text-base font-bold tracking-wide mb-2.5">
+                      <div className="w-2/3 flex flex-col justify-between items-start mr-10 ">
+                        <h1 className="text-base font-bold tracking-wide mb-2.5 mt-1.5">
                           {" "}
                           Sales Transfers by Collection
                         </h1>
-                        <div className="h-full w-full">
+                        <div className="h-52 w-full">
                           <Suspense fallback={<Loading />}>
-                            <AreaChart />
+                            <AreaChart nftContract_address={selected} />
                           </Suspense>
                         </div>
                       </div>
@@ -408,46 +338,6 @@ const Dashboard = () => {
                     <div>
                       <div className="w-auto flex flex-row bg-blueBg p-3 px-4 mr-8 drop-shadow-xl rounded-lg  ">
                         <div className="flex flex-col w-full h-24 scrollbar-thin scrollbar-thumb-grayDark scrollbar-track-grayDarkText overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-                          {/* {collection &&
-                            collections.map((el) => {
-                              // if (el.sales === 0) return <Loading />;
-                              if (!collection) {
-                                <Redirect to="/" />;
-                              }
-                              return (
-                                <>
-                                  <div className="w-full mb-2 flex flex-row justify-center items-center  text-base font-bold tracking-wide ">
-                                    <div className="w-2/6 flex flex-row justify-start items-center text-grayDark">
-                                      <Link
-                                        to={`${el.nftImage}`}
-                                        target="__blank"
-                                        rel="noopener noreferrer"
-                                      >
-                                        <img
-                                          className="w-7 h-7 mr-4"
-                                          alt="icon"
-                                          src={`${el.nftImage}`}
-                                        />
-                                      </Link>
-                                      {el.collectionName}
-                                    </div>
-
-                                    <div className="w-1/6 text-grayDark flex justify-center">
-                                      {el.sales ? el.sales : "0"} Sales
-                                    </div>
-                                    <div className="w-1/6 text-grayDark flex justify-center">
-                                      {el.salesVolume} Ξ
-                                    </div>
-                                    <div className="w-1/6 text-grayDark flex justify-center">
-                                      4.3 Ξ
-                                    </div>
-                                    <div className="w-1/6 text-grayDark flex justify-center">
-                                      5.2%
-                                    </div>
-                                  </div>
-                                </>
-                              );
-                            })} */}
                           <Suspense fallback={<Loading />}>
                             <CollectionTable />
                           </Suspense>

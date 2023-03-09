@@ -4,7 +4,6 @@ import { useFirestoreConnect } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import { useFirestore, useFirebase } from "react-redux-firebase";
 import Loading from "../layout/Loading.js";
-
 const CollectionTable = () => {
   const [count, setCount] = useState(0);
   const [collectionsLi, setCollectionsLi] = useState([]);
@@ -24,7 +23,9 @@ const CollectionTable = () => {
   const params = {
     chain_id: "ethereum",
     contract_address: "",
-    sold_after: "2023-02-01T00:00:00Z",
+    sold_after: "2023-03-01T00:00:00Z",
+    sold_before: "2023-03-31T00:00:00Z",
+
     limit: "10000",
   };
 
@@ -43,6 +44,7 @@ const CollectionTable = () => {
     let some = [];
     let salesVolume = 0;
     let sales = 0;
+    let royalty_fee = 0;
     try {
       if (count < 3) {
         setCount(count + 1);
@@ -59,19 +61,23 @@ const CollectionTable = () => {
           ).then((data) => {
             salesVolume = 0;
             sales = 0;
+            royalty_fee = 0;
             console.log("transpose request successfull");
             data.results.map((e) => {
               salesVolume = salesVolume + e.eth_price;
               sales = sales + e.quantity;
+              royalty_fee = royalty_fee + e.royalty_fee;
 
               return { salesVolume, sales };
             });
             salesVolume = (Math.round(salesVolume * 100) / 100).toFixed(2);
+            royalty_fee = (Math.round(royalty_fee * 100) / 100).toFixed(2);
             // sales = (Math.round(sales * 100) / 100).toFixed(2);
             setCollection({
               ...element,
               salesVolume,
               sales,
+              royalty_fee,
               createdAt: firestore.FieldValue.serverTimestamp(),
             });
             setCollectionsLi([...collectionsLi, collection]);
@@ -85,6 +91,7 @@ const CollectionTable = () => {
                 ...element,
                 salesVolume,
                 sales,
+                royalty_fee,
                 createdAt: firestore.FieldValue.serverTimestamp(),
               });
           });
@@ -103,6 +110,8 @@ const CollectionTable = () => {
       return <Loading />;
     } else {
     }
+    // let b = SalesNFT();
+    // console.log(b);
     setInterval(loadCollections(), 12000);
   }, [collections]);
   console.log(flag);
@@ -152,7 +161,7 @@ const CollectionTable = () => {
                   {el.salesVolume} Ξ
                 </div>
                 <div className="w-1/6 text-grayDark flex justify-center">
-                  4.3 Ξ
+                  {el.royalty_fee}Ξ
                 </div>
                 <div className="w-1/6 text-grayDark flex justify-center">
                   5.2%
