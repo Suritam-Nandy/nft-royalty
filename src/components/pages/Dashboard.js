@@ -212,7 +212,7 @@ const Dashboard = () => {
                         Summary Statistics{" "}
                       </h1>
                       <div className="w-40 ml-4 px-1 py-1 rounded-full border flex flex-row justify-around items-center text-sm font-semibold">
-                        <label classname="mr-2 text-xs ">Monthly </label>
+                        <label classname="mr-2 text-xs ">March </label>
                         <div>.</div>
                       </div>
                       {/* <div className="">
