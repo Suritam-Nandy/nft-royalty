@@ -12,10 +12,10 @@ import DoughnutChart, { dataDoughnut } from "../layout/DoughnutChart";
 import { useEffect, useState } from "react";
 import { useFirestoreConnect } from "react-redux-firebase";
 import Loading from "../layout/Loading.js";
-import AddCollectionDetails from "./AddCollectionDetails";
-import Datepicker from "react-tailwindcss-datepicker";
+
 
 const CollectionTable = React.lazy(() => import("../layout/CollectionTable"));
+
 const Dashboard = () => {
   const firebase = useFirebase();
   const [flag, setFlag] = useState();
@@ -220,6 +220,7 @@ const Dashboard = () => {
                       <Button name={"Distribute Royalties"} />
                     </div>
                   </div>
+
 
                   <div className="w-full bg-skyBg p-2 py-1  drop-shadow-xl rounded-lg ">
                     <Banner />
