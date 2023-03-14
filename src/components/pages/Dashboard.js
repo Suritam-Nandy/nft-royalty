@@ -12,8 +12,6 @@ import DoughnutChart, { dataDoughnut } from "../layout/DoughnutChart";
 import { useEffect, useState } from "react";
 import { useFirestoreConnect } from "react-redux-firebase";
 import Loading from "../layout/Loading.js";
-import AddCollectionDetails from "./AddCollectionDetails";
-import Datepicker from "react-tailwindcss-datepicker";
 
 const CollectionTable = React.lazy(() => import("../layout/CollectionTable"));
 const Dashboard = () => {
