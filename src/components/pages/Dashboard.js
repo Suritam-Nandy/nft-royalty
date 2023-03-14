@@ -14,6 +14,7 @@ import { useFirestoreConnect } from "react-redux-firebase";
 import Loading from "../layout/Loading.js";
 
 const CollectionTable = React.lazy(() => import("../layout/CollectionTable"));
+
 const Dashboard = () => {
   const firebase = useFirebase();
   const [flag, setFlag] = useState();
