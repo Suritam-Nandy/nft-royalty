@@ -12,8 +12,10 @@ import DoughnutChart, { dataDoughnut } from "../layout/DoughnutChart";
 import { useEffect, useState } from "react";
 import { useFirestoreConnect } from "react-redux-firebase";
 import Loading from "../layout/Loading.js";
+import AddCollectionDetails from "./AddCollectionDetails";
+import Datepicker from "react-tailwindcss-datepicker";
+
 const CollectionTable = React.lazy(() => import("../layout/CollectionTable"));
-// const options = ["Italy", "Spain", "Greece"];
 const Dashboard = () => {
   const firebase = useFirebase();
   const [flag, setFlag] = useState();
@@ -47,7 +49,13 @@ const Dashboard = () => {
   //   storeAs: "users",
   // });
   const [selected, setSelected] = useState();
-
+  const [calendarState, setCalendarState] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection",
+    },
+  ]);
   const legend = {
     labels: [...dataDoughnut.datasets[0].labels],
     data: [...dataDoughnut.datasets[0].data],
@@ -70,6 +78,15 @@ const Dashboard = () => {
     const data = await response.json();
 
     return data;
+  };
+  const [range, setRange] = useState({
+    startDate: new Date().setDate(1),
+    endDate: new Date(),
+  });
+
+  const handleValueChange = (newValue) => {
+    console.log("newValue:", newValue);
+    setRange(newValue);
   };
   // // Call it with async:
   // (async () => {
@@ -161,6 +178,8 @@ const Dashboard = () => {
       return <Loading />;
     } else {
     }
+    console.log("newValue:", range);
+
     setSelected(collections[0].nftContractAddress);
   }, []);
 
@@ -178,19 +197,19 @@ const Dashboard = () => {
   return (
     <>
       <div>
-        <div className="flex flex-row min-h-screen bg-gray-100 text-gray-800">
+        <div className="flex flex-row min-h-screen bg-ash-100 text-ash-800">
           <Sidebar />
           <div className="h-screen flex flex-col w-full ">
-            <main className="main w-full flex flex-col justify-center items-center flex-grow scrollbar-thin scrollbar-thumb-grayDark scrollbar-track-grayDarkText overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+            <main className="main w-full flex flex-col justify-center items-center flex-grow scrollbar-thin scrollbar-thumb-ashDark scrollbar-track-ashDarkText overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
               <div className="w-full flex flex-col justify-start items-center ">
                 <div className="w-full flex flex-col flex-grow px-8 ">
                   <div className="w-full flex flex-col font-s justfy-center items-start mb-2.5 mt-">
                     <h1 className="tracking-wide font-medium py-1">
                       Current Pay Period:
                     </h1>
-                    <div className="w-full bg-grayLight rounded-full h-4 dark:bg-grayLight">
+                    <div className="w-full bg-ashLight rounded-full h-4 dark:bg-ashLight">
                       <div
-                        className="bg-grayDarkText   h-4 rounded-full"
+                        className="bg-ashDarkText   h-4 rounded-full"
                         style={{ width: "45%" }}
                       ></div>
                     </div>
@@ -202,7 +221,7 @@ const Dashboard = () => {
                     </div>
                   </div>
 
-                  <div className="w-full bg-blueBg p-2 py-1  drop-shadow-xl rounded-lg ">
+                  <div className="w-full bg-skyBg p-2 py-1  drop-shadow-xl rounded-lg ">
                     <Banner />
                   </div>
 
@@ -211,54 +230,40 @@ const Dashboard = () => {
                       <h1 className="mr-6 font-bold tracking-wide text-2xl">
                         Summary Statistics{" "}
                       </h1>
-                      <div className="w-40 ml-4 px-1 py-1 rounded-full border flex flex-row justify-around items-center text-sm font-semibold">
+                      <div className="w-56 ml-4 px- py-2  rounded-full border flex flex-row justify-around items-center text-sm font-semibold">
                         <label classname="mr-2 text-xs ">March </label>
                         <div>.</div>
+                        {/* <div className="flex flex-col md:grid mx-10  md:grid-cols-2  m-1 w-full"> */}
+                        {/* <DateRange
+                      editableDateInputs={true}
+                      onChange={(item) =>
+                        setCalendarState([item.selection])
+                      }
+                      minDate={new Date()}
+                      moveRangeOnFirstSelection={false}
+                      ranges={calendarState}
+                      disabledDates={restrictedDates}
+                      /> */}
+                        {/* <Datepicker
+                          // className="w-40 ml-4 px-1 py-1 rounded-full border flex flex-row justify-around items-center text-sm font-semibold"
+                          // primaryColor={"sky"}
+                          primaryColor={"cyan"}
+                          className=""
+                          inputClassName=" text-sm font-semibold tracking-tighter px-0 py-0 dark:bg-white dark:text-black  focus:outline-none focus:ring-0"
+                          containerClassName=" h-min -my-1 "
+                          value={range}
+                          onChange={handleValueChange}
+                          showShortcuts={true}
+                          placeholder={"Range"}
+                        /> */}
                       </div>
-                      {/* <div className="">
-                        <div
-                          onClick={handleOpen}
-                          className="w-40  ml-4 px-1 py-1 rounded-full border flex flex-row justify-around items-center text-sm font-semibold"
-                        >
-                          <button classname="mr-2 text-xs">Collection </button>
-                          <div>.</div>
-                        </div>
-
-                        <div
-                          id="dropdown"
-                          className={`
-                          
-                          ${open ? "block" : "hidden"}
-                     
-                          ml-4 z-10 absolute  bg-gray divide-y divide-gray rounded-lg shadow w-40 dark:bg-grayDark`}
-                        >
-                          <ul
-                            className="py-2 text-sm text-grayDark dark:text-grayLight"
-                            aria-labelledby="dropdownHoverButton"
-                          >
-                            {collections.map((el) => {
-                              return (
-                                <>
-                                  <div
-                                  // onClick={}
-                                  >
-                                    <a className="block px-4 py-2 hover:bg-grayLight dark:hover:bg-grayDark dark:hover:text-white">
-                                      {el.collectionName}
-                                    </a>
-                                  </div>
-                                </>
-                              );
-                            })}
-                          </ul>
-                        </div>
-                      </div> */}
 
                       {collections && (
                         <form>
                           <select
                             value={selected}
                             onChange={(e) => setSelected(e.target.value)}
-                            className="w-44  ml-4 px-2 py-1 rounded-full border flex flex-row justify-around items-center text-sm font-semibold"
+                            className="w-56  ml-4 px-2 py-1  rounded-full border flex flex-row justify-around items-center text-sm font-semibold"
                           >
                             {collections.map((el) => (
                               <option
@@ -281,7 +286,10 @@ const Dashboard = () => {
                         </h1>
                         <div className="h-52 w-full">
                           <Suspense fallback={<Loading />}>
-                            <AreaChart nftContract_address={selected} />
+                            <AreaChart
+                              nftContract_address={selected}
+                              range={range}
+                            />
                           </Suspense>
                         </div>
                       </div>
@@ -336,8 +344,8 @@ const Dashboard = () => {
                       </div>
                     </div>
                     <div>
-                      <div className="w-auto flex flex-row bg-blueBg p-3 px-4 mr-8 drop-shadow-xl rounded-lg  ">
-                        <div className="flex flex-col w-full h-24 scrollbar-thin scrollbar-thumb-grayDark scrollbar-track-grayDarkText overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+                      <div className="w-auto flex flex-row bg-skyBg p-3 px-4 mr-8 drop-shadow-xl rounded-lg  ">
+                        <div className="flex flex-col w-full h-24 scrollbar-thin scrollbar-thumb-ashDark scrollbar-track-ashDarkText overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
                           <Suspense fallback={<Loading />}>
                             <CollectionTable />
                           </Suspense>

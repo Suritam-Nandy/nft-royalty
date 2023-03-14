@@ -266,19 +266,19 @@ const D = () => {
   return (
     <>
       <div>
-        <div className="flex flex-row min-h-screen bg-gray-100 text-gray-800">
+        <div className="flex flex-row min-h-screen bg-ash-100 text-ash-800">
           <Sidebar />
           <div className="h-screen flex flex-col w-full ">
-            <main className="main w-full flex flex-col justify-center items-center flex-grow scrollbar-thin scrollbar-thumb-grayDark scrollbar-track-grayDarkText overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+            <main className="main w-full flex flex-col justify-center items-center flex-grow scrollbar-thin scrollbar-thumb-ashDark scrollbar-track-ashDarkText overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
               <div className="w-full flex flex-col justify-start items-center ">
                 <div className="w-full flex flex-col flex-grow px-8 ">
                   <div className="w-full flex flex-col font-s justfy-center items-start mb-2.5 mt-">
                     <h1 className="tracking-wide font-medium py-1">
                       Current Pay Period:
                     </h1>
-                    <div className="w-full bg-grayLight rounded-full h-4 dark:bg-grayLight">
+                    <div className="w-full bg-ashLight rounded-full h-4 dark:bg-ashLight">
                       <div
-                        className="bg-grayDarkText   h-4 rounded-full"
+                        className="bg-ashDarkText   h-4 rounded-full"
                         style={{ width: "45%" }}
                       ></div>
                     </div>
@@ -290,31 +290,31 @@ const D = () => {
                     </div>
                   </div>
 
-                  <div className="w-full bg-blueBg p-2 py-1  drop-shadow-xl rounded-lg ">
-                    <div className="w-full flex flex-row justify-around items-center text-grayDark">
-                      <div className="w-max flex flex-col justify-center items-center text-grayText font-bold ">
+                  <div className="w-full bg-skyBg p-2 py-1  drop-shadow-xl rounded-lg ">
+                    <div className="w-full flex flex-row justify-around items-center text-ashDark">
+                      <div className="w-max flex flex-col justify-center items-center text-ashText font-bold ">
                         <label>Current Balance</label>
                         <label className="flex flex-col justify-center items-center text-2xl -mt-1">
                           31.8 Ξ{" "}
-                          <span className="text-sm font-normal text-grayDarkText tracking-wide -mt-1">
+                          <span className="text-sm font-normal text-ashDarkText tracking-wide -mt-1">
                             $38,160 USD
                           </span>
                         </label>
                       </div>
-                      <div className="w-max flex flex-col justify-center items-center text-grayText  font-bold ">
+                      <div className="w-max flex flex-col justify-center items-center text-ashText  font-bold ">
                         <label>Net Income</label>
                         <label className="flex flex-col justify-center items-center text-2xl -mt-1">
                           21.2 Ξ
-                          <span className="text-sm font-normal text-grayDarkText tracking-wide -mt-1">
+                          <span className="text-sm font-normal text-ashDarkText tracking-wide -mt-1">
                             $25,440 USD
                           </span>
                         </label>
                       </div>
-                      <div className="w-max flex flex-col justify-center items-center text-grayText  font-bold ">
+                      <div className="w-max flex flex-col justify-center items-center text-ashText  font-bold ">
                         <label>Contributor Earnings</label>
                         <label className="flex flex-col justify-center items-center text-2xl -mt-1">
                           10.6 Ξ{" "}
-                          <span className="text-sm font-normal text-grayDarkText tracking-wide -mt-1">
+                          <span className="text-sm font-normal text-ashDarkText tracking-wide -mt-1">
                             $12,720 USD
                           </span>
                         </label>
@@ -392,8 +392,8 @@ const D = () => {
                       </div>
                     </div>
                     <div>
-                      <div className="w-auto flex flex-row bg-blueBg p-3 px-4 mr-8 drop-shadow-xl rounded-lg  ">
-                        <div className="flex flex-col w-full h-24 scrollbar-thin scrollbar-thumb-grayDark scrollbar-track-grayDarkText overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+                      <div className="w-auto flex flex-row bg-skyBg p-3 px-4 mr-8 drop-shadow-xl rounded-lg  ">
+                        <div className="flex flex-col w-full h-24 scrollbar-thin scrollbar-thumb-ashDark scrollbar-track-ashDarkText overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
                           {collectionsL.map((el) => {
                             console.log("====================================");
                             console.log(el.nftImage);
@@ -401,7 +401,7 @@ const D = () => {
                             return (
                               <>
                                 <div className="w-full mb-2 flex flex-row justify-center items-center  text-base font-bold tracking-wide ">
-                                  <div className="w-2/6 flex flex-row justify-start items-center text-grayDark">
+                                  <div className="w-2/6 flex flex-row justify-start items-center text-ashDark">
                                     <img
                                       className="w-7 h-7 mr-4"
                                       alt="icon"
@@ -411,16 +411,16 @@ const D = () => {
                                     {/* Pudgy Penguins */}
                                   </div>
 
-                                  <div className="w-1/6 text-grayDark flex justify-center">
+                                  <div className="w-1/6 text-ashDark flex justify-center">
                                     21 Sales
                                   </div>
-                                  <div className="w-1/6 text-grayDark flex justify-center">
+                                  <div className="w-1/6 text-ashDark flex justify-center">
                                     51 Ξ
                                   </div>
-                                  <div className="w-1/6 text-grayDark flex justify-center">
+                                  <div className="w-1/6 text-ashDark flex justify-center">
                                     4.3 Ξ
                                   </div>
-                                  <div className="w-1/6 text-grayDark flex justify-center">
+                                  <div className="w-1/6 text-ashDark flex justify-center">
                                     5.2%
                                   </div>
                                 </div>

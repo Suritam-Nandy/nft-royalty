@@ -53,7 +53,7 @@ const AreaChart = (selected) => {
 
   const ChartInit = async () => {
     try {
-      if (count < 2) {
+      if (count < 6) {
         console.log(selected);
         setCount(count + 1);
         const xAxis = [
@@ -73,10 +73,17 @@ const AreaChart = (selected) => {
         };
 
         let s = 0;
-        let i = 1;
+        let i = 0;
         config.params.contract_address = selected.nftContract_address
           ? selected.nftContract_address
           : collections[0].nftContractAddress;
+        // config.params.sold_after = selected.range.startDate
+        //   ? `${selected.range.startDate}T00:00:00Z`
+        //   : "2023-03-01T00:00:00Z";
+        // config.params.sold_before = selected.range.endDate
+        //   ? `${selected.range.endDate}T00:00:00Z`
+        //   : "2023-03-01T00:00:00Z";
+        // console.log(config.params.sold_before);
 
         axios
           .get(
@@ -153,10 +160,14 @@ const AreaChart = (selected) => {
     if (!collections && !chartData.datasets) {
       return <Loading />;
     } else {
-      ChartInit();
       setCount(0);
+      setInterval(ChartInit(), 10000);
     }
-  }, [selected.nftContract_address]);
+  }, [
+    selected.nftContract_address,
+    selected.range.startDate,
+    selected.range.endDate,
+  ]);
   if (!chartData.datasets) {
     return <Loading />;
   } else {

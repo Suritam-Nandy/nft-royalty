@@ -50,10 +50,7 @@ const Login = () => {
           <div className="my-3 px-4">
             <div className="flex flex-col ">
               <div className="flex flex-col">
-                <label
-                  className="text-sm text-gray mb-3 font-medium"
-                  id="email"
-                >
+                <label className="text-sm text-ash mb-3 font-medium" id="email">
                   Email Address
                 </label>
                 <Input
@@ -65,7 +62,7 @@ const Login = () => {
               </div>
               <div className="flex flex-col my-4">
                 <label
-                  className="text-sm text-gray mb-3 font-medium"
+                  className="text-sm text-ash mb-3 font-medium"
                   id="password"
                 >
                   Password
@@ -92,21 +89,21 @@ const Login = () => {
                 </div>
                 <div className="flex flex-row justify-center items-center px-4">
                   <input type="checkbox" className="mr-3 h-4 w-4" />
-                  <label className="flex items-center justify-center text-xl text-gray mb-1 font-medium">
+                  <label className="flex items-center justify-center text-xl text-ash mb-1 font-medium">
                     Remember me
                   </label>
                 </div>
               </div>
-              <div className="flex flex-col items-center justify-center my-6 text-sm text-gray font-bold">
+              <div className="flex flex-col items-center justify-center my-6 text-sm text-ash font-bold">
                 <div className="-ml-3.5">
                   Dont have an account?
-                  <Link className="text-blue ml-2" to="/signup">
+                  <Link className="text-sky ml-2" to="/signup">
                     Sign up here
                   </Link>
                 </div>
                 <div className="flex justify-start">
                   Forgot your password?
-                  <Link className="text-blue ml-2">Reset Password</Link>
+                  <Link className="text-sky ml-2">Reset Password</Link>
                 </div>
               </div>
             </div>

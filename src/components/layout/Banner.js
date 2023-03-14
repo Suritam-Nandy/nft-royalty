@@ -22,31 +22,31 @@ const Banner = () => {
   }
 
   return (
-    <div className="w-full flex flex-row justify-around items-center text-grayDark">
-      <div className="w-max flex flex-col justify-center items-center text-grayText font-bold ">
+    <div className="w-full flex flex-row justify-around items-center text-ashDark">
+      <div className="w-max flex flex-col justify-center items-center text-ashText font-bold ">
         <label>Current Balance</label>
         <label className="flex flex-col justify-center items-center text-2xl -mt-1">
           31.8
           {user[0].walletAddress}Ξ{" "}
-          <span className="text-sm font-normal text-grayDarkText tracking-wide -mt-1">
+          <span className="text-sm font-normal text-ashDarkText tracking-wide -mt-1">
             $38,160 USD
           </span>
         </label>
       </div>
-      <div className="w-max flex flex-col justify-center items-center text-grayText  font-bold ">
+      <div className="w-max flex flex-col justify-center items-center text-ashText  font-bold ">
         <label>Net Income</label>
         <label className="flex flex-col justify-center items-center text-2xl -mt-1">
           21.2 Ξ
-          <span className="text-sm font-normal text-grayDarkText tracking-wide -mt-1">
+          <span className="text-sm font-normal text-ashDarkText tracking-wide -mt-1">
             $25,440 USD
           </span>
         </label>
       </div>
-      <div className="w-max flex flex-col justify-center items-center text-grayText  font-bold ">
+      <div className="w-max flex flex-col justify-center items-center text-ashText  font-bold ">
         <label>Contributor Earnings</label>
         <label className="flex flex-col justify-center items-center text-2xl -mt-1">
           10.6 Ξ{" "}
-          <span className="text-sm font-normal text-grayDarkText tracking-wide -mt-1">
+          <span className="text-sm font-normal text-ashDarkText tracking-wide -mt-1">
             $12,720 USD
           </span>
         </label>

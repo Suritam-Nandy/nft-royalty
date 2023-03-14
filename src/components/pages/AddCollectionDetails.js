@@ -199,7 +199,7 @@ const AddCollectionDetails = () => {
 
   return (
     <div>
-      <div className="flex flex-row min-h-screen bg-gray-100 text-gray-800">
+      <div className="flex flex-row min-h-screen bg-ash-100 text-ash-800">
         <Sidebar />
         <div className="h-screen flex flex-col w-full">
           <main className="main w-full flex flex-col justify-center items-center flex-grow ">
@@ -209,7 +209,7 @@ const AddCollectionDetails = () => {
                   Collection Details
                 </h1>
                 <div className="flex flex-row justify-between items-center mb-2">
-                  <div className="w-9/12 drop-shadow-xl rounded-lg pt-3 pb-0   px-10 bg-blueBg mr-32">
+                  <div className="w-9/12 drop-shadow-xl rounded-lg pt-3 pb-0   px-10 bg-skyBg mr-32">
                     {collectionDetailsList.map((el) => {
                       const key = el.id;
 
@@ -232,7 +232,7 @@ const AddCollectionDetails = () => {
                     })}
                   </div>
 
-                  <div className="w-9/12 h-full flex flex-col justify-between items-start drop-shadow-xl rounded-lg py-3 px-12 bg-blueBg text-base">
+                  <div className="w-9/12 h-full flex flex-col justify-between items-start drop-shadow-xl rounded-lg py-3 px-12 bg-skyBg text-base">
                     <div className="flex flex-row w-max">
                       <label className="block font-bold mr-5 justify-self-end">
                         Payment Schedule*
@@ -243,13 +243,13 @@ const AddCollectionDetails = () => {
                           type="radio"
                           value=""
                           name="payment-schedule-radio"
-                          className="   w-4 h-4 mx-6 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                          className="   w-4 h-4 mx-6 text-sky-600 bg-ash-100 border-ash-300 focus:ring-sky-500 dark:focus:ring-sky-600 dark:ring-offset-ash-800 focus:ring-2 dark:bg-ash-700 dark:border-ash-600"
                         />
                         <input
                           id="payment-schedule-radio-2"
                           type="radio"
                           name="payment-schedule-radio"
-                          className="   w-4 h-4 mx-6 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                          className="   w-4 h-4 mx-6 text-sky-600 bg-ash-100 border-ash-300 focus:ring-sky-500 dark:focus:ring-sky-600 dark:ring-offset-ash-800 focus:ring-2 dark:bg-ash-700 dark:border-ash-600"
                         />
                         <input
                           checked
@@ -257,7 +257,7 @@ const AddCollectionDetails = () => {
                           type="radio"
                           value=""
                           name="payment-schedule-radio"
-                          className="   w-4 h-4 mx-6 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                          className="   w-4 h-4 mx-6 text-sky-600 bg-ash-100 border-ash-300 focus:ring-sky-500 dark:focus:ring-sky-600 dark:ring-offset-ash-800 focus:ring-2 dark:bg-ash-700 dark:border-ash-600"
                         />
                       </div>
                     </div>
@@ -270,14 +270,14 @@ const AddCollectionDetails = () => {
                         type="radio"
                         value=""
                         name=" 1099s-preparation-radio"
-                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        className="w-4 h-4 text-sky-600 bg-ash-100 border-ash-300 focus:ring-sky-500 dark:focus:ring-sky-600 dark:ring-offset-ash-800 focus:ring-2 dark:bg-ash-700 dark:border-ash-600"
                       />
                       <input
                         id=" 1099s-preparation-radio-2"
                         type="radio"
                         value=""
                         name=" 1099s-preparation-radio"
-                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        className="w-4 h-4 text-sky-600 bg-ash-100 border-ash-300 focus:ring-sky-500 dark:focus:ring-sky-600 dark:ring-offset-ash-800 focus:ring-2 dark:bg-ash-700 dark:border-ash-600"
                       />
                     </div>
 
@@ -299,9 +299,9 @@ const AddCollectionDetails = () => {
                 </h1>
 
                 <div className="flex flex-col mb-2.5 mt-2">
-                  <div className="w-full h-max drop-shadow-xl rounded-lg pb-0 pt-2    bg-blueBg">
+                  <div className="w-full h-max drop-shadow-xl rounded-lg pb-0 pt-2    bg-skyBg">
                     <h1
-                      className="text-gray text-2xl font-semibold mb-1 px-10"
+                      className="text-ash text-2xl font-semibold mb-1 px-10"
                       // onClick={setCount(1)}
                     >
                       Artist 1
@@ -315,7 +315,7 @@ const AddCollectionDetails = () => {
                             "0 -8px 10px -6px rgba(115,115,115,0.75)",
                         }}
                       >
-                        <h1 className="text-gray text-2xl font-semibold mb-1  ">
+                        <h1 className="text-ash text-2xl font-semibold mb-1  ">
                           Artist {count}
                         </h1>
                       </div>
@@ -380,7 +380,7 @@ const AddCollectionDetails = () => {
                             value={contributorsInformation["additionalNotes"]}
                             onChange={onContributorsDetailsChange}
                             rows="3"
-                            className=" w-48 shadow appearance-none border rounded  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className=" w-48 shadow appearance-none border rounded  py-2 px-3 text-ash-700 leading-tight focus:outline-none focus:shadow-outline"
                           ></textarea>
                         </div>
                       </div>
@@ -389,7 +389,7 @@ const AddCollectionDetails = () => {
                 </div>
                 <div className="w-full flex flex-row justify-center items-center  my-3">
                   <div className="">
-                    <div className="bg-white w-max drop-shadow-lg  rounded-xl px-8 py-1 text-blue text-lg font-medium shadow-md hover:text-blueDark hover:shadow-lg focus:text-blueDark focus:shadow-lg focus:outline-none focus:ring-0 active:text-blueDark active:shadow-lg transition duration-150 ease-in-out">
+                    <div className="bg-white w-max drop-shadow-lg  rounded-xl px-8 py-1 text-sky text-lg font-medium shadow-md hover:text-skyDark hover:shadow-lg focus:text-skyDark focus:shadow-lg focus:outline-none focus:ring-0 active:text-skyDark active:shadow-lg transition duration-150 ease-in-out">
                       <label
                         onClick={addContributor}
                         className="text-base font-bold"

@@ -112,8 +112,11 @@ const CollectionTable = () => {
     }
     // let b = SalesNFT();
     // console.log(b);
-    setInterval(loadCollections(), 12000);
-  }, [collections]);
+    // setInterval(loadCollections(), 12000);
+    setCount(0);
+
+    loadCollections();
+  }, []);
   console.log(flag);
   if (!collectionsLi) {
     return <Loading />;
@@ -138,7 +141,7 @@ const CollectionTable = () => {
           return (
             <>
               <div className="w-full mb-2 flex flex-row justify-center items-center  text-base font-bold tracking-wide ">
-                <div className="w-2/6 flex flex-row justify-start items-center text-grayDark">
+                <div className="w-2/6 flex flex-row justify-start items-center text-ashDark">
                   <Link
                     to={`${el.nftImage}`}
                     target="__blank"
@@ -154,16 +157,16 @@ const CollectionTable = () => {
                   {/* Pudgy Penguins */}
                 </div>
 
-                <div className="w-1/6 text-grayDark flex justify-center">
+                <div className="w-1/6 text-ashDark flex justify-center">
                   {el.sales ? el.sales : "0"} Sales
                 </div>
-                <div className="w-1/6 text-grayDark flex justify-center">
+                <div className="w-1/6 text-ashDark flex justify-center">
                   {el.salesVolume} Ξ
                 </div>
-                <div className="w-1/6 text-grayDark flex justify-center">
+                <div className="w-1/6 text-ashDark flex justify-center">
                   {el.royalty_fee}Ξ
                 </div>
-                <div className="w-1/6 text-grayDark flex justify-center">
+                <div className="w-1/6 text-ashDark flex justify-center">
                   5.2%
                 </div>
               </div>
