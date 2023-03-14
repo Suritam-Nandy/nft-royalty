@@ -113,7 +113,7 @@ const Signup = () => {
                   {/* <input
                       type={el.type}
                       //   name="password"
-                      className="form-control w-48 shadow appearance-none border border-gray rounded text-xs  py-0.5 px-1 text-black leading-3 focus:outline-none focus:shadow-outline"
+                      className="form-control w-48 shadow appearance-none border border-ash rounded text-xs  py-0.5 px-1 text-black leading-3 focus:outline-none focus:shadow-outline"
                       // placeholder="Enter Your Password"
                       //   onChange={onInputChange}
                     /> */}
@@ -134,7 +134,7 @@ const Signup = () => {
                   {/* <input
                       type={el.type}
                       //   name="password"
-                      className="form-control w-48 shadow appearance-none border border-gray rounded text-xs  py-0.5 px-1 text-black leading-3 focus:outline-none focus:shadow-outline"
+                      className="form-control w-48 shadow appearance-none border border-ash rounded text-xs  py-0.5 px-1 text-black leading-3 focus:outline-none focus:shadow-outline"
                       // placeholder="Enter Your Password"
                       //   onChange={onInputChange}
                     /> */}
@@ -155,7 +155,7 @@ const Signup = () => {
                   {/* <input
                       type={el.type}
                       //   name="password"
-                      className="form-control w-48 shadow appearance-none border border-gray rounded text-xs  py-0.5 px-1 text-black leading-3 focus:outline-none focus:shadow-outline"
+                      className="form-control w-48 shadow appearance-none border border-ash rounded text-xs  py-0.5 px-1 text-black leading-3 focus:outline-none focus:shadow-outline"
                       // placeholder="Enter Your Password"
                       //   onChange={onInputChange}
                     /> */}
@@ -176,7 +176,7 @@ const Signup = () => {
                   {/* <input
                       type={el.type}
                       //   name="password"
-                      className="form-control w-48 shadow appearance-none border border-gray rounded text-xs  py-0.5 px-1 text-black leading-3 focus:outline-none focus:shadow-outline"
+                      className="form-control w-48 shadow appearance-none border border-ash rounded text-xs  py-0.5 px-1 text-black leading-3 focus:outline-none focus:shadow-outline"
                       // placeholder="Enter Your Password"
                       //   onChange={onInputChange}
                     /> */}
@@ -197,7 +197,7 @@ const Signup = () => {
                   {/* <input
                       type={el.type}
                       //   name="password"
-                      className="form-control w-48 shadow appearance-none border border-gray rounded text-xs  py-0.5 px-1 text-black leading-3 focus:outline-none focus:shadow-outline"
+                      className="form-control w-48 shadow appearance-none border border-ash rounded text-xs  py-0.5 px-1 text-black leading-3 focus:outline-none focus:shadow-outline"
                       // placeholder="Enter Your Password"
                       //   onChange={onInputChange}
                     /> */}
@@ -218,7 +218,7 @@ const Signup = () => {
                   {/* <input
                       type={el.type}
                       //   name="password"
-                      className="form-control w-48 shadow appearance-none border border-gray rounded text-xs  py-0.5 px-1 text-black leading-3 focus:outline-none focus:shadow-outline"
+                      className="form-control w-48 shadow appearance-none border border-ash rounded text-xs  py-0.5 px-1 text-black leading-3 focus:outline-none focus:shadow-outline"
                       // placeholder="Enter Your Password"
                       //   onChange={onInputChange}
                     /> */}
@@ -239,7 +239,7 @@ const Signup = () => {
                   {/* <input
                       type={el.type}
                       //   name="password"
-                      className="form-control w-48 shadow appearance-none border border-gray rounded text-xs  py-0.5 px-1 text-black leading-3 focus:outline-none focus:shadow-outline"
+                      className="form-control w-48 shadow appearance-none border border-ash rounded text-xs  py-0.5 px-1 text-black leading-3 focus:outline-none focus:shadow-outline"
                       // placeholder="Enter Your Password"
                       //   onChange={onInputChange}
                     /> */}
@@ -247,7 +247,7 @@ const Signup = () => {
                 </div>
               </div>
 
-              <div className="w-40 h-28 bg-grayLight rounded-full flex mt-2 justify-center items-center">
+              <div className="w-40 h-28 bg-ashLight rounded-full flex mt-2 justify-center items-center">
                 <label className="text-sm font-bold">Upload Avatar</label>
               </div>
             </div>

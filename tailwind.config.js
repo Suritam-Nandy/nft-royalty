@@ -1,19 +1,31 @@
 /** @type {import('tailwindcss').Config} */
+
+const colors = require("tailwindcss/colors");
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  darkMode: "media",
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
+  ],
   theme: {
     colors: {
       white: "#FFF",
-      graySidebar: "##FBF9F9",
-      gray: "#62656C",
-      grayLight: "#D9D9D9",
-      grayDark: "#545454",
-      grayDarkText: "#8C8C8C",
-      grayBg: "#E8E8E8",
-      blue: "#2A36B8",
-      blueBg: "#E8ECF4",
-      blueLight: "#10D4FF",
-      blueDark: "#2A36a4",
+      ashSidebar: "##FBF9F9",
+      ash: "#62656C",
+      ashLight: "#D9D9D9",
+      ashDark: "#545454",
+      ashDarkText: "#8C8C8C",
+      ashBg: "#E8E8E8",
+      sky: "#2A36B8",
+      skyBg: "#E8ECF4",
+      skyLight: "#10D4FF",
+      skyDark: "#2A36a4",
+      black: colors.black,
+      slate: colors.slate,
+      gray: colors.gray,
+      cyan: colors.cyan,
+
+      blue: colors.blue,
     },
     extend: {},
   },
