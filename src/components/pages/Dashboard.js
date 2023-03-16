@@ -12,7 +12,7 @@ import DoughnutChart, { dataDoughnut } from "../layout/DoughnutChart";
 import { useEffect, useState } from "react";
 import { useFirestoreConnect } from "react-redux-firebase";
 import Loading from "../layout/Loading.js";
-
+import Datepicker from "react-tailwindcss-datepicker";
 const CollectionTable = React.lazy(() => import("../layout/CollectionTable"));
 
 const Dashboard = () => {
@@ -230,8 +230,8 @@ const Dashboard = () => {
                         Summary Statistics{" "}
                       </h1>
                       <div className="w-56 ml-4 px- py-2  rounded-full border flex flex-row justify-around items-center text-sm font-semibold">
-                        <label classname="mr-2 text-xs ">March </label>
-                        <div>.</div>
+                        {/* <label classname="mr-2 text-xs ">March </label>
+                        <div>.</div> */}
                         {/* <div className="flex flex-col md:grid mx-10  md:grid-cols-2  m-1 w-full"> */}
                         {/* <DateRange
                       editableDateInputs={true}
@@ -243,7 +243,7 @@ const Dashboard = () => {
                       ranges={calendarState}
                       disabledDates={restrictedDates}
                       /> */}
-                        {/* <Datepicker
+                        <Datepicker
                           // className="w-40 ml-4 px-1 py-1 rounded-full border flex flex-row justify-around items-center text-sm font-semibold"
                           // primaryColor={"sky"}
                           primaryColor={"cyan"}
@@ -254,7 +254,7 @@ const Dashboard = () => {
                           onChange={handleValueChange}
                           showShortcuts={true}
                           placeholder={"Range"}
-                        /> */}
+                        />
                       </div>
 
                       {collections && (
