@@ -77,13 +77,13 @@ const AreaChart = (selected) => {
         config.params.contract_address = selected.nftContract_address
           ? selected.nftContract_address
           : collections[0].nftContractAddress;
-        // config.params.sold_after = selected.range.startDate
-        //   ? `${selected.range.startDate}T00:00:00Z`
-        //   : "2023-03-01T00:00:00Z";
-        // config.params.sold_before = selected.range.endDate
-        //   ? `${selected.range.endDate}T00:00:00Z`
-        //   : "2023-03-01T00:00:00Z";
-        // console.log(config.params.sold_before);
+        config.params.sold_after = selected.range.startDate
+          ? `${selected.range.startDate}T00:00:00Z`
+          : "2023-03-01T00:00:00Z";
+        config.params.sold_before = selected.range.endDate
+          ? `${selected.range.endDate}T00:00:00Z`
+          : "2023-03-01T00:00:00Z";
+        console.log(config.params.sold_before);
 
         axios
           .get(
@@ -102,10 +102,8 @@ const AreaChart = (selected) => {
                 xValues.push(new Date(ele.timestamp).getDate());
 
                 while (i < xValues[xValues.length - 1]) {
-                  // console.log(xValues[xValues.length - 1]);
                   while (xAxis[i] < xValues[xValues.length - 1]) {
                     yValues.splice(i, 0, 0);
-                    // console.log("added", xAxis[i]);
                     i = i + 1;
                   }
                   i = i + 1;
@@ -115,7 +113,6 @@ const AreaChart = (selected) => {
                 s = s + ele.quantity;
                 yValues[yValues.length - 1] = s;
               }
-              // console.log(xValues[i]);
               confirmed.push(ele.confirmed);
               return { xValues, yValues };
             });
