@@ -49,7 +49,7 @@ const CollectionTable = () => {
       if (count < 3) {
         setCount(count + 1);
         setFlag(true);
-        console.log("transpose ");
+        // console.log("transpose ");
 
         await collections.map((element) => {
           params.contract_address = element.nftContractAddress;
@@ -62,7 +62,7 @@ const CollectionTable = () => {
             salesVolume = 0;
             sales = 0;
             royalty_fee = 0;
-            console.log("transpose request successfull");
+            // console.log("transpose request successfull");
             data.results.map((e) => {
               salesVolume = salesVolume + e.eth_price;
               sales = sales + e.quantity;
@@ -117,7 +117,7 @@ const CollectionTable = () => {
 
     loadCollections();
   }, []);
-  console.log(flag);
+  // console.log(flag);
   if (!collectionsLi) {
     return <Loading />;
   } else {

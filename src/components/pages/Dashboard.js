@@ -182,7 +182,7 @@ const Dashboard = () => {
     setSelected(collections[0].nftContractAddress);
   }, []);
 
-  console.log(flag);
+  // console.log(flag);
   if (!collections) {
     return <Loading />;
   } else {

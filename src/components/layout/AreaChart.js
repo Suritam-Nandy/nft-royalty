@@ -26,7 +26,7 @@ ChartJS.register(
 );
 
 const AreaChart = (selected) => {
-  console.log("contract_address", selected);
+  // console.log("contract_address", selected);
   const { uid } = useSelector((state) => state.firebase.auth);
 
   const collections = useSelector(
@@ -49,12 +49,12 @@ const AreaChart = (selected) => {
 
     limit: "10000",
   };
-  console.log(collections);
+  // console.log(collections);
 
   const ChartInit = async () => {
     try {
       if (count < 6) {
-        console.log(selected);
+        // console.log(selected);
         setCount(count + 1);
         const xAxis = [
           1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
@@ -83,7 +83,7 @@ const AreaChart = (selected) => {
         config.params.sold_before = selected.range.endDate
           ? `${selected.range.endDate}T00:00:00Z`
           : "2023-03-01T00:00:00Z";
-        console.log(config.params.sold_before);
+        // console.log(config.params.sold_before);
 
         axios
           .get(
@@ -91,7 +91,7 @@ const AreaChart = (selected) => {
             config
           )
           .then((res) => {
-            console.log("transpose request chart successfull");
+            // console.log("transpose request chart successfull");
             // i = 1;
             res.data.results.map((ele) => {
               if (
@@ -138,7 +138,7 @@ const AreaChart = (selected) => {
                 },
               ],
             });
-            console.log(chartData.dataList);
+            // console.log(chartData.dataList);
           })
 
           .catch((err) => {
