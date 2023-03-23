@@ -19,28 +19,19 @@ const CollectionTable = React.lazy(() => import("../layout/CollectionTable"));
 const Dashboard = () => {
   const [count, setCount] = useState(0);
   const [ethPrice, setEthPrice] = useState();
-  const firebase = useFirebase();
-  const [flag, setFlag] = useState();
   const { uid } = useSelector((state) => state.firebase.auth);
   const [open, setOpen] = useState(false);
-  const [contract_address, setContract_address] = useState("");
 
-  const firestore = useFirestore();
   // const [count, setCount] = useState(0);
-  const [collectionsLi, setCollectionsLi] = useState([]);
 
   const collections = useSelector(
     (state) => state.firestore.ordered.collections
   );
-  // const users = useSelector((state) => state.firestore.ordered.users);
   useFirestoreConnect({
     collection: `allCollections/${uid}/collections`,
     storeAs: "collections",
   });
-  // useFirestoreConnect({
-  //   collection: `users/${uid}/collections`,
-  //   storeAs: "users",
-  // });
+
   const [selected, setSelected] = useState();
 
   const legend = {
@@ -105,10 +96,6 @@ const Dashboard = () => {
   } else {
   }
 
-  const handleOpen = (contract_address) => {
-    setOpen(!open);
-    setContract_address(contract_address);
-  };
   console.log();
   return (
     <>

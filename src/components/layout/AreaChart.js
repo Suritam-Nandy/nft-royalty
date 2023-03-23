@@ -157,7 +157,7 @@ const AreaChart = (selected) => {
     if (!collections && !chartData.datasets) {
       return <Loading />;
     } else {
-      // setCount(0);
+      setCount(0);
       setInterval(ChartInit(), 10000);
     }
   }, [
