@@ -22,8 +22,6 @@ const Dashboard = () => {
   const { uid } = useSelector((state) => state.firebase.auth);
   const [open, setOpen] = useState(false);
 
-  // const [count, setCount] = useState(0);
-
   const collections = useSelector(
     (state) => state.firestore.ordered.collections
   );
@@ -32,7 +30,7 @@ const Dashboard = () => {
     storeAs: "collections",
   });
 
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState(collections[0].nftContractAddress);
 
   const legend = {
     labels: [...dataDoughnut.datasets[0].labels],
@@ -86,11 +84,9 @@ const Dashboard = () => {
     console.log("newValue:", range);
 
     loadEthPrice();
-    setSelected(collections[0].nftContractAddress);
     console.log("e", ethPrice);
   }, [range, collections]);
 
-  // console.log(flag);
   if (!collections) {
     return <Loading />;
   } else {
