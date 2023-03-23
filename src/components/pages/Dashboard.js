@@ -30,7 +30,7 @@ const Dashboard = () => {
     storeAs: "collections",
   });
 
-  const [selected, setSelected] = useState(collections[0].nftContractAddress);
+  const [selected, setSelected] = useState();
 
   const legend = {
     labels: [...dataDoughnut.datasets[0].labels],
