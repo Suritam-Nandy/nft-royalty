@@ -25,39 +25,16 @@ const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const [contract_address, setContract_address] = useState("");
 
-  const firestore = useFirestore();
-  // const [count, setCount] = useState(0);
-  const [collectionsLi, setCollectionsLi] = useState([]);
-
-  const [collection, setCollection] = useState({
-    // nftContractAddress: "",
-    // royaltyPercentage: "",
-    // authorizedWallet: "",
-    // paymentSchedule: "monthly",
-    // preparation: "yes",
-    // nftImage: "",
-    // artists: [],
-  });
   const collections = useSelector(
     (state) => state.firestore.ordered.collections
   );
-  // const users = useSelector((state) => state.firestore.ordered.users);
   useFirestoreConnect({
     collection: `allCollections/${uid}/collections`,
     storeAs: "collections",
   });
-  // useFirestoreConnect({
-  //   collection: `users/${uid}/collections`,
-  //   storeAs: "users",
-  // });
+
   const [selected, setSelected] = useState();
-  const [calendarState, setCalendarState] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
+
   const legend = {
     labels: [...dataDoughnut.datasets[0].labels],
     data: [...dataDoughnut.datasets[0].data],
@@ -72,104 +49,20 @@ const Dashboard = () => {
     const response = await fetch(url + "?" + new URLSearchParams(params), {
       Method: "GET",
     });
-    const data1 = await response.json();
+    const data = await response.json();
 
-    return data1;
+    return data;
   };
   const [range, setRange] = useState({
-    startDate: new Date().setDate(1),
-    endDate: new Date(),
+    startDate: "",
+    endDate: "",
   });
 
   const handleValueChange = (newValue) => {
     console.log("newValue:", newValue);
-    // loadEthPrice();
     setRange(newValue);
   };
-  // // Call it with async:
-  // (async () => {
-  //   const data = await get(
-  //     "https://api.transpose.io/nft/sales-by-contract-address",
-  //     //   {
-  //     //   postId: 1,
-  //     // }
-  //     params
-  //   );
 
-  //   console.log(data);
-  // })();
-  // Calling it with then:
-  //   get(
-  //     "https://api.transpose.io/nft/collections-by-contract-address",
-  //     //   {
-  //     //   postId: 1,
-  //     // }
-  //     params
-  //   ).then((data) => {
-
-  //     console.log(data.image_url)
-  //   let img = data.image_url
-
-  // const loadCollections = async () => {
-  //   let some = [];
-  //   let salesVolume = 0;
-  //   let sales = 0;
-  //   try {
-  //     if (count < 4) {
-  //       setCount(count + 1);
-  //       setFlag(true);
-  //       console.log("transpose successfull");
-
-  //       await collections.map((element) => {
-  //         params.contract_address = element.nftContractAddress;
-
-  //         get(
-  //           "https://api.transpose.io/nft/sales-by-contract-address",
-
-  //           params
-  //         ).then((data) => {
-  //           salesVolume = 0;
-  //           sales = 0;
-  //           console.log("transpose successfull");
-  //           data.results.map((e) => {
-  //             console.log("transpose mapped successfull");
-
-  //             salesVolume = salesVolume + e.eth_price;
-  //             sales = sales + e.quantity;
-
-  //             return { salesVolume, sales };
-  //           });
-  //           salesVolume = (Math.round(salesVolume * 100) / 100).toFixed(2);
-  //           // sales = (Math.round(sales * 100) / 100).toFixed(2);
-  //           setCollection({
-  //             ...element,
-  //             salesVolume,
-  //             sales,
-  //             createdAt: firestore.FieldValue.serverTimestamp(),
-  //           });
-  //           setCollectionsLi([...collectionsLi, collection]);
-
-  //           firestore
-  //             .collection("allCollections")
-  //             .doc(uid)
-  //             .collection("collections")
-  //             .doc(element.docRef.id)
-  //             .set({
-  //               ...element,
-  //               salesVolume,
-  //               sales,
-  //               createdAt: firestore.FieldValue.serverTimestamp(),
-  //             });
-  //         });
-  //         return some;
-  //       });
-  //     } else {
-  //       console.log("transpose updated sales");
-  //     }
-  //   } catch (error) {
-  //     console.log("Error getting document:", error);
-  //   }
-  // };
   const loadEthPrice = async () => {
     try {
       if (count < 3) {
@@ -210,10 +103,6 @@ const Dashboard = () => {
   } else {
   }
 
-  const handleOpen = (contract_address) => {
-    setOpen(!open);
-    setContract_address(contract_address);
-  };
   console.log();
   return (
     <>
