@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 import { useFirestoreConnect } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import Loading from "../layout/Loading.js";
 import { useFirestore } from "react-redux-firebase";
 import Web3 from "web3";
-const Banner = () => {
+const Banner = (props) => {
   const [count, setCount] = useState(0);
   const [currentBalance, setCurrentBalance] = useState();
 
@@ -45,7 +47,7 @@ const Banner = () => {
     return data;
   };
 
-  const loadCollections = async () => {
+  const loadBanner = async () => {
     try {
       if (count < 3) {
         setCount(count + 1);
@@ -99,12 +101,13 @@ const Banner = () => {
     if (!user) {
       return <Loading />;
     } else {
-      loadCollections();
       setCount(0);
+
+      loadBanner();
       // console.log("cy", currentBalance);
     }
-  }, [user]);
-  if (!user) {
+  }, [props.ethPrice]);
+  if (!props.ethPrice) {
     return <Loading />;
   } else {
   }
@@ -113,11 +116,11 @@ const Banner = () => {
     <div className="w-full flex flex-row justify-around items-center text-ashDark">
       <div className="w-max flex flex-col justify-center items-center text-ashText font-bold ">
         <label>Current Balance</label>
-        {user && (
+        {props && (
           <label className="flex flex-col justify-center items-center text-2xl -mt-1">
             {currentBalance}Ξ{" "}
             <span className="text-sm font-normal text-ashDarkText tracking-wide -mt-1">
-              $38,160 USD
+              ${Math.round(props.ethPrice * currentBalance * 100) / 100} USD
             </span>
           </label>
         )}

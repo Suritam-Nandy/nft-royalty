@@ -1,4 +1,5 @@
 import React, { Suspense } from "react";
+import axios from "axios";
 
 import { useSelector } from "react-redux";
 import { useFirestore, useFirebase } from "react-redux-firebase";
@@ -16,6 +17,8 @@ import Datepicker from "react-tailwindcss-datepicker";
 const CollectionTable = React.lazy(() => import("../layout/CollectionTable"));
 
 const Dashboard = () => {
+  const [count, setCount] = useState(0);
+  const [ethPrice, setEthPrice] = useState();
   const firebase = useFirebase();
   const [flag, setFlag] = useState();
   const { uid } = useSelector((state) => state.firebase.auth);
@@ -61,22 +64,17 @@ const Dashboard = () => {
     backgroundColor: [...dataDoughnut.datasets[0].backgroundColor],
   };
   const params = {
-    chain_id: "ethereum",
-    contract_address: "",
-    sold_after: "2023-02-01T00:00:00Z",
-    // order: "asc",
-    limit: "10000",
+    module: "stats",
+    action: "ethprice",
+    apikey: "E8CEZXZKHVZE3PK8UDRQYG9EVBF86Y9PWJ",
   };
   const get = async (url, params) => {
     const response = await fetch(url + "?" + new URLSearchParams(params), {
       Method: "GET",
-      headers: {
-        "X-API-KEY": "FxKTp6MHpWQDaos8SRnSetdIZiUYLliS",
-      },
     });
-    const data = await response.json();
+    const data1 = await response.json();
 
-    return data;
+    return data1;
   };
   const [range, setRange] = useState({
     startDate: new Date().setDate(1),
@@ -85,6 +83,7 @@ const Dashboard = () => {
 
   const handleValueChange = (newValue) => {
     console.log("newValue:", newValue);
+    // loadEthPrice();
     setRange(newValue);
   };
   // // Call it with async:
@@ -171,7 +170,28 @@ const Dashboard = () => {
   //     console.log("Error getting document:", error);
   //   }
   // };
+  const loadEthPrice = async () => {
+    try {
+      if (count < 3) {
+        setCount(count + 1);
+        console.log("transpose ");
 
+        const config = {
+          module: "stats",
+          action: "ethprice",
+          apikey: "E8CEZXZKHVZE3PK8UDRQYG9EVBF86Y9PWJ",
+        };
+
+        get("https://api.etherscan.io/api", params).then((data) => {
+          setEthPrice(data.result.ethusd);
+        });
+      } else {
+        console.log("transpose updated EthPrice");
+      }
+    } catch (error) {
+      console.log("Error getting document:", error);
+    }
+  };
   useEffect(() => {
     if (!collections) {
       return <Loading />;
@@ -179,11 +199,13 @@ const Dashboard = () => {
     }
     console.log("newValue:", range);
 
+    loadEthPrice();
     setSelected(collections[0].nftContractAddress);
-  }, []);
+    console.log("e", ethPrice);
+  }, [range, collections]);
 
   // console.log(flag);
-  if (!collections) {
+  if (!range) {
     return <Loading />;
   } else {
   }
@@ -221,7 +243,7 @@ const Dashboard = () => {
                   </div>
 
                   <div className="w-full bg-skyBg p-2 py-1  drop-shadow-xl rounded-lg ">
-                    <Banner />
+                    <Banner ethPrice={ethPrice} />
                   </div>
 
                   <div className="w-full mx-8 my-2 ">
