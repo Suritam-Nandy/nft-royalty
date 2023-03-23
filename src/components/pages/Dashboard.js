@@ -69,12 +69,6 @@ const Dashboard = () => {
         setCount(count + 1);
         console.log("transpose ");
 
-        const config = {
-          module: "stats",
-          action: "ethprice",
-          apikey: "E8CEZXZKHVZE3PK8UDRQYG9EVBF86Y9PWJ",
-        };
-
         get("https://api.etherscan.io/api", params).then((data) => {
           setEthPrice(data.result.ethusd);
         });
