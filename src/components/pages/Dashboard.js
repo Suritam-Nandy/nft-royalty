@@ -25,14 +25,22 @@ const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const [contract_address, setContract_address] = useState("");
 
+  const firestore = useFirestore();
+  // const [count, setCount] = useState(0);
+  const [collectionsLi, setCollectionsLi] = useState([]);
+
   const collections = useSelector(
     (state) => state.firestore.ordered.collections
   );
+  // const users = useSelector((state) => state.firestore.ordered.users);
   useFirestoreConnect({
     collection: `allCollections/${uid}/collections`,
     storeAs: "collections",
   });
-
+  // useFirestoreConnect({
+  //   collection: `users/${uid}/collections`,
+  //   storeAs: "users",
+  // });
   const [selected, setSelected] = useState();
 
   const legend = {
@@ -92,11 +100,15 @@ const Dashboard = () => {
   }, [range, collections]);
 
   // console.log(flag);
-  if (!range) {
+  if (!collections) {
     return <Loading />;
   } else {
   }
 
+  const handleOpen = (contract_address) => {
+    setOpen(!open);
+    setContract_address(contract_address);
+  };
   console.log();
   return (
     <>

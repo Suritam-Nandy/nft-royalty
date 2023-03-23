@@ -51,7 +51,7 @@ const AreaChart = (selected) => {
   };
   // console.log(collections);
 
-  const ChartInit = async () => {
+  const ChartInit = () => {
     try {
       if (count < 6) {
         // console.log(selected);
@@ -158,7 +158,7 @@ const AreaChart = (selected) => {
       return <Loading />;
     } else {
       // setCount(0);
-      ChartInit();
+      setInterval(ChartInit(), 10000);
     }
   }, [
     selected.nftContract_address,
