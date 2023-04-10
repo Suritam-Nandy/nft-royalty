@@ -98,8 +98,13 @@ const Dashboard = () => {
       <div>
         <div className="flex flex-row min-h-screen bg-ash-100 text-ash-800">
           <Sidebar />
-          <div className="h-screen flex flex-col w-full ">
-            <main className="main w-full flex flex-col justify-center items-center flex-grow scrollbar-thin scrollbar-thumb-ashDark scrollbar-track-ashDarkText overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+          <div className="flex flex-col w-full ">
+            <main
+              className="main w-full flex flex-col justify-center items-center flex-grow 
+            
+            
+            "
+            >
               <div className="w-full flex flex-col justify-start items-center ">
                 <div className="w-full flex flex-col flex-grow px-8 ">
                   <div className="w-full flex flex-col font-s justfy-center items-start mb-2.5 mt-">
@@ -183,7 +188,7 @@ const Dashboard = () => {
                           {" "}
                           Sales Transfers by Collection
                         </h1>
-                        <div className="h-52 w-full">
+                        <div className=" h-52 w-full">
                           <Suspense fallback={<Loading />}>
                             <AreaChart
                               nftContract_address={selected}
@@ -197,10 +202,10 @@ const Dashboard = () => {
                           Royalty Share
                         </h1>
                         <div className="flex flex-row h-28 w-full mb-0.5">
-                          <div className=" -mt-4 w-24">
+                          <div className=" -mt-4  md:w-20 xs:w-12 w-24">
                             <DoughnutChart />
                           </div>
-                          <div className="w-max flex flex-col flex-wrap justify-start items-start">
+                          <div className="w-full flex flex-col flex-wrap justify-start items-start">
                             {legend.labels.map((el, index) => {
                               return (
                                 <div className="my-1 mx-3 flex flex-row ">
@@ -217,7 +222,7 @@ const Dashboard = () => {
                             })}
                           </div>
                         </div>
-                        <div className="-mt-4 w-24">
+                        <div className="-mt-4 md:w-20 xs:w-12 w-24">
                           <DoughnutChart />
                         </div>
                       </div>
@@ -246,7 +251,7 @@ const Dashboard = () => {
                       <div className="w-auto flex flex-row bg-skyBg p-3 px-4 mr-8 drop-shadow-xl rounded-lg  ">
                         <div className="flex flex-col w-full h-24 scrollbar-thin scrollbar-thumb-ashDark scrollbar-track-ashDarkText overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
                           <Suspense fallback={<Loading />}>
-                            <CollectionTable />
+                            <CollectionTable range={range} />
                           </Suspense>
                         </div>
                       </div>

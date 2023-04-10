@@ -120,7 +120,11 @@ const Banner = (props) => {
           <label className="flex flex-col justify-center items-center text-2xl -mt-1">
             {currentBalance}Ξ{" "}
             <span className="text-sm font-normal text-ashDarkText tracking-wide -mt-1">
-              ${Math.round(props.ethPrice * currentBalance * 100) / 100} USD
+              $
+              {(Math.round(props.ethPrice * currentBalance * 100) / 100)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              USD
             </span>
           </label>
         )}

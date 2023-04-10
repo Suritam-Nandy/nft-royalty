@@ -4,7 +4,8 @@ import { useFirestoreConnect } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import { useFirestore, useFirebase } from "react-redux-firebase";
 import Loading from "../layout/Loading.js";
-const CollectionTable = () => {
+const CollectionTable = (props) => {
+  console.log(props);
   const [count, setCount] = useState(0);
   const [collectionsLi, setCollectionsLi] = useState([]);
   const [flag, setFlag] = useState(false);
@@ -53,6 +54,16 @@ const CollectionTable = () => {
 
         await collections.map((element) => {
           params.contract_address = element.nftContractAddress;
+          if (params.sold_after != "")
+            params.sold_after = props.range.startDate;
+          if (params.sold_before != "")
+            params.sold_before = props.range.endDate;
+          // params.sold_after = props.range.startDate
+          //   ? `${props.range.startDate}T00:00:00Z`
+          //   : "2023-03-01T00:00:00Z";
+          // params.sold_before = props.range.endDate
+          //   ? `${props.range.endDate}T00:00:00Z`
+          //   : "2023-03-01T00:00:00Z";
 
           get(
             "https://api.transpose.io/nft/sales-by-contract-address",
@@ -114,9 +125,10 @@ const CollectionTable = () => {
     // console.log(b);
     // setInterval(loadCollections(), 12000);
     setCount(0);
+    setInterval(loadCollections(), 8000);
 
-    loadCollections();
-  }, []);
+    // loadCollections();
+  }, [props]);
   // console.log(flag);
   if (!collectionsLi) {
     return <Loading />;

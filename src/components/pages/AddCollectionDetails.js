@@ -69,6 +69,7 @@ const AddCollectionDetails = () => {
       alert("Maximum Contributors added");
       return;
     }
+
     e.preventDefault();
     setContributorsInformation({
       contributorNameAlias: "",
@@ -84,7 +85,7 @@ const AddCollectionDetails = () => {
     });
     setContributors([...contributors, contributorsInformation]);
 
-    setCount(2);
+    setCount(count + 1);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -158,8 +159,9 @@ const AddCollectionDetails = () => {
       name: "Wallet Address*",
     },
     {
-      id: "SSN",
-      name: "SSN(required for 1099s)",
+      id: "taxId",
+      name: "Tax ID Number",
+      labelData: "(required for 1099s)",
     },
   ];
   const moreContributorsInformationList = [
@@ -173,7 +175,8 @@ const AddCollectionDetails = () => {
     },
     {
       id: "tokenIDs",
-      name: "Token IDs(Leave blank ",
+      name: "Token IDs",
+      labelData: "(Leave blank if 0% token-based royalty)",
     },
     {
       id: "additionalFlatFee",
@@ -201,7 +204,7 @@ const AddCollectionDetails = () => {
     <div>
       <div className="flex flex-row min-h-screen bg-ash-100 text-ash-800">
         <Sidebar />
-        <div className="h-screen flex flex-col w-full">
+        <div className="flex flex-col w-full ">
           <main className="main w-full flex flex-col justify-center items-center flex-grow ">
             <div className=" flex flex-col justify-start items-center">
               <div className="flex flex-col  w-max flex-grow px-4">
@@ -330,10 +333,14 @@ const AddCollectionDetails = () => {
                               id={el.id}
                               className="grid grid-cols-2 w-max mb-6 h-min"
                             >
-                              <label className="block font-bold mr-5 justify-self-end">
-                                {el.name}
-                              </label>
-
+                              <div className="flex flex-col">
+                                <label className="block font-bold text-right mr-5 justify-self-end">
+                                  {el.name}
+                                </label>
+                                <label className="text-xs font-thin text-right mr-5 -mt-1.5">
+                                  {el.labelData}
+                                </label>
+                              </div>
                               <Input
                                 type="text"
                                 name={el.id}
@@ -353,9 +360,14 @@ const AddCollectionDetails = () => {
                               className="grid grid-cols-2 w-max mb-6 h-min"
                               id={el.id}
                             >
-                              <label className="block font-bold mr-5 justify-self-end">
-                                {el.name}
-                              </label>
+                              <div className="flex flex-col">
+                                <label className="block font-bold text-right  mr-5 justify-self-end">
+                                  {el.name}
+                                </label>
+                                <label className="text-xs font-thin mr-5  -mt-1.5">
+                                  {el.labelData}
+                                </label>
+                              </div>
 
                               <Input
                                 type="text"
