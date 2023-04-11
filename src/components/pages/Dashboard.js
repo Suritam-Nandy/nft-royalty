@@ -98,7 +98,7 @@ const Dashboard = () => {
       <div>
         <div className="flex flex-row min-h-screen bg-ash-100 text-ash-800">
           <Sidebar />
-          <div className="flex flex-col w-full ">
+          <div className="flex flex-col  sm:w-max md:w-full ">
             <main
               className="main w-full flex flex-col justify-center items-center flex-grow 
             
@@ -188,7 +188,7 @@ const Dashboard = () => {
                           {" "}
                           Sales Transfers by Collection
                         </h1>
-                        <div className=" h-52 w-full">
+                        <div className=" h-52 sm:w-max md:w-full">
                           <Suspense fallback={<Loading />}>
                             <AreaChart
                               nftContract_address={selected}
@@ -202,27 +202,29 @@ const Dashboard = () => {
                           Royalty Share
                         </h1>
                         <div className="flex flex-row h-28 w-full mb-0.5">
-                          <div className=" -mt-4  md:w-20 xs:w-12 w-24">
+                          <div className=" -mt-4  md:w-20 sm:w-10 ">
                             <DoughnutChart />
                           </div>
-                          <div className="w-full flex flex-col flex-wrap justify-start items-start">
+                          <div className="sm:w-min md:w-max flex flex-col flex-wrap justify-start items-start">
                             {legend.labels.map((el, index) => {
                               return (
-                                <div className="my-1 mx-3 flex flex-row ">
+                                <div className="my-1 mx-3 flex flex-row sm:w-min md:w-full">
                                   <div
                                     className={``}
                                     style={{
                                       backgroundColor: `${legend.backgroundColor[index]}`,
                                     }}
                                   >
-                                    <h1 className="text-sm">{el}</h1>
+                                    <h1 className="sm:text-xs md:text-sm sm:w-full w-max">
+                                      {el}
+                                    </h1>
                                   </div>
                                 </div>
                               );
                             })}
                           </div>
                         </div>
-                        <div className="-mt-4 md:w-20 xs:w-12 w-24">
+                        <div className=" -mt-4  md:w-20 sm:w-10 ">
                           <DoughnutChart />
                         </div>
                       </div>

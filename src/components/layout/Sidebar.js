@@ -41,7 +41,7 @@ const Sidebar = () => {
     { id: "feedback", name: "Feedback", icon: "Feedback.png" },
   ];
   return (
-    <aside className="sidebar w-max transform-gpu translate-x-full md:translate-x-0 transition-transform duration-150 ease-in bg-ashSidebar shadow-2xl">
+    <aside className="sidebar w-max transform-gpu  translate-x-0 transition-transform duration-150 ease-in bg-ashSidebar shadow-2xl">
       <div className="w-64 sidebar-header flex flex-col items-center justify-center py-4">
         <div className="my-3">
           <img alt="avatar" src="Avatar.png" className="w-28 h-28" />

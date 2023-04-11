@@ -47,18 +47,18 @@ const CollectionTable = (props) => {
     let sales = 0;
     let royalty_fee = 0;
     try {
-      if (count < 4) {
+      if (count < 2) {
         setCount(count + 1);
         setFlag(true);
         // console.log("transpose ");
 
         await collections.map((element) => {
           params.contract_address = element.nftContractAddress;
-          if (params.sold_after != "")
-            params.sold_after = props.range.startDate;
-          if (params.sold_before != "")
-            params.sold_before = props.range.endDate;
-          params.sold_after = props.range.startDate;
+          // if (params.sold_after != "")
+          //   params.sold_after = props.range.startDate;
+          // if (params.sold_before != "")
+          //   params.sold_before = props.range.endDate;
+          // params.sold_after = props.range.startDate;
           //   ? `${props.range.startDate}T00:00:00Z`
           //   : "2023-03-01T00:00:00Z";
           // params.sold_before = props.range.endDate
@@ -121,14 +121,15 @@ const CollectionTable = (props) => {
       return <Loading />;
     } else {
     }
+
     // let b = SalesNFT();
     // console.log(b);
     // setInterval(loadCollections(), 12000);
-    setCount(0);
+    // setCount(0);
     setInterval(loadCollections(), 8000);
 
     // loadCollections();
-  }, [props]);
+  }, []);
   // console.log(flag);
   if (!collectionsLi) {
     return <Loading />;

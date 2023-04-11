@@ -207,17 +207,22 @@ const AddCollectionDetails = () => {
 
   return (
     <div>
-      <div className="flex flex-row min-h-screen bg-ash-100 text-ash-800">
+      <div className="w-full flex flex-row min-h-screen bg-ash-100 text-ash-800">
         <Sidebar />
-        <div className="flex flex-col w-full ">
-          <main className="main w-full flex flex-col justify-center items-center flex-grow ">
-            <div className=" flex flex-col justify-start items-center">
-              <div className="flex flex-col  w-max flex-grow px-4">
+        <div className="flex flex-col sm:w-max md:w-full ">
+          <main
+            className="main w-max flex flex-col justify-center items-center flex-grow 
+            
+            
+            "
+          >
+            <div className="w-full flex flex-col justify-start items-center">
+              <div className="w-full flex flex-col flex-grow px-16 ">
                 <h1 className="text-3xl font-semibold my-2">
                   Collection Details
                 </h1>
-                <div className="flex flex-row justify-between items-center mb-2">
-                  <div className="w-9/12 drop-shadow-xl rounded-lg pt-3 pb-0   px-10 bg-skyBg mr-32">
+                <div className="w-full flex flex-row justify-between items-center mb-2">
+                  <div className="w-full drop-shadow-xl rounded-lg pt-3 pb-0   px-10 bg-skyBg mr-32">
                     {collectionDetailsList.map((el) => {
                       const key = el.id;
 
@@ -240,7 +245,7 @@ const AddCollectionDetails = () => {
                     })}
                   </div>
 
-                  <div className="w-9/12 h-full flex flex-col justify-between items-start drop-shadow-xl rounded-lg py-3 px-12 bg-skyBg text-base">
+                  <div className="w-full h-full flex flex-col justify-between items-start drop-shadow-xl rounded-lg py-3 px-12 bg-skyBg text-base">
                     <div className="flex flex-row w-max">
                       <label className="block font-bold mr-5 justify-self-end">
                         Payment Schedule*
@@ -306,8 +311,8 @@ const AddCollectionDetails = () => {
                   Contributor(s) Information
                 </h1>
 
-                <div className="flex flex-col mb-2.5 mt-2">
-                  <div className="w-full h-max drop-shadow-xl rounded-lg pb-0 pt-2    bg-skyBg">
+                <div className="w-full flex flex-col mb-2.5 mt-2">
+                  <div className="w-full drop-shadow-xl rounded-lg pb-0 pt-2 bg-skyBg">
                     <h1
                       className="text-ash text-2xl font-semibold mb-1 px-10"
                       // onClick={setCount(1)}
