@@ -47,7 +47,7 @@ const CollectionTable = (props) => {
     let sales = 0;
     let royalty_fee = 0;
     try {
-      if (count < 8) {
+      if (count < 4) {
         setCount(count + 1);
         setFlag(true);
         // console.log("transpose ");
