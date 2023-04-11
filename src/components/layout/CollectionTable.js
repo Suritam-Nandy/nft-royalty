@@ -34,7 +34,7 @@ const CollectionTable = (props) => {
     const response = await fetch(url + "?" + new URLSearchParams(params), {
       Method: "GET",
       headers: {
-        "X-API-KEY": "FxKTp6MHpWQDaos8SRnSetdIZiUYLliS",
+        "X-API-KEY": "OxrtPGDKVUIlRIUPYSPfLQICWbf9JumQ",
       },
     });
     const data = await response.json();
@@ -47,7 +47,7 @@ const CollectionTable = (props) => {
     let sales = 0;
     let royalty_fee = 0;
     try {
-      if (count < 3) {
+      if (count < 8) {
         setCount(count + 1);
         setFlag(true);
         // console.log("transpose ");
@@ -58,7 +58,7 @@ const CollectionTable = (props) => {
             params.sold_after = props.range.startDate;
           if (params.sold_before != "")
             params.sold_before = props.range.endDate;
-          // params.sold_after = props.range.startDate
+          params.sold_after = props.range.startDate;
           //   ? `${props.range.startDate}T00:00:00Z`
           //   : "2023-03-01T00:00:00Z";
           // params.sold_before = props.range.endDate

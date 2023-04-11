@@ -65,10 +65,10 @@ const AddCollectionDetails = () => {
     });
   };
   const addContributor = async (e) => {
-    if (count === 2) {
-      alert("Maximum Contributors added");
-      return;
-    }
+    // if (count === 2) {
+    //   alert("Maximum Contributors added");
+    //   return;
+    // }
 
     e.preventDefault();
     setContributorsInformation({
@@ -91,53 +91,58 @@ const AddCollectionDetails = () => {
     e.preventDefault();
 
     params.contract_addresses = collection.nftContractAddress;
+    try {
+      get(
+        "https://api.transpose.io/nft/collections-by-contract-address",
 
-    get(
-      "https://api.transpose.io/nft/collections-by-contract-address",
-
-      params
-    ).then((data) => {
-      setColection({
-        ...collection,
-        nftImage: data.results[0].image_url
-          ? data.results[0].image_url
-          : "null",
-        collectionName: data.results[0].name,
-      });
-      firestore
-        .collection("users")
-        .doc(uid)
-        .collection("collections")
-
-        .add({
+        params
+      ).then((data) => {
+        setColection({
           ...collection,
           nftImage: data.results[0].image_url
             ? data.results[0].image_url
             : "null",
           collectionName: data.results[0].name,
-          userUid: uid,
-          createdAt: firestore.FieldValue.serverTimestamp(),
-        })
-        .then((docRef) => {
-          firestore
-            .collection("allCollections")
-            .doc(uid)
-            .collection("collections")
-            .doc(docRef.id)
-            .set({
-              ...collection,
-              nftImage: data.results[0].image_url
-                ? data.results[0].image_url
-                : "null",
-              collectionName: data.results[0].name,
-              userUid: uid,
-              docRef: docRef,
-
-              createdAt: firestore.FieldValue.serverTimestamp(),
-            });
         });
-    });
+        firestore
+          .collection("users")
+          .doc(uid)
+          .collection("collections")
 
+          .add({
+            ...collection,
+            nftImage: data.results[0].image_url
+              ? data.results[0].image_url
+              : "null",
+            collectionName: data.results[0].name,
+            userUid: uid,
+            createdAt: firestore.FieldValue.serverTimestamp(),
+          })
+          .then((docRef) => {
+            firestore
+              .collection("allCollections")
+              .doc(uid)
+              .collection("collections")
+              .doc(docRef.id)
+              .set({
+                ...collection,
+                nftImage: data.results[0].image_url
+                  ? data.results[0].image_url
+                  : "null",
+                collectionName: data.results[0].name,
+                userUid: uid,
+                docRef: docRef,
+
+                createdAt: firestore.FieldValue.serverTimestamp(),
+              });
+            console.log("firebase");
+          });
+      });
+    } catch (error) {
+      console.log("Error getting document:", error);
+      alert("Wrong contract address");
+      return;
+    }
     history.push("/dashboard");
   };
 
@@ -309,20 +314,23 @@ const AddCollectionDetails = () => {
                     >
                       Artist 1
                     </h1>
-                    {count === 2 && (
-                      <div
-                        className="px-10 rounded-t-lg mt-1.5"
-                        h-max
-                        style={{
-                          "box-shadow":
-                            "0 -8px 10px -6px rgba(115,115,115,0.75)",
-                        }}
-                      >
-                        <h1 className="text-ash text-2xl font-semibold mb-1  ">
-                          Artist {count}
-                        </h1>
-                      </div>
-                    )}
+                    {count > 1 &&
+                      contributors.map((el) => {
+                        return (
+                          <div
+                            className="px-10 rounded-t-lg mt-1.5"
+                            h-max
+                            style={{
+                              "box-shadow":
+                                "0 -8px 10px -6px rgba(115,115,115,0.75)",
+                            }}
+                          >
+                            <h1 className="text-ash text-2xl font-semibold mb-1  ">
+                              Artist {contributors.indexOf(el) + 2}
+                            </h1>
+                          </div>
+                        );
+                      })}
                     <div className="flex flex-row w-full px-10">
                       <div className="w-full flex flex-col  items-center justify-start ">
                         {contributorsInformationList.map((el) => {

@@ -67,7 +67,7 @@ const AreaChart = (selected) => {
         let yValues = [];
         const config = {
           headers: {
-            "X-API-KEY": "FxKTp6MHpWQDaos8SRnSetdIZiUYLliS",
+            "X-API-KEY": "OxrtPGDKVUIlRIUPYSPfLQICWbf9JumQ",
           },
           params: pas,
         };
