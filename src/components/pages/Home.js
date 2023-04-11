@@ -14,7 +14,7 @@ const Home = () => {
       <div>
         <div className="flex flex-row min-h-screen bg-ash-100 text-ash-800">
           <Sidebar />
-          <div className="h-screen flex flex-col w-full">
+          <div className="h-screen flex flex-col sm:w-max md:w-full">
             <main className="main w-full flex flex-col justify-center items-center flex-grow ">
               <div className="main-content flex flex-col justify-center items-center flex-grow">
                 <div className="w-max flex flex-col justify-center items-center  flex-grow bg-white">
