@@ -209,7 +209,7 @@ const AddCollectionDetails = () => {
     <div>
       <div className="w-full flex flex-row min-h-screen bg-ash-100 text-ash-800">
         <Sidebar />
-        <div className="flex flex-col sm:w-max md:w-full ">
+        <div className="flex flex-col sm:w-max md:w-max lg:w-full ">
           <main
             className="main w-max flex flex-col justify-center items-center flex-grow 
             

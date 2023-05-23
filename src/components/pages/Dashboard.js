@@ -98,7 +98,7 @@ const Dashboard = () => {
       <div>
         <div className="flex flex-row min-h-screen bg-ash-100 text-ash-800">
           <Sidebar />
-          <div className="flex flex-col  sm:w-max md:w-full ">
+          <div className="flex flex-col  sm:w-max md:w-max lg:w-full">
             <main
               className="main w-full flex flex-col justify-center items-center flex-grow 
             
@@ -183,12 +183,12 @@ const Dashboard = () => {
                     </div>
 
                     <div className="w-full flex flex-row  justify-start items-around ">
-                      <div className="w-2/3 flex flex-col justify-between items-start mr-10 ">
+                      <div className="w-2/3 flex flex-col justify-between items-start sm:mr-0 md:mr-10 ">
                         <h1 className="text-base font-bold tracking-wide mb-2.5 mt-1.5">
                           {" "}
                           Sales Transfers by Collection
                         </h1>
-                        <div className=" h-52 sm:w-max md:w-full">
+                        <div className=" h-52 sm:w-max md:w-max lg:w-full">
                           <Suspense fallback={<Loading />}>
                             <AreaChart
                               nftContract_address={selected}
@@ -202,20 +202,20 @@ const Dashboard = () => {
                           Royalty Share
                         </h1>
                         <div className="flex flex-row h-28 w-full mb-0.5">
-                          <div className=" -mt-4  md:w-20 sm:w-10 ">
+                          <div className=" -mt-4  md:w-10 sm:w-10 lg:w-20 ">
                             <DoughnutChart />
                           </div>
-                          <div className="sm:w-min md:w-max flex flex-col flex-wrap justify-start items-start">
+                          <div className="sm:w-min md:w-min lg:w-max flex flex-col flex-wrap justify-start items-start">
                             {legend.labels.map((el, index) => {
                               return (
-                                <div className="my-1 mx-3 flex flex-row sm:w-min md:w-full">
+                                <div className="my-1 mx-3 flex flex-row sm:w-min md:w-min lg:w-max">
                                   <div
                                     className={``}
                                     style={{
                                       backgroundColor: `${legend.backgroundColor[index]}`,
                                     }}
                                   >
-                                    <h1 className="sm:text-xs md:text-sm sm:w-full w-max">
+                                    <h1 className="sm:text-xs md:text-sm sm:w-full md:w-full w-min">
                                       {el}
                                     </h1>
                                   </div>
@@ -224,7 +224,7 @@ const Dashboard = () => {
                             })}
                           </div>
                         </div>
-                        <div className=" -mt-4  md:w-20 sm:w-10 ">
+                        <div className=" -mt-4  md:w-10 sm:w-10 lg:w-20 ">
                           <DoughnutChart />
                         </div>
                       </div>
